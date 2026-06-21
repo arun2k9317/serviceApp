@@ -1,0 +1,242 @@
+/* Global Stylesheet for Full Maintenance & Deep Cleaning Company */
+
+/* Smooth Scroll */
+html {
+  scroll-behavior: smooth;
+  color-scheme: light dark;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--mantine-color-body);
+  color: #515359;
+  font-family: var(--font-pt-sans), sans-serif;
+  font-size: 14px;
+  overflow-x: hidden;
+}
+
+/* Headings uppercase and spacing styled like Bricks */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-open-sans), sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #333743;
+  font-weight: 700;
+}
+
+[data-mantine-color-scheme="dark"] h1,
+[data-mantine-color-scheme="dark"] h2,
+[data-mantine-color-scheme="dark"] h3,
+[data-mantine-color-scheme="dark"] h4,
+[data-mantine-color-scheme="dark"] h5,
+[data-mantine-color-scheme="dark"] h6 {
+  color: #ffffff;
+}
+
+/* Custom Premium Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--mantine-color-gray-1);
+}
+
+[data-mantine-color-scheme="dark"] ::-webkit-scrollbar-track {
+  background: var(--mantine-color-dark-8);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ffc104;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #e6ad00;
+}
+
+/* Text Selection Overrides */
+::selection {
+  background-color: rgba(255, 193, 4, 0.25);
+  color: #111111;
+}
+
+[data-mantine-color-scheme="dark"] ::selection {
+  background-color: rgba(255, 193, 4, 0.4);
+  color: #ffffff;
+}
+
+/* Custom Micro-Animations */
+.hover-lift {
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--mantine-shadow-md);
+}
+
+/* Section Header Styles - Bricks Construction Theme */
+.section-header {
+  text-align: center;
+  padding: 60px 0 40px;
+  width: 100%;
+}
+
+.section-header .subtitle {
+  font-style: italic;
+  color: #888888;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0;
+  text-transform: none;
+  margin: 0 0 10px 0;
+  display: block;
+}
+
+.section-header h2 {
+  font-size: 32px;
+  line-height: 40px;
+  margin: 0;
+}
+
+.section-header p {
+  font-size: 14px;
+  color: #656b6f;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Center Line Divider - Bricks construction theme */
+.bricks-divider {
+  position: relative;
+  display: block;
+  max-width: 250px;
+  height: 1px;
+  margin: 20px auto 25px;
+  padding: 0 3px 0;
+}
+
+.bricks-divider:before,
+.bricks-divider:after {
+  display: block;
+  position: absolute;
+  width: 50%;
+  content: "";
+  top: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #dbdbdb);
+}
+
+.bricks-divider:before {
+  left: -3px;
+}
+
+.bricks-divider:after {
+  right: -3px;
+  transform: rotate(180deg);
+}
+
+.bricks-divider i {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: 1px solid #dbdbdb;
+  top: -3px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--mantine-color-body);
+}
+
+/* White Section Headers (dark backgrounds) */
+.section-header.white h2,
+.section-header.white p,
+.section-header.white .subtitle {
+  color: #ffffff !important;
+}
+
+.section-header.white .bricks-divider:before,
+.section-header.white .bricks-divider:after {
+  background: linear-gradient(to right, transparent, #ffffff) !important;
+}
+
+.section-header.white .bricks-divider i {
+  border-color: #ffffff !important;
+  background: transparent !important;
+}
+
+.gradient-text-primary {
+  background: linear-gradient(135deg, #e6ad00, #ffc104);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-secondary {
+  background: linear-gradient(135deg, #2a2f35, #111111);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Hero Badge Glow */
+.badge-glow {
+  box-shadow: 0 0 15px rgba(11, 94, 215, 0.35);
+}
+
+/* Floating widgets positioning */
+.floating-widgets {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+@media (max-width: 48em) {
+  .floating-widgets {
+    bottom: 5rem; /* Raise to avoid overlapping sticky mobile call bar */
+    right: 1rem;
+    gap: 0.75rem;
+  }
+}
+
+/* Sticky Bottom Call Bar for Mobile Only */
+.mobile-sticky-bar {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 99;
+  background-color: var(--mantine-color-body);
+  border-top: 1px solid var(--mantine-color-default-border);
+  padding: 0.75rem 1rem;
+}
+
+@media (max-width: 48em) {
+  .mobile-sticky-bar {
+    display: block;
+  }
+}
+
+/* Dark Mode Background Overrides */
+[data-mantine-color-scheme="dark"] .why-us-bg {
+  background-color: #1a1b1e !important;
+}
+[data-mantine-color-scheme="dark"] .partners-section {
+  background-color: #1a1b1e !important;
+}
+[data-mantine-color-scheme="dark"] .gallery-section {
+  background-color: #1a1b1e !important;
+}
+[data-mantine-color-scheme="dark"] .custom-amc-banner {
+  background-color: rgba(26, 27, 30, 0.4) !important;
+  border-color: #25262b !important;
+}

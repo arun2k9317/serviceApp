@@ -1,0 +1,39 @@
+{
+  "name": "service-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^5.4.0",
+    "@mantine/carousel": "^9.3.2",
+    "@mantine/core": "^9.3.2",
+    "@mantine/form": "^9.3.2",
+    "@mantine/hooks": "^9.3.2",
+    "@mantine/notifications": "^9.3.2",
+    "@supabase/ssr": "^0.12.0",
+    "@supabase/supabase-js": "^2.108.2",
+    "@tabler/icons-react": "^3.44.0",
+    "embla-carousel-react": "^8.6.0",
+    "framer-motion": "^12.40.0",
+    "next": "15.0.2",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "react-hook-form": "^7.79.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "15.0.2",
+    "postcss": "^8.5.15",
+    "postcss-preset-mantine": "^1.18.0",
+    "typescript": "^5"
+  }
+}
