@@ -5,7 +5,7 @@ import AMCRequestForm from '../../components/forms/AMCRequestForm';
 
 export const metadata = {
   title: 'Annual Maintenance Contracts (AMC) Packages',
-  description: 'Select from our Residential or Commercial Annual Maintenance Contracts (AMC) in Kerala for complete peace of mind with scheduled checks and 24/7 priority support.',
+  description: 'Select from our Residential or Commercial Annual Maintenance Contracts (AMC) for complete peace of mind with scheduled checks and 24/7 priority support.',
 };
 
 const amcPackages = [
@@ -67,10 +67,15 @@ export default function AMCPage() {
         <Breadcrumbs mb="md">{breadcrumbs}</Breadcrumbs>
         
         <Box style={{ borderLeft: '4px solid #ffc104', paddingLeft: rem(16) }} mb="xl">
-          <Title order={1} fw={900} style={{ fontFamily: 'var(--font-open-sans), sans-serif' }}>
+          <Title
+            order={1}
+            fw={900}
+            fz={{ base: rem(22), sm: rem(28), md: rem(32) }}
+            style={{ fontFamily: 'var(--font-open-sans), sans-serif' }}
+          >
             Annual Maintenance Contracts (AMC)
           </Title>
-          <Text c="dimmed" size="md" mt="xs" style={{ maxWidth: rem(650) }}>
+          <Text c="dimmed" fz={{ base: 'sm', md: 'md' }} mt="xs" style={{ maxWidth: rem(650) }}>
             Protect your property investment, secure your appliances, and avoid sudden breakdown costs with our structured annual maintenance plans.
           </Text>
         </Box>

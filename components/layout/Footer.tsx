@@ -57,7 +57,7 @@ export default function Footer() {
                 </span>
               </Link>
               <Text size="sm" style={{ color: '#adb5bd', maxWidth: rem(320), lineHeight: 1.6 }}>
-                Professional facility management, deep cleaning, annual maintenance contracts, and emergency support for villas, apartments, and corporate offices across Kerala.
+                Complete facility management solutions for residential, commercial, and industrial properties. Electrical, plumbing, HVAC, cleaning, and comprehensive maintenance under one roof.
               </Text>
               <Group gap="xs">
                 <ActionIcon
@@ -107,8 +107,8 @@ export default function Footer() {
                 QUICK LINKS
               </Title>
               <Stack gap="xs">
-                {['Home', 'Our Services', 'AMC Packages', 'Special Offers', 'Our Work Process', 'Clients Showcase'].map((label, idx) => {
-                  const paths = ['/', '/services', '/amc', '/offers', '/process', '/clients'];
+                {['Home', 'About Us', 'Our Services', 'Industries', 'Contact Us'].map((label, idx) => {
+                  const paths = ['/', '/about', '/services', '/clients', '/contact'];
                   return (
                     <Link
                       key={label}
@@ -138,11 +138,12 @@ export default function Footer() {
               </Title>
               <Stack gap="xs">
                 {[
-                  { label: 'AC Maintenance', path: '/services/ac-maintenance' },
-                  { label: 'Deep Cleaning Services', path: '/deep-cleaning' },
-                  { label: 'Electrical Upgrades', path: '/services/electrical-maintenance' },
-                  { label: 'Plumbing repairs', path: '/services/plumbing-maintenance' },
-                  { label: 'Doorstep Car Wash', path: '/services/mobile-car-wash' },
+                  { label: 'Electrical Services', path: '/services#electrical' },
+                  { label: 'Plumbing Services', path: '/services#plumbing' },
+                  { label: 'HVAC & AC', path: '/services#hvac' },
+                  { label: 'Deep Cleaning', path: '/services#deep-cleaning' },
+                  { label: 'Painting & Renovation', path: '/services#painting' },
+                  { label: 'Pest Control', path: '/services#pest-control' },
                 ].map((item) => (
                   <Link
                     key={item.label}
@@ -198,10 +199,10 @@ export default function Footer() {
                   <IconMapPin size={18} style={{ color: '#ffc104', marginTop: rem(2), flexShrink: 0 }} />
                   <div>
                     <Text size="sm" fw={600} style={{ color: '#ffffff' }}>
-                      Kochi, Kerala
+                      Metro City
                     </Text>
                     <Text size="xs" style={{ color: '#adb5bd' }}>
-                      Serving Kochi, Trivandrum, Kozhikode, Thrissur
+                      Serving all major areas & surrounding metropolitan regions
                     </Text>
                   </div>
                 </Group>

@@ -27,18 +27,13 @@ import {
   IconBrandLinkedin,
   IconBrandPinterest,
   IconWorld,
-  IconSearch,
-  IconShoppingCart,
 } from '@tabler/icons-react';
 
 const navLinks = [
   { label: 'Home', path: '/' },
+  { label: 'About Us', path: '/about' },
   { label: 'Services', path: '/services' },
-  { label: 'Deep Cleaning', path: '/deep-cleaning' },
-  { label: 'AMC Packages', path: '/amc' },
-  { label: 'Offers', path: '/offers' },
-  { label: 'Work Process', path: '/process' },
-  { label: 'Clients', path: '/clients' },
+  { label: 'Industries', path: '/clients' },
   { label: 'Contact', path: '/contact' },
 ];
 
@@ -91,7 +86,7 @@ export default function Header() {
           color: '#adb5bd',
         }}
       >
-        <Container size="lg" style={{ height: '100%', paddingLeft: rem(16), paddingRight: rem(16) }}>
+        <Container size="xl" style={{ height: '100%', paddingLeft: rem(16), paddingRight: rem(16) }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', height: '100%' }}>
             {/* Contact details */}
             <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
@@ -163,7 +158,7 @@ export default function Header() {
 
       {/* 2. BOTTOM MAIN HEADER */}
       <div style={{ height: rem(80), display: 'flex', alignItems: 'center' }}>
-        <Container size="lg" style={{ width: '100%' }}>
+        <Container size="xl" style={{ width: '100%' }}>
           <Group justify="space-between" align="center" wrap="nowrap">
             {/* Logo in Bricks style */}
             <Link href="/" style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column' }}>
@@ -193,7 +188,7 @@ export default function Header() {
             </Link>
 
             {/* Desktop Navigation Links (Uppercase, 13px, bold, white/gold, Bricks outline for active) */}
-            <Group gap={rem(8)} visibleFrom="lg" wrap="nowrap">
+            <Group gap={rem(4)} visibleFrom="lg" wrap="nowrap">
               {navLinks.map((link) => {
                 const isActive = pathname === link.path;
                 return (
@@ -201,14 +196,14 @@ export default function Header() {
                     key={link.path}
                     href={link.path}
                     style={{
-                      fontSize: rem(13),
+                      fontSize: rem(12),
                       fontWeight: 700,
                       color: isActive ? '#ffc104' : '#ffffff',
                       transition: 'all 0.2s ease',
                       textDecoration: 'none',
-                      padding: `${rem(8)} ${rem(14)}`,
+                      padding: `${rem(6)} ${rem(10)}`,
                       textTransform: 'uppercase',
-                      letterSpacing: rem(0.8),
+                      letterSpacing: rem(0.5),
                       border: isActive
                         ? '1px solid rgba(255, 193, 4, 0.35)'
                         : '1px solid transparent',
@@ -222,27 +217,8 @@ export default function Header() {
               })}
             </Group>
 
-            {/* CTA & Actions (Bricks Mock Shop, Globe Language, Search + CTA) */}
+            {/* CTA & Actions */}
             <Group gap="lg" wrap="nowrap" style={{ flexShrink: 0 }}>
-              {/* Mock Cart, Language, Search */}
-              <Group gap="md" visibleFrom="lg" wrap="nowrap" style={{ color: '#ffffff', fontSize: rem(13), fontWeight: 700 }}>
-                {/* Cart Mock */}
-                <Group gap={6} style={{ cursor: 'pointer', opacity: 0.8 }} className="nav-action-hover">
-                  <IconShoppingCart size={16} style={{ color: '#ffffff' }} />
-                  <span style={{ letterSpacing: rem(0.5) }}>$0.00 (0 ITEMS)</span>
-                </Group>
-                
-                {/* Language select mock */}
-                <Group gap={6} style={{ cursor: 'pointer', opacity: 0.8 }} className="nav-action-hover">
-                  <IconWorld size={16} style={{ color: '#ffffff' }} />
-                  <span style={{ letterSpacing: rem(0.5) }}>ENG</span>
-                </Group>
-                
-                {/* Search icon mock */}
-                <ActionIcon variant="subtle" color="white" styles={{ root: { opacity: 0.8, '&:hover': { opacity: 1, color: '#ffc104' } } }}>
-                  <IconSearch size={16} />
-                </ActionIcon>
-              </Group>
 
               {/* Color Scheme Toggle */}
               <ActionIcon
@@ -267,6 +243,7 @@ export default function Header() {
                 href="/contact"
                 variant="filled"
                 color="brandYellow"
+                size="sm"
                 styles={{
                   root: {
                     backgroundColor: '#ffc104',
@@ -282,8 +259,9 @@ export default function Header() {
                   },
                 }}
                 visibleFrom="sm"
+                id="header-cta-consultation"
               >
-                Book Inspection
+                Get Consultation
               </Button>
 
               {/* Burger Menu for Mobile */}

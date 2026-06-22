@@ -576,7 +576,7 @@ export default function DashboardClient({
         <form onSubmit={handleAddTestimonial}>
           <Stack gap="md">
             <TextInput label="Customer Name" name="customer_name" required placeholder="e.g. Ramesh Kumar" />
-            <TextInput label="Designation / Place" name="designation" placeholder="e.g. Villa Owner, Kochi" />
+            <TextInput label="Designation / Place" name="designation" placeholder="e.g. Villa Owner" />
             <Textarea label="Review" name="review" required minRows={3} placeholder="Write the customer quote here..." />
             <NumberInput label="Rating" name="rating" required min={1} max={5} defaultValue={5} />
             <Checkbox label="Feature on Home Page" name="is_featured" defaultChecked />
@@ -606,7 +606,7 @@ export default function DashboardClient({
       <Modal opened={galleryOpened} onClose={galleryHandlers.close} title="Add Before/After Project" radius="md">
         <form onSubmit={handleAddGallery}>
           <Stack gap="md">
-            <TextInput label="Project Title" name="title" required placeholder="e.g. Kakkanad Kitchen descaling" />
+            <TextInput label="Project Title" name="title" required placeholder="e.g. Kitchen descaling" />
             
             <Select
               label="Service Category"

@@ -1,40 +1,98 @@
 import React from 'react';
-import { Container, Title, Text, SimpleGrid, Card, ThemeIcon, Stack, Group, Box, rem, Breadcrumbs, Anchor } from '@mantine/core';
-import { IconHome, IconBuilding, IconBuildingSkyscraper, IconBuildingStore, IconTools, IconCup, IconActivity, IconBriefcase, IconDiscountCheck } from '@tabler/icons-react';
+import {
+  Container,
+  Title,
+  Text,
+  SimpleGrid,
+  Card,
+  ThemeIcon,
+  Stack,
+  Group,
+  Box,
+  rem,
+  Breadcrumbs,
+  Anchor,
+} from '@mantine/core';
+import {
+  IconHome,
+  IconBuilding,
+  IconBuildingSkyscraper,
+  IconBuildingStore,
+  IconTools,
+  IconCup,
+  IconActivity,
+  IconBriefcase,
+  IconDiscountCheck,
+} from '@tabler/icons-react';
 import TestimonialCarousel from '../../components/ui/TestimonialCarousel';
 import { getTestimonials } from '../../lib/actions';
 
 export const metadata = {
-  title: 'Our Clients & Sectors served',
-  description: 'Learn about the sectors we serve across Kerala, including residential villas, apartments, retail shops, clinics, offices, and property management companies.',
+  title: 'Industries & Sectors We Serve',
+  description: 'Learn about the industries and sectors we serve, including residential properties, commercial buildings, hospitals, hotels, retail stores, and industrial facilities.',
 };
 
 const clientSectors = [
-  { icon: IconHome, title: 'Villas & Homes', desc: 'Providing scheduled AC filter cleans, plumbing descaling, structural snag checks, and deep kitchen sanitization for private homeowners.' },
-  { icon: IconBuilding, title: 'Apartments & Flats', desc: 'Offering regular maintenance audits and shared property deep cleaning, and tenant onboarding checklist services.' },
-  { icon: IconBriefcase, title: 'Offices & Corporates', desc: 'AMC cooling audits, electrical load balancing, data center checkups, and carpet descaling during weekends.' },
-  { icon: IconBuildingStore, title: 'Shops & Showrooms', desc: 'Providing retail outlets with lighting checkups, showcase glass descaling, and priority AC breakdown SLAs.' },
-  { icon: IconCup, title: 'Cafes & Restaurants', desc: 'Kitchen exhaust degreasing, grease trap descaling, dining area deep sanitation, and cooling system maintenance.' },
-  { icon: IconActivity, title: 'Medical Clinics', desc: 'Sanitary plumbing audits, sterile environment descaling, and UPS/backup electrical circuit checks.' },
-  { icon: IconBuildingSkyscraper, title: 'Commercial Complexes', desc: 'Common area pressure washing, lift lobby maintenance, main DB panel testing, and parking lot scrubbing.' },
-  { icon: IconTools, title: 'Property Managers', desc: 'On-demand snag audits, visual checkups, painting touchups, and deep cleaning for vacant rental properties.' },
+  { icon: IconHome, title: 'Villas & Homes', desc: 'Scheduled maintenance, plumbing checks, deep kitchen sanitization, and comprehensive property care for private homeowners.' },
+  { icon: IconBuilding, title: 'Apartments & Flats', desc: 'Regular maintenance audits, shared property deep cleaning, and tenant onboarding checklist services.' },
+  { icon: IconBriefcase, title: 'Offices & Corporates', desc: 'HVAC maintenance, electrical load balancing, carpet cleaning, and facility management contracts.' },
+  { icon: IconBuildingStore, title: 'Shops & Showrooms', desc: 'Lighting checkups, glass cleaning, pest control, and priority breakdown support for retail outlets.' },
+  { icon: IconCup, title: 'Cafes & Restaurants', desc: 'Kitchen exhaust degreasing, dining area deep sanitation, and cooling system maintenance.' },
+  { icon: IconActivity, title: 'Hospitals & Clinics', desc: 'Sanitary plumbing audits, sterile environment maintenance, and backup electrical circuit checks.' },
+  { icon: IconBuildingSkyscraper, title: 'Commercial Complexes', desc: 'Common area maintenance, lobby cleaning, electrical panel testing, and parking lot upkeep.' },
+  { icon: IconTools, title: 'Property Managers', desc: 'On-demand property inspections, painting touchups, and deep cleaning for vacant rental properties.' },
 ];
 
 const mockLogos = [
-  { name: 'Kochi Tech Park Inc.' },
-  { name: 'Skyline Villa Assc.' },
+  { name: 'Metro Tech Park' },
+  { name: 'Skyline Villas' },
   { name: 'Greenwood Estates' },
-  { name: 'Kerala Clinic Group' },
-  { name: 'City Center Retail' },
-  { name: 'Malabar Cafes Co.' },
+  { name: 'City Healthcare' },
+  { name: 'Centre Point Retail' },
+  { name: 'Grand Hotels Group' },
 ];
+
+// ─── SECTION HEADER (Mantine-based, server-compatible) ──────────────────────
+function SectionHeader({ subtitle, title, description, white }: {
+  subtitle: string;
+  title: string;
+  description?: string;
+  white?: boolean;
+}) {
+  return (
+    <Stack align="center" gap={4} ta="center" mb={40} pt={40}>
+      <Text fz="md" fs="italic" c={white ? '#ffc104' : 'dimmed'}>
+        {subtitle}
+      </Text>
+      <Title
+        order={2}
+        fz={{ base: rem(24), sm: rem(28), md: rem(32) }}
+        fw={700}
+        c={white ? '#ffffff' : undefined}
+        style={{ fontFamily: 'var(--font-open-sans), sans-serif', textTransform: 'uppercase', letterSpacing: rem(1) }}
+      >
+        {title}
+      </Title>
+      <Group gap={10} align="center" my="sm" style={{ width: rem(180) }}>
+        <Box style={{ flex: 1, height: rem(1), background: white ? 'rgba(255,255,255,0.2)' : 'linear-gradient(to right, transparent, #dbdbdb)' }} />
+        <Box style={{ width: rem(7), height: rem(7), borderRadius: '50%', border: `1px solid ${white ? 'rgba(255,255,255,0.4)' : '#dbdbdb'}`, background: white ? 'transparent' : 'var(--mantine-color-body)' }} />
+        <Box style={{ flex: 1, height: rem(1), background: white ? 'rgba(255,255,255,0.2)' : 'linear-gradient(to left, transparent, #dbdbdb)' }} />
+      </Group>
+      {description && (
+        <Text fz="sm" c={white ? '#e9ecef' : 'dimmed'} maw={600} lh={1.6}>
+          {description}
+        </Text>
+      )}
+    </Stack>
+  );
+}
 
 export default async function ClientsPage() {
   const testimonials = await getTestimonials();
 
   const breadcrumbs = [
     { title: 'Home', href: '/' },
-    { title: 'Clients', href: '/clients' },
+    { title: 'Industries', href: '/clients' },
   ].map((item, index) => (
     <Anchor href={item.href} key={index} size="sm" c="dimmed">
       {item.title}
@@ -42,33 +100,38 @@ export default async function ClientsPage() {
   ));
 
   return (
-    <Box py={40}>
+    <Box py={{ base: 30, md: 40 }}>
       {/* Page Header */}
       <Container size="lg" mb="xl">
         <Breadcrumbs mb="md">{breadcrumbs}</Breadcrumbs>
-        
+
         <Box style={{ borderLeft: '4px solid #ffc104', paddingLeft: rem(16) }} mb="xl">
-          <Title order={1} fw={900} style={{ fontFamily: 'var(--font-open-sans), sans-serif' }}>
-            Clients & Sectors We Serve
+          <Title
+            order={1}
+            fw={900}
+            fz={{ base: rem(22), sm: rem(28), md: rem(32) }}
+            ff="var(--font-open-sans), sans-serif"
+          >
+            Industries & Sectors We Serve
           </Title>
-          <Text c="dimmed" size="md" mt="xs" style={{ maxWidth: rem(650) }}>
-            We deliver facility support across different properties. From private villas to busy offices, we protect what matters.
+          <Text c="dimmed" fz={{ base: 'sm', md: 'md' }} mt="xs" maw={650}>
+            We deliver facility management across diverse properties. From private homes to commercial complexes, we keep your spaces running efficiently.
           </Text>
         </Box>
       </Container>
 
       {/* Sectors Grid */}
-      <Container size="lg" mb={80}>
-        <SimpleGrid cols={{ base: 1, sm: 2, md: 4 }} spacing="lg">
+      <Container size="lg" mb={{ base: 50, md: 80 }}>
+        <SimpleGrid cols={{ base: 1, xs: 2, md: 4 }} spacing="lg">
           {clientSectors.map((sector) => (
-            <Card key={sector.title} padding="lg" radius="md" withBorder className="hover-lift">
+            <Card key={sector.title} padding="lg" radius="md" withBorder className="hover-lift" style={{ height: '100%' }}>
               <ThemeIcon radius="md" size="lg" color="brandYellow" variant="light" mb="md">
                 <sector.icon size={22} style={{ color: '#e6ad00' }} />
               </ThemeIcon>
               <Text fw={700} size="sm" mb="xs">
                 {sector.title}
               </Text>
-              <Text size="xs" c="dimmed" style={{ lineHeight: 1.5 }}>
+              <Text size="xs" c="dimmed" lh={1.5}>
                 {sector.desc}
               </Text>
             </Card>
@@ -77,14 +140,13 @@ export default async function ClientsPage() {
       </Container>
 
       {/* Corporate Partners / Logos Grid */}
-      <Box style={{ backgroundColor: 'var(--mantine-color-gray-0)' }} py={60} className="partners-section">
+      <Box style={{ backgroundColor: 'var(--mantine-color-gray-0)' }} py={{ base: 40, md: 60 }} className="partners-section">
         <Container size="lg" mb={40}>
-          <div className="section-header">
-            <span className="subtitle">Corporate Network</span>
-            <h2>Trusted by Leading Organizations</h2>
-            <div className="bricks-divider"><i></i></div>
-            <p>We manage maintenance rosters and deep cleaning operations for local and corporate brands.</p>
-          </div>
+          <SectionHeader
+            subtitle="Corporate Network"
+            title="Trusted by Leading Organizations"
+            description="We manage maintenance and facility operations for residential and corporate clients."
+          />
 
           <SimpleGrid cols={{ base: 2, sm: 3, md: 6 }} spacing="lg">
             {mockLogos.map((logo, index) => (
@@ -103,7 +165,7 @@ export default async function ClientsPage() {
                 }}
               >
                 <Group gap={6} wrap="nowrap">
-                  <IconDiscountCheck size={16} style={{ color: '#ffc104' }} />
+                  <IconDiscountCheck size={16} style={{ color: '#ffc104', flexShrink: 0 }} />
                   <Text fw={700} size="xs" c="dimmed" ta="center">
                     {logo.name}
                   </Text>
@@ -115,13 +177,13 @@ export default async function ClientsPage() {
       </Box>
 
       {/* Testimonials */}
-      <Box style={{ backgroundColor: '#2a2f35', paddingTop: rem(80), paddingBottom: rem(80) }}>
+      <Box style={{ backgroundColor: '#2a2f35' }} py={{ base: 50, md: 80 }}>
         <Container size="lg">
-          <div className="section-header white">
-            <span className="subtitle">Testimonials</span>
-            <h2>What Clients Say About Our Service</h2>
-            <div className="bricks-divider"><i></i></div>
-          </div>
+          <SectionHeader
+            subtitle="Testimonials"
+            title="What Clients Say About Our Service"
+            white
+          />
 
           <TestimonialCarousel testimonials={testimonials} />
         </Container>

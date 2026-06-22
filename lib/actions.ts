@@ -39,10 +39,10 @@ let mockCallbacks = [
 ];
 
 let mockTestimonials = [
-  { id: 't-1', customer_name: 'Ramesh Kumar', designation: 'Villa Owner, Kochi', review: 'The deep cleaning team did an absolutely amazing job! They cleaned every single corner of my villa. Very professional equipment and polite staff.', rating: 5, is_featured: true, created_at: new Date().toISOString() },
-  { id: 't-2', customer_name: 'Anjana Nair', designation: 'Apartment Resident, Trivandrum', review: 'Very reliable AC maintenance services. The technician arrived on time, diagnosed the issue quickly, and fixed it at a very reasonable price.', rating: 5, is_featured: true, created_at: new Date().toISOString() },
-  { id: 't-3', customer_name: 'Varghese George', designation: 'Office Manager, Calicut', review: 'We have signed a Commercial AMC with them for our office. Everything from plumbing fixes to electrical checks has been managed perfectly and on time.', rating: 5, is_featured: true, created_at: new Date().toISOString() },
-  { id: 't-4', customer_name: 'Dr. Safeer', designation: 'Clinic Owner, Thrissur', review: 'Extremely satisfied with the post-construction cleaning. They sanitized the entire clinic, and the reports they provided were highly professional.', rating: 4, is_featured: true, created_at: new Date().toISOString() }
+  { id: 't-1', customer_name: 'Ramesh Kumar', designation: 'Villa Owner', review: 'The deep cleaning team did an absolutely amazing job! They cleaned every single corner of my villa. Very professional equipment and polite staff.', rating: 5, is_featured: true, created_at: new Date().toISOString() },
+  { id: 't-2', customer_name: 'Anjana Nair', designation: 'Apartment Resident', review: 'Very reliable AC maintenance services. The technician arrived on time, diagnosed the issue quickly, and fixed it at a very reasonable price.', rating: 5, is_featured: true, created_at: new Date().toISOString() },
+  { id: 't-3', customer_name: 'Varghese George', designation: 'Office Manager', review: 'We have signed a Commercial AMC with them for our office. Everything from plumbing fixes to electrical checks has been managed perfectly and on time.', rating: 5, is_featured: true, created_at: new Date().toISOString() },
+  { id: 't-4', customer_name: 'Dr. Safeer', designation: 'Clinic Owner', review: 'Extremely satisfied with the post-construction cleaning. They sanitized the entire clinic, and the reports they provided were highly professional.', rating: 4, is_featured: true, created_at: new Date().toISOString() }
 ];
 
 let mockOffers: Array<{
@@ -572,7 +572,7 @@ const defaultServices = [
     description: 'Scheduled home checkups, visual snagging, thermal imaging, and pre-monsoon checks to avoid damage.',
     imageUrl: 'https://images.unsplash.com/photo-1581094288338-2314dddb7ecc?auto=format&fit=crop&w=600&q=80',
     image_url: 'https://images.unsplash.com/photo-1581094288338-2314dddb7ecc?auto=format&fit=crop&w=600&q=80',
-    benefits: ['Catches minor issues before they become expensive repairs', 'Keeps structure in top architectural health', 'Comprehensive property health report generated', 'Tailored schedules for Kerala tropical weather'],
+    benefits: ['Catches minor issues before they become expensive repairs', 'Keeps structure in top architectural health', 'Comprehensive property health report generated', 'Tailored schedules for seasonal weather conditions'],
     process: [
       { step: 1, title: 'Visual Snag Audit', desc: 'Full walkthrough checking walls, doors, ceilings, and tiles for cracks or dampness.' },
       { step: 2, title: 'Thermal Scan', desc: 'Using thermal cameras to find hidden damp spots or electrical hotspots.' },
@@ -602,7 +602,7 @@ const defaultServices = [
     description: 'Fast response team for power failures, major water leaks, AC breakdowns, and locks lockout.',
     imageUrl: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80',
     image_url: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80',
-    benefits: ['Rapid response within 2 hours across Kerala cities', 'Special emergency response team dispatch', 'Resolves critical safety threats immediately', 'Available for residential & commercial premises'],
+    benefits: ['Rapid response within 2 hours across all service cities', 'Special emergency response team dispatch', 'Resolves critical safety threats immediately', 'Available for residential & commercial premises'],
     process: [
       { step: 1, title: 'Hotline Call Intake', desc: 'Our support center records structural breakdown parameters immediately.' },
       { step: 2, title: 'Technician Dispatch', desc: 'Closest certified technician team is rerouted to the location with tools.' },

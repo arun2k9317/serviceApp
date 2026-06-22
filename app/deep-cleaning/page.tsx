@@ -6,7 +6,7 @@ import { getGalleryItems } from '../../lib/actions';
 
 export const metadata = {
   title: 'Professional Deep Cleaning Services',
-  description: 'Specialized deep cleaning solutions in Kerala for villas, apartments, offices, post-construction sites, kitchen and bathroom descaling, and AC duct cleaning.',
+  description: 'Specialized deep cleaning solutions for villas, apartments, offices, post-construction sites, kitchen and bathroom descaling, and AC duct cleaning.',
 };
 
 const cleaningServices = [
@@ -19,6 +19,41 @@ const cleaningServices = [
   { icon: IconFlame, title: 'Kitchen Sanitization', desc: 'Heavy degreasing of cooker hoods, backsplash descaling, cabinet scrubbing, and countertop disinfecting.' },
   { icon: IconBath, title: 'Washroom Sanitization', desc: 'Acidic descaling of tiles, deep bowl sanitization, tap polish, and wall descaling to remove hard water deposits.' },
 ];
+
+// ─── SECTION HEADER (Mantine-based, server-compatible) ──────────────────────
+function SectionHeader({ subtitle, title, description, white }: {
+  subtitle: string;
+  title: string;
+  description?: string;
+  white?: boolean;
+}) {
+  return (
+    <Stack align="center" gap={4} ta="center" mb={40} pt={40}>
+      <Text fz="md" fs="italic" c={white ? '#ffc104' : 'dimmed'}>
+        {subtitle}
+      </Text>
+      <Title
+        order={2}
+        fz={{ base: rem(24), sm: rem(28), md: rem(32) }}
+        fw={700}
+        c={white ? '#ffffff' : undefined}
+        style={{ fontFamily: 'var(--font-open-sans), sans-serif', textTransform: 'uppercase', letterSpacing: rem(1) }}
+      >
+        {title}
+      </Title>
+      <Group gap={10} align="center" my="sm" style={{ width: rem(180) }}>
+        <Box style={{ flex: 1, height: rem(1), background: white ? 'rgba(255,255,255,0.2)' : 'linear-gradient(to right, transparent, #dbdbdb)' }} />
+        <Box style={{ width: rem(7), height: rem(7), borderRadius: '50%', border: `1px solid ${white ? 'rgba(255,255,255,0.4)' : '#dbdbdb'}`, background: white ? 'transparent' : 'var(--mantine-color-body)' }} />
+        <Box style={{ flex: 1, height: rem(1), background: white ? 'rgba(255,255,255,0.2)' : 'linear-gradient(to left, transparent, #dbdbdb)' }} />
+      </Group>
+      {description && (
+        <Text fz="sm" c={white ? '#e9ecef' : 'dimmed'} maw={600} lh={1.6}>
+          {description}
+        </Text>
+      )}
+    </Stack>
+  );
+}
 
 export default async function DeepCleaningPage() {
   // Query gallery items from Supabase or mock store
@@ -42,10 +77,15 @@ export default async function DeepCleaningPage() {
         <Breadcrumbs mb="md">{breadcrumbs}</Breadcrumbs>
         
         <Box style={{ borderLeft: '4px solid #ffc104', paddingLeft: rem(16) }} mb="xl">
-          <Title order={1} fw={900} style={{ fontFamily: 'var(--font-open-sans), sans-serif' }}>
+          <Title
+            order={1}
+            fw={900}
+            fz={{ base: rem(22), sm: rem(28), md: rem(32) }}
+            style={{ fontFamily: 'var(--font-open-sans), sans-serif' }}
+          >
             Deep Cleaning Services
           </Title>
-          <Text c="dimmed" size="md" mt="xs" style={{ maxWidth: rem(650) }}>
+          <Text c="dimmed" fz={{ base: 'sm', md: 'md' }} mt="xs" style={{ maxWidth: rem(650) }}>
             Hospital-grade sanitization and restoration scrubbing for residential and commercial spaces. Witness the visual difference with our professional execution.
           </Text>
         </Box>
@@ -53,7 +93,13 @@ export default async function DeepCleaningPage() {
 
       {/* Vertical Services simple grid */}
       <Container size="lg" mb={80}>
-        <Title order={2} size="h3" fw={800} mb="xl" style={{ fontFamily: 'var(--font-open-sans), sans-serif' }}>
+        <Title
+          order={2}
+          fz={{ base: rem(18), sm: rem(20), md: rem(22) }}
+          fw={800}
+          mb="xl"
+          style={{ fontFamily: 'var(--font-open-sans), sans-serif' }}
+        >
           Our Deep Cleaning Verticals
         </Title>
         <SimpleGrid cols={{ base: 1, sm: 2, md: 4 }} spacing="lg">
@@ -76,12 +122,11 @@ export default async function DeepCleaningPage() {
       {/* Before / After Slider Grid Section */}
       <Box style={{ backgroundColor: 'var(--mantine-color-gray-0)' }} py={60} className="gallery-section">
         <Container size="lg">
-          <div className="section-header">
-            <span className="subtitle">Case Studies</span>
-            <h2>Before / After Showcase</h2>
-            <div className="bricks-divider"><i></i></div>
-            <p>Click on any project to launch the interactive slider and verify our meticulous cleaning quality.</p>
-          </div>
+          <SectionHeader
+            subtitle="Case Studies"
+            title="Before / After Showcase"
+            description="Click on any project to launch the interactive slider and verify our meticulous cleaning quality."
+          />
 
           {cleaningGallery.length > 0 ? (
             <BeforeAfterSlider items={cleaningGallery} />

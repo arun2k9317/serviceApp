@@ -21,10 +21,10 @@ export default function ContactPage() {
   ));
 
   const branchLocations = [
-    { city: 'Kochi Hub (HQ)', address: 'NH Bypass, Vyttila, Kochi, Ernakulam - 682019' },
-    { city: 'Trivandrum Office', address: 'Kazhakkoottam, Trivandrum, Kerala - 695582' },
-    { city: 'Kozhikode Branch', address: 'Mavoor Road, Kozhikode, Kerala - 673004' },
-    { city: 'Thrissur Dispatch', address: 'East Fort, Thrissur, Kerala - 680005' },
+    { city: 'Headquarters', address: '100 Main Street, Suite 400, Metro City - 10001' },
+    { city: 'North Dispatch Hub', address: '500 Industrial Boulevard, Industrial Area - 10020' },
+    { city: 'South Regional Office', address: '200 Commercial Way, Suite 10, South Zone - 10030' },
+    { city: 'West Dispatch Center', address: '350 Logistics Road, West District - 10040' },
   ];
 
   return (
@@ -34,11 +34,16 @@ export default function ContactPage() {
         <Breadcrumbs mb="md">{breadcrumbs}</Breadcrumbs>
         
         <Box style={{ borderLeft: '4px solid #ffc104', paddingLeft: rem(16) }} mb="xl">
-          <Title order={1} fw={900} style={{ fontFamily: 'var(--font-open-sans), sans-serif' }}>
+          <Title
+            order={1}
+            fw={900}
+            fz={{ base: rem(22), sm: rem(28), md: rem(32) }}
+            style={{ fontFamily: 'var(--font-open-sans), sans-serif' }}
+          >
             Get in Touch
           </Title>
-          <Text c="dimmed" size="md" mt="xs" style={{ maxWidth: rem(650) }}>
-            Need AC servicing, plumbing help, deep cleaning, or AMC pricing? Contact us today to book your free inspection visual audit!
+          <Text c="dimmed" fz={{ base: 'sm', md: 'md' }} mt="xs" style={{ maxWidth: rem(650) }}>
+            Need professional HVAC, plumbing, electrical maintenance, or deep cleaning? Contact us today to schedule your consultation and inspection.
           </Text>
         </Box>
       </Container>
@@ -124,7 +129,7 @@ export default function ContactPage() {
                 </Stack>
               </Card>
 
-              {/* Interactive Iframe Map (Kerala, Kochi Center) */}
+              {/* Interactive Iframe Map (Service Coverage Map) */}
               <div
                 style={{
                   position: 'relative',
@@ -137,8 +142,8 @@ export default function ContactPage() {
                 }}
               >
                 <iframe
-                  title="Kerala Service Coverage Map"
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3928.5602419080517!2d76.32168921479483!3d9.975487792868213!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b080cd330d07cc7%3A0xe10cd212bc292415!2sKochi%2C%20Kerala!5e0!3m2!1sen!2sin!4v1655458000000!5m2!1sen!2sin"
+                  title="Service Coverage Area Map"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d193595.2528082184!2d-74.11976373099967!3d40.69767006346215!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY!5e0!3m2!1sen!2sus!4v1655458000000!5m2!1sen!2sus"
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}

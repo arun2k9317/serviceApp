@@ -30,10 +30,15 @@ export default async function OffersPage() {
         <Breadcrumbs mb="md">{breadcrumbs}</Breadcrumbs>
         
         <Box style={{ borderLeft: '4px solid #ffc104', paddingLeft: rem(16) }} mb="xl">
-          <Title order={1} fw={900} style={{ fontFamily: 'var(--font-open-sans), sans-serif' }}>
+          <Title
+            order={1}
+            fw={900}
+            fz={{ base: rem(22), sm: rem(28), md: rem(32) }}
+            style={{ fontFamily: 'var(--font-open-sans), sans-serif' }}
+          >
             Special Offers & Deals
           </Title>
-          <Text c="dimmed" size="md" mt="xs" style={{ maxWidth: rem(650) }}>
+          <Text c="dimmed" fz={{ base: 'sm', md: 'md' }} mt="xs" style={{ maxWidth: rem(650) }}>
             Save on home deep cleaning, electrical troubleshooting, plumbing audits, and yearly maintenance subscription programs. Claim active vouchers below.
           </Text>
         </Box>
