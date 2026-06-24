@@ -18,8 +18,8 @@ export default function Footer() {
   return (
     <footer
       style={{
-        backgroundColor: '#2a2f35', // Consistent dark gray background
-        borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+        backgroundColor: '#2B3A55', // Dark navy — strong page anchor
+        borderTop: '3px solid #6D94C5',
         paddingTop: rem(60),
         paddingBottom: rem(40),
         color: '#dee2e6',
@@ -42,13 +42,13 @@ export default function Footer() {
                     lineHeight: 1.1,
                   }}
                 >
-                  FULL MAINTENANCE<span style={{ color: '#ffc104' }}>.</span>
+                  FULL MAINTENANCE<span style={{ color: '#6D94C5' }}>.</span>
                 </span>
                 <span
                   style={{
                     fontSize: rem(10),
                     fontWeight: 600,
-                    color: '#adb5bd',
+                    color: '#CBDCEB',
                     letterSpacing: rem(1.5),
                     textTransform: 'uppercase',
                   }}
@@ -68,7 +68,7 @@ export default function Footer() {
                   aria-label="Facebook"
                   component="a"
                   href="#"
-                  styles={{ root: { color: '#adb5bd', '&:hover': { color: '#ffc104' } } }}
+                  styles={{ root: { color: '#CBDCEB', '&:hover': { color: '#ffffff', backgroundColor: 'rgba(109, 148, 197, 0.2)' } } }}
                 >
                   <IconBrandFacebook size={18} />
                 </ActionIcon>
@@ -80,7 +80,7 @@ export default function Footer() {
                   aria-label="Instagram"
                   component="a"
                   href="#"
-                  styles={{ root: { color: '#adb5bd', '&:hover': { color: '#ffc104' } } }}
+                  styles={{ root: { color: '#CBDCEB', '&:hover': { color: '#ffffff', backgroundColor: 'rgba(109, 148, 197, 0.2)' } } }}
                 >
                   <IconBrandInstagram size={18} />
                 </ActionIcon>
@@ -92,7 +92,7 @@ export default function Footer() {
                   aria-label="Linkedin"
                   component="a"
                   href="#"
-                  styles={{ root: { color: '#adb5bd', '&:hover': { color: '#ffc104' } } }}
+                  styles={{ root: { color: '#CBDCEB', '&:hover': { color: '#ffffff', backgroundColor: 'rgba(109, 148, 197, 0.2)' } } }}
                 >
                   <IconBrandLinkedin size={18} />
                 </ActionIcon>
@@ -103,7 +103,7 @@ export default function Footer() {
           {/* Quick Links */}
           <Grid.Col span={{ base: 6, sm: 3, md: 2 }}>
             <Stack gap="md">
-              <Title order={4} size="xs" style={{ letterSpacing: rem(1.5), color: '#ffffff', fontFamily: 'var(--font-open-sans), sans-serif' }}>
+              <Title order={4} size="xs" style={{ letterSpacing: rem(1.5), color: '#CBDCEB', fontFamily: 'var(--font-open-sans), sans-serif' }}>
                 QUICK LINKS
               </Title>
               <Stack gap="xs">
@@ -119,7 +119,7 @@ export default function Footer() {
                         textDecoration: 'none',
                         transition: 'color 0.2s ease',
                       }}
-                      onMouseEnter={(e) => (e.currentTarget.style.color = '#ffc104')}
+                      onMouseEnter={(e) => (e.currentTarget.style.color = '#CBDCEB')}
                       onMouseLeave={(e) => (e.currentTarget.style.color = '#adb5bd')}
                     >
                       {label}
@@ -133,7 +133,7 @@ export default function Footer() {
           {/* Services */}
           <Grid.Col span={{ base: 6, sm: 3, md: 3 }}>
             <Stack gap="md">
-              <Title order={4} size="xs" style={{ letterSpacing: rem(1.5), color: '#ffffff', fontFamily: 'var(--font-open-sans), sans-serif' }}>
+              <Title order={4} size="xs" style={{ letterSpacing: rem(1.5), color: '#CBDCEB', fontFamily: 'var(--font-open-sans), sans-serif' }}>
                 SERVICES
               </Title>
               <Stack gap="xs">
@@ -154,7 +154,7 @@ export default function Footer() {
                       textDecoration: 'none',
                       transition: 'color 0.2s ease',
                     }}
-                    onMouseEnter={(e) => (e.currentTarget.style.color = '#ffc104')}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = '#CBDCEB')}
                     onMouseLeave={(e) => (e.currentTarget.style.color = '#adb5bd')}
                   >
                     {item.label}
@@ -167,12 +167,12 @@ export default function Footer() {
           {/* Contacts */}
           <Grid.Col span={{ base: 12, sm: 6, md: 3 }}>
             <Stack gap="md">
-              <Title order={4} size="xs" style={{ letterSpacing: rem(1.5), color: '#ffffff', fontFamily: 'var(--font-open-sans), sans-serif' }}>
+              <Title order={4} size="xs" style={{ letterSpacing: rem(1.5), color: '#CBDCEB', fontFamily: 'var(--font-open-sans), sans-serif' }}>
                 GET IN TOUCH
               </Title>
               <Stack gap="sm">
                 <Group gap="xs" wrap="nowrap" align="flex-start">
-                  <IconPhone size={18} style={{ color: '#ffc104', marginTop: rem(2), flexShrink: 0 }} />
+                  <IconPhone size={18} style={{ color: '#CBDCEB', marginTop: rem(2), flexShrink: 0 }} />
                   <div>
                     <Text size="sm" fw={600} style={{ color: '#ffffff' }}>
                       +91 90000 00000
@@ -184,7 +184,7 @@ export default function Footer() {
                 </Group>
 
                 <Group gap="xs" wrap="nowrap" align="flex-start">
-                  <IconMail size={18} style={{ color: '#ffc104', marginTop: rem(2), flexShrink: 0 }} />
+                  <IconMail size={18} style={{ color: '#CBDCEB', marginTop: rem(2), flexShrink: 0 }} />
                   <div>
                     <Text size="sm" fw={600} style={{ color: '#ffffff' }}>
                       support@fullmaintenance.com
@@ -196,7 +196,7 @@ export default function Footer() {
                 </Group>
 
                 <Group gap="xs" wrap="nowrap" align="flex-start">
-                  <IconMapPin size={18} style={{ color: '#ffc104', marginTop: rem(2), flexShrink: 0 }} />
+                  <IconMapPin size={18} style={{ color: '#CBDCEB', marginTop: rem(2), flexShrink: 0 }} />
                   <div>
                     <Text size="sm" fw={600} style={{ color: '#ffffff' }}>
                       Metro City
@@ -215,7 +215,7 @@ export default function Footer() {
         <hr
           style={{
             border: 'none',
-            borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+            borderTop: '1px solid rgba(203, 220, 235, 0.15)',
             marginTop: rem(40),
             marginBottom: rem(30),
           }}
@@ -235,7 +235,7 @@ export default function Footer() {
                 textDecoration: 'none',
                 transition: 'color 0.2s ease',
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = '#ffc104')}
+              onMouseEnter={(e) => (e.currentTarget.style.color = '#CBDCEB')}
               onMouseLeave={(e) => (e.currentTarget.style.color = '#adb5bd')}
             >
               Privacy Policy
@@ -248,7 +248,7 @@ export default function Footer() {
                 textDecoration: 'none',
                 transition: 'color 0.2s ease',
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = '#ffc104')}
+              onMouseEnter={(e) => (e.currentTarget.style.color = '#CBDCEB')}
               onMouseLeave={(e) => (e.currentTarget.style.color = '#adb5bd')}
             >
               Terms of Service

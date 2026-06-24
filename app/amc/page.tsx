@@ -12,7 +12,7 @@ const amcPackages = [
   {
     title: 'Residential AMC',
     subtitle: 'Best for villas & independent houses',
-    color: 'brandYellow',
+    color: 'brandBlue',
     features: [
       '4 Scheduled Preventive Maintenance audits per year',
       'Routine AC washing & servicing (up to 4 units)',
@@ -66,7 +66,7 @@ export default function AMCPage() {
       <Container size="lg" mb="xl">
         <Breadcrumbs mb="md">{breadcrumbs}</Breadcrumbs>
         
-        <Box style={{ borderLeft: '4px solid #ffc104', paddingLeft: rem(16) }} mb="xl">
+        <Box style={{ borderLeft: '4px solid #6D94C5', paddingLeft: rem(16) }} mb="xl">
           <Title
             order={1}
             fw={900}
@@ -96,12 +96,12 @@ export default function AMCPage() {
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
-                borderColor: pkg.color === 'brandYellow' ? 'rgba(255, 193, 4, 0.3)' : pkg.color === 'brandDark' ? 'rgba(42, 47, 53, 0.2)' : 'rgba(0, 0, 0, 0.1)',
-                borderTop: `${rem(5)} solid ${pkg.color === 'brandYellow' ? '#ffc104' : pkg.color === 'brandDark' ? '#2a2f35' : '#868e96'}`,
+                borderColor: pkg.color === 'brandBlue' ? 'rgba(109, 148, 197, 0.3)' : pkg.color === 'brandDark' ? 'rgba(43, 58, 85, 0.2)' : 'rgba(0, 0, 0, 0.1)',
+                borderTop: `${rem(5)} solid ${pkg.color === 'brandBlue' ? '#6D94C5' : pkg.color === 'brandDark' ? '#2B3A55' : '#868e96'}`,
               }}
             >
               <Stack gap="xs" mb="lg">
-                <Text fw={800} size="xl" style={{ color: pkg.color === 'brandYellow' ? '#e6ad00' : pkg.color === 'brandDark' ? '#2a2f35' : '#495057', fontFamily: 'var(--font-open-sans), sans-serif' }}>
+                <Text fw={800} size="xl" style={{ color: pkg.color === 'brandBlue' ? '#6D94C5' : pkg.color === 'brandDark' ? '#2B3A55' : '#495057', fontFamily: 'var(--font-open-sans), sans-serif' }}>
                   {pkg.title}
                 </Text>
                 <Text size="xs" c="dimmed" fw={600}>
@@ -114,7 +114,7 @@ export default function AMCPage() {
                   size="sm"
                   center
                   icon={
-                    <ThemeIcon color={pkg.color} size={18} radius="xl" styles={{ root: { color: pkg.color === 'brandYellow' ? '#2a2f35' : '#ffffff' } }}>
+                    <ThemeIcon color={pkg.color} size={18} radius="xl" styles={{ root: { color: pkg.color === 'brandBlue' ? '#ffffff' : '#ffffff' } }}>
                       <IconCheck size={12} />
                     </ThemeIcon>
                   }
@@ -137,7 +137,7 @@ export default function AMCPage() {
                 rightSection={<IconChevronRight size={14} />}
                 styles={{
                   root: {
-                    color: pkg.color === 'brandYellow' ? '#e6ad00' : pkg.color === 'brandDark' ? '#2a2f35' : '#495057',
+                    color: pkg.color === 'brandBlue' ? '#6D94C5' : pkg.color === 'brandDark' ? '#2B3A55' : '#495057',
                     fontWeight: 700,
                   }
                 }}
@@ -151,10 +151,10 @@ export default function AMCPage() {
 
       {/* Custom Plans details Banner */}
       <Container size="lg" mb={80}>
-        <Card shadow="sm" radius="md" padding="lg" withBorder style={{ backgroundColor: 'rgba(255, 193, 4, 0.06)', borderColor: 'rgba(255, 193, 4, 0.3)' }} className="custom-amc-banner">
+        <Card shadow="sm" radius="md" padding="lg" withBorder style={{ backgroundColor: 'rgba(109, 148, 197, 0.06)', borderColor: 'rgba(109, 148, 197, 0.25)' }} className="custom-amc-banner">
           <Group gap="md" align="flex-start" wrap="nowrap">
-            <ThemeIcon color="brandYellow" size="lg" radius="md">
-              <IconAward size={22} style={{ color: '#2a2f35' }} />
+            <ThemeIcon color="brandBlue" size="lg" radius="md">
+              <IconAward size={22} style={{ color: '#ffffff' }} />
             </ThemeIcon>
             <div>
               <Text fw={700} size="md">Custom AMC Plans for Large Properties & Businesses</Text>

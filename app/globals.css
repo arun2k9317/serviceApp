@@ -1,4 +1,5 @@
 /* Global Stylesheet for Full Maintenance & Deep Cleaning Company */
+/* Color Palette: #F5EFE6 (cream) | #E8DFCA (sand) | #6D94C5 (blue) | #CBDCEB (sky) | #2B3A55 (navy) */
 
 /* Smooth Scroll */
 html {
@@ -11,20 +12,25 @@ body {
   padding: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--mantine-color-body);
-  color: #515359;
+  background-color: #F5EFE6;
+  color: #4a5568;
   font-family: var(--font-pt-sans), sans-serif;
   font-size: 14px;
   overflow-x: hidden;
 }
 
-/* Headings uppercase and spacing styled like Bricks */
+/* Headings */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-open-sans), sans-serif;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: #333743;
+  color: #2B3A55;
   font-weight: 700;
+}
+
+[data-mantine-color-scheme="dark"] body {
+  background-color: var(--mantine-color-dark-8);
+  color: var(--mantine-color-dark-0);
 }
 
 [data-mantine-color-scheme="dark"] h1,
@@ -42,7 +48,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--mantine-color-gray-1);
+  background: #E8DFCA;
 }
 
 [data-mantine-color-scheme="dark"] ::-webkit-scrollbar-track {
@@ -50,22 +56,22 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #ffc104;
+  background: #6D94C5;
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #e6ad00;
+  background: #5a80b0;
 }
 
 /* Text Selection Overrides */
 ::selection {
-  background-color: rgba(255, 193, 4, 0.25);
+  background-color: rgba(109, 148, 197, 0.25);
   color: #111111;
 }
 
 [data-mantine-color-scheme="dark"] ::selection {
-  background-color: rgba(255, 193, 4, 0.4);
+  background-color: rgba(109, 148, 197, 0.4);
   color: #ffffff;
 }
 
@@ -79,7 +85,29 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: var(--mantine-shadow-md);
 }
 
-/* Section Header Styles - Bricks Construction Theme */
+/* Service card — full-bleed illustration zoom on hover */
+.service-full-card {
+  transition: box-shadow 0.3s ease, transform 0.3s ease !important;
+}
+
+.service-card-img {
+  transform: scale(1);
+  transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+}
+
+.service-full-card:hover .service-card-img {
+  transform: scale(1.08);
+}
+
+.service-full-card:hover .service-card-scrim {
+  background: linear-gradient(to bottom,
+    rgba(0,0,0,0.15) 0%,
+    rgba(0,0,0,0.3) 35%,
+    rgba(0,0,0,0.78) 70%,
+    rgba(0,0,0,0.92) 100%) !important;
+}
+
+/* Section Header Styles */
 .section-header {
   text-align: center;
   padding: 60px 0 40px;
@@ -88,7 +116,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .section-header .subtitle {
   font-style: italic;
-  color: #888888;
+  color: #6D94C5;
   font-size: 16px;
   line-height: 24px;
   letter-spacing: 0;
@@ -101,18 +129,19 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 32px;
   line-height: 40px;
   margin: 0;
+  color: #2B3A55;
 }
 
 .section-header p {
   font-size: 14px;
-  color: #656b6f;
+  color: #5a6a7e;
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
   line-height: 1.6;
 }
 
-/* Center Line Divider - Bricks construction theme */
+/* Center Line Divider */
 .bricks-divider {
   position: relative;
   display: block;
@@ -130,7 +159,7 @@ h1, h2, h3, h4, h5, h6 {
   content: "";
   top: 0;
   height: 1px;
-  background: linear-gradient(to right, transparent, #dbdbdb);
+  background: linear-gradient(to right, transparent, #CBDCEB);
 }
 
 .bricks-divider:before {
@@ -147,7 +176,7 @@ h1, h2, h3, h4, h5, h6 {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  border: 1px solid #dbdbdb;
+  border: 1px solid #CBDCEB;
   top: -3px;
   left: 50%;
   transform: translateX(-50%);
@@ -163,29 +192,31 @@ h1, h2, h3, h4, h5, h6 {
 
 .section-header.white .bricks-divider:before,
 .section-header.white .bricks-divider:after {
-  background: linear-gradient(to right, transparent, #ffffff) !important;
+  background: linear-gradient(to right, transparent, rgba(203, 220, 235, 0.6)) !important;
 }
 
 .section-header.white .bricks-divider i {
-  border-color: #ffffff !important;
+  border-color: rgba(203, 220, 235, 0.6) !important;
   background: transparent !important;
 }
 
+/* Gradient text — primary (blue) */
 .gradient-text-primary {
-  background: linear-gradient(135deg, #e6ad00, #ffc104);
+  background: linear-gradient(135deg, #5a80b0, #6D94C5);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
+/* Gradient text — secondary (navy) */
 .gradient-text-secondary {
-  background: linear-gradient(135deg, #2a2f35, #111111);
+  background: linear-gradient(135deg, #2B3A55, #3D4F6A);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 /* Hero Badge Glow */
 .badge-glow {
-  box-shadow: 0 0 15px rgba(11, 94, 215, 0.35);
+  box-shadow: 0 0 15px rgba(109, 148, 197, 0.4);
 }
 
 /* Floating widgets positioning */
@@ -215,8 +246,8 @@ h1, h2, h3, h4, h5, h6 {
   left: 0;
   width: 100%;
   z-index: 99;
-  background-color: var(--mantine-color-body);
-  border-top: 1px solid var(--mantine-color-default-border);
+  background-color: #F5EFE6;
+  border-top: 1px solid #CBDCEB;
   padding: 0.75rem 1rem;
 }
 

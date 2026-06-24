@@ -29,7 +29,7 @@ export default async function OffersPage() {
       <Container size="lg" mb="xl">
         <Breadcrumbs mb="md">{breadcrumbs}</Breadcrumbs>
         
-        <Box style={{ borderLeft: '4px solid #ffc104', paddingLeft: rem(16) }} mb="xl">
+        <Box style={{ borderLeft: '4px solid #6D94C5', paddingLeft: rem(16) }} mb="xl">
           <Title
             order={1}
             fw={900}
@@ -70,13 +70,13 @@ export default async function OffersPage() {
                 >
                   <Stack gap="xs">
                     <Group justify="space-between">
-                      <ThemeIcon color="brandYellow" variant="light" size="lg" radius="md">
-                        <IconGift size={22} style={{ color: '#e6ad00' }} />
+                      <ThemeIcon color="brandBlue" variant="light" size="lg" radius="md">
+                        <IconGift size={22} style={{ color: '#6D94C5' }} />
                       </ThemeIcon>
-                      <Badge color="brandYellow" variant="filled" styles={{ root: { color: '#2a2f35', fontWeight: 700 } }}>Active Offer</Badge>
+                      <Badge color="brandBlue" variant="filled" styles={{ root: { color: '#ffffff', fontWeight: 700 } }}>Active Offer</Badge>
                     </Group>
                     
-                    <Text fw={800} size="lg" mt="md" style={{ color: '#e6ad00', fontFamily: 'var(--font-open-sans), sans-serif' }}>
+                    <Text fw={800} size="lg" mt="md" style={{ color: '#6D94C5', fontFamily: 'var(--font-open-sans), sans-serif' }}>
                       {offer.title}
                     </Text>
                     

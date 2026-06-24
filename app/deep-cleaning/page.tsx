@@ -29,7 +29,7 @@ function SectionHeader({ subtitle, title, description, white }: {
 }) {
   return (
     <Stack align="center" gap={4} ta="center" mb={40} pt={40}>
-      <Text fz="md" fs="italic" c={white ? '#ffc104' : 'dimmed'}>
+      <Text fz="md" fs="italic" c={white ? '#CBDCEB' : 'dimmed'}>
         {subtitle}
       </Text>
       <Title
@@ -42,9 +42,9 @@ function SectionHeader({ subtitle, title, description, white }: {
         {title}
       </Title>
       <Group gap={10} align="center" my="sm" style={{ width: rem(180) }}>
-        <Box style={{ flex: 1, height: rem(1), background: white ? 'rgba(255,255,255,0.2)' : 'linear-gradient(to right, transparent, #dbdbdb)' }} />
-        <Box style={{ width: rem(7), height: rem(7), borderRadius: '50%', border: `1px solid ${white ? 'rgba(255,255,255,0.4)' : '#dbdbdb'}`, background: white ? 'transparent' : 'var(--mantine-color-body)' }} />
-        <Box style={{ flex: 1, height: rem(1), background: white ? 'rgba(255,255,255,0.2)' : 'linear-gradient(to left, transparent, #dbdbdb)' }} />
+        <Box style={{ flex: 1, height: rem(1), background: white ? 'rgba(203,220,235,0.3)' : 'linear-gradient(to right, transparent, #CBDCEB)' }} />
+        <Box style={{ width: rem(7), height: rem(7), borderRadius: '50%', border: `1px solid ${white ? 'rgba(203,220,235,0.5)' : '#CBDCEB'}`, background: white ? 'transparent' : 'var(--mantine-color-body)' }} />
+        <Box style={{ flex: 1, height: rem(1), background: white ? 'rgba(203,220,235,0.3)' : 'linear-gradient(to left, transparent, #CBDCEB)' }} />
       </Group>
       {description && (
         <Text fz="sm" c={white ? '#e9ecef' : 'dimmed'} maw={600} lh={1.6}>
@@ -76,7 +76,7 @@ export default async function DeepCleaningPage() {
       <Container size="lg" mb="xl">
         <Breadcrumbs mb="md">{breadcrumbs}</Breadcrumbs>
         
-        <Box style={{ borderLeft: '4px solid #ffc104', paddingLeft: rem(16) }} mb="xl">
+        <Box style={{ borderLeft: '4px solid #6D94C5', paddingLeft: rem(16) }} mb="xl">
           <Title
             order={1}
             fw={900}

@@ -25,23 +25,23 @@ export default function TestimonialCarousel({ testimonials }: TestimonialCarouse
       slideGap="md"
       styles={{
         control: {
-          backgroundColor: '#2a2f35',
+          backgroundColor: '#2B3A55',
           boxShadow: 'var(--mantine-shadow-md)',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
+          border: '1px solid rgba(203, 220, 235, 0.2)',
           color: '#ffffff',
           '&:hover': {
-            backgroundColor: '#ffc104',
-            color: '#2a2f35',
+            backgroundColor: '#6D94C5',
+            color: '#ffffff',
           },
         },
         indicator: {
           width: rem(8),
           height: rem(8),
           transition: 'width 250ms ease',
-          backgroundColor: 'rgba(255, 255, 255, 0.2)',
+          backgroundColor: 'rgba(203, 220, 235, 0.3)',
           '&[data-active]': {
             width: rem(24),
-            backgroundColor: '#ffc104',
+            backgroundColor: '#6D94C5',
           },
         },
       }}
@@ -66,13 +66,13 @@ export default function TestimonialCarousel({ testimonials }: TestimonialCarouse
                 display: 'flex',
                 flexDirection: 'column',
                 position: 'relative',
-                backgroundColor: '#2a2f35', // Match Bricks dark testimonial style
-                borderColor: 'rgba(255, 255, 255, 0.1)',
+                backgroundColor: '#2B3A55',
+                borderColor: 'rgba(203, 220, 235, 0.15)',
                 color: '#ffffff',
               }}
             >
               <Group gap="md" align="center" mb="md">
-                <Avatar color="brandYellow" radius="xl" size={60} styles={{ placeholder: { color: '#2a2f35', fontWeight: 700 } }}>
+                <Avatar color="brandBlue" radius="xl" size={60} styles={{ placeholder: { color: '#ffffff', fontWeight: 700 } }}>
                   {initials}
                 </Avatar>
                 <div>
@@ -80,7 +80,7 @@ export default function TestimonialCarousel({ testimonials }: TestimonialCarouse
                     {testimonial.customer_name}
                   </Text>
                   {testimonial.designation && (
-                    <Text size="xs" style={{ color: '#ffc104', fontStyle: 'italic' }}>
+                    <Text size="xs" style={{ color: '#CBDCEB', fontStyle: 'italic' }}>
                       {testimonial.designation}
                     </Text>
                   )}
@@ -94,7 +94,7 @@ export default function TestimonialCarousel({ testimonials }: TestimonialCarouse
                   fontStyle: 'italic',
                   lineHeight: 1.6,
                   color: '#dee2e6',
-                  borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+                  borderTop: '1px solid rgba(203, 220, 235, 0.15)',
                   paddingTop: rem(15),
                 }}
               >

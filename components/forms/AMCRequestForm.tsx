@@ -231,7 +231,7 @@ Additional Notes: ${values.notes || 'None'}
 
           <Button
             type="submit"
-            color="brandYellow"
+            color="brandBlue"
             size="md"
             fullWidth
             loading={loading}
@@ -239,7 +239,7 @@ Additional Notes: ${values.notes || 'None'}
             rightSection={<IconChevronRight size={16} />}
             styles={{
               root: {
-                color: '#2a2f35',
+                color: '#ffffff',
                 fontWeight: 700,
               }
             }}

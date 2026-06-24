@@ -61,7 +61,7 @@ function SectionHeader({ subtitle, title, description, white }: {
 }) {
   return (
     <Stack align="center" gap={4} ta="center" mb={40} pt={40}>
-      <Text fz="md" fs="italic" c={white ? '#ffc104' : 'dimmed'}>
+      <Text fz="md" fs="italic" c={white ? '#CBDCEB' : 'dimmed'}>
         {subtitle}
       </Text>
       <Title
@@ -74,9 +74,9 @@ function SectionHeader({ subtitle, title, description, white }: {
         {title}
       </Title>
       <Group gap={10} align="center" my="sm" style={{ width: rem(180) }}>
-        <Box style={{ flex: 1, height: rem(1), background: white ? 'rgba(255,255,255,0.2)' : 'linear-gradient(to right, transparent, #dbdbdb)' }} />
-        <Box style={{ width: rem(7), height: rem(7), borderRadius: '50%', border: `1px solid ${white ? 'rgba(255,255,255,0.4)' : '#dbdbdb'}`, background: white ? 'transparent' : 'var(--mantine-color-body)' }} />
-        <Box style={{ flex: 1, height: rem(1), background: white ? 'rgba(255,255,255,0.2)' : 'linear-gradient(to left, transparent, #dbdbdb)' }} />
+        <Box style={{ flex: 1, height: rem(1), background: white ? 'rgba(203,220,235,0.3)' : 'linear-gradient(to right, transparent, #CBDCEB)' }} />
+        <Box style={{ width: rem(7), height: rem(7), borderRadius: '50%', border: `1px solid ${white ? 'rgba(203,220,235,0.5)' : '#CBDCEB'}`, background: white ? 'transparent' : 'var(--mantine-color-body)' }} />
+        <Box style={{ flex: 1, height: rem(1), background: white ? 'rgba(203,220,235,0.3)' : 'linear-gradient(to left, transparent, #CBDCEB)' }} />
       </Group>
       {description && (
         <Text fz="sm" c={white ? '#e9ecef' : 'dimmed'} maw={600} lh={1.6}>
@@ -105,7 +105,7 @@ export default async function ClientsPage() {
       <Container size="lg" mb="xl">
         <Breadcrumbs mb="md">{breadcrumbs}</Breadcrumbs>
 
-        <Box style={{ borderLeft: '4px solid #ffc104', paddingLeft: rem(16) }} mb="xl">
+        <Box style={{ borderLeft: '4px solid #6D94C5', paddingLeft: rem(16) }} mb="xl">
           <Title
             order={1}
             fw={900}
@@ -125,8 +125,8 @@ export default async function ClientsPage() {
         <SimpleGrid cols={{ base: 1, xs: 2, md: 4 }} spacing="lg">
           {clientSectors.map((sector) => (
             <Card key={sector.title} padding="lg" radius="md" withBorder className="hover-lift" style={{ height: '100%' }}>
-              <ThemeIcon radius="md" size="lg" color="brandYellow" variant="light" mb="md">
-                <sector.icon size={22} style={{ color: '#e6ad00' }} />
+              <ThemeIcon radius="md" size="lg" color="brandBlue" variant="light" mb="md">
+                <sector.icon size={22} style={{ color: '#6D94C5' }} />
               </ThemeIcon>
               <Text fw={700} size="sm" mb="xs">
                 {sector.title}
@@ -140,7 +140,7 @@ export default async function ClientsPage() {
       </Container>
 
       {/* Corporate Partners / Logos Grid */}
-      <Box style={{ backgroundColor: 'var(--mantine-color-gray-0)' }} py={{ base: 40, md: 60 }} className="partners-section">
+      <Box style={{ backgroundColor: '#E8DFCA' }} py={{ base: 40, md: 60 }} className="partners-section">
         <Container size="lg" mb={40}>
           <SectionHeader
             subtitle="Corporate Network"
@@ -165,7 +165,7 @@ export default async function ClientsPage() {
                 }}
               >
                 <Group gap={6} wrap="nowrap">
-                  <IconDiscountCheck size={16} style={{ color: '#ffc104', flexShrink: 0 }} />
+                  <IconDiscountCheck size={16} style={{ color: '#6D94C5', flexShrink: 0 }} />
                   <Text fw={700} size="xs" c="dimmed" ta="center">
                     {logo.name}
                   </Text>
@@ -177,7 +177,7 @@ export default async function ClientsPage() {
       </Box>
 
       {/* Testimonials */}
-      <Box style={{ backgroundColor: '#2a2f35' }} py={{ base: 50, md: 80 }}>
+      <Box style={{ backgroundColor: '#2B3A55' }} py={{ base: 50, md: 80 }}>
         <Container size="lg">
           <SectionHeader
             subtitle="Testimonials"

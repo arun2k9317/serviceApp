@@ -33,7 +33,7 @@ export default function ContactPage() {
       <Container size="lg" mb="xl">
         <Breadcrumbs mb="md">{breadcrumbs}</Breadcrumbs>
         
-        <Box style={{ borderLeft: '4px solid #ffc104', paddingLeft: rem(16) }} mb="xl">
+        <Box style={{ borderLeft: '4px solid #6D94C5', paddingLeft: rem(16) }} mb="xl">
           <Title
             order={1}
             fw={900}
@@ -56,14 +56,14 @@ export default function ContactPage() {
               {/* Coordinates Card */}
               <Card withBorder padding="xl" radius="md" shadow="sm">
                 <Stack gap="md">
-                  <Text fw={800} size="lg" style={{ color: '#e6ad00', fontFamily: 'var(--font-open-sans), sans-serif' }}>
+                  <Text fw={800} size="lg" style={{ color: '#6D94C5', fontFamily: 'var(--font-open-sans), sans-serif' }}>
                     Customer Support Hotlines
                   </Text>
                   
                   <Stack gap="sm">
                     <Group gap="md" wrap="nowrap" align="flex-start">
-                      <ThemeIcon color="brandYellow" size="md" radius="md" variant="light" style={{ flexShrink: 0 }}>
-                        <IconPhone size={18} style={{ color: '#2a2f35' }} />
+                      <ThemeIcon color="brandBlue" size="md" radius="md" variant="light" style={{ flexShrink: 0 }}>
+                        <IconPhone size={18} style={{ color: '#6D94C5' }} />
                       </ThemeIcon>
                       <div>
                         <Text size="sm" fw={700}>Phone Support</Text>
@@ -73,8 +73,8 @@ export default function ContactPage() {
                     </Group>
 
                     <Group gap="md" wrap="nowrap" align="flex-start">
-                      <ThemeIcon color="brandYellow" size="md" radius="md" variant="light" style={{ flexShrink: 0 }}>
-                        <IconBrandWhatsapp size={18} style={{ color: '#e6ad00' }} />
+                      <ThemeIcon color="brandBlue" size="md" radius="md" variant="light" style={{ flexShrink: 0 }}>
+                        <IconBrandWhatsapp size={18} style={{ color: '#6D94C5' }} />
                       </ThemeIcon>
                       <div>
                         <Text size="sm" fw={700}>WhatsApp Dispatcher</Text>
@@ -84,8 +84,8 @@ export default function ContactPage() {
                     </Group>
 
                     <Group gap="md" wrap="nowrap" align="flex-start">
-                      <ThemeIcon color="brandYellow" size="md" radius="md" variant="light" style={{ flexShrink: 0 }}>
-                        <IconMail size={18} style={{ color: '#2a2f35' }} />
+                      <ThemeIcon color="brandBlue" size="md" radius="md" variant="light" style={{ flexShrink: 0 }}>
+                        <IconMail size={18} style={{ color: '#6D94C5' }} />
                       </ThemeIcon>
                       <div>
                         <Text size="sm" fw={700}>Support Email</Text>
@@ -95,8 +95,8 @@ export default function ContactPage() {
                     </Group>
 
                     <Group gap="md" wrap="nowrap" align="flex-start">
-                      <ThemeIcon color="brandYellow" size="md" radius="md" variant="light" style={{ flexShrink: 0 }}>
-                        <IconClock size={18} style={{ color: '#2a2f35' }} />
+                      <ThemeIcon color="brandBlue" size="md" radius="md" variant="light" style={{ flexShrink: 0 }}>
+                        <IconClock size={18} style={{ color: '#6D94C5' }} />
                       </ThemeIcon>
                       <div>
                         <Text size="sm" fw={700}>Working Hours</Text>
@@ -111,7 +111,7 @@ export default function ContactPage() {
               {/* Branch Locations */}
               <Card withBorder padding="xl" radius="md" shadow="sm">
                 <Stack gap="sm">
-                  <Text fw={800} size="lg" style={{ color: '#e6ad00', fontFamily: 'var(--font-open-sans), sans-serif' }}>
+                  <Text fw={800} size="lg" style={{ color: '#6D94C5', fontFamily: 'var(--font-open-sans), sans-serif' }}>
                     Branch Dispatch Hubs
                   </Text>
                   <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md">

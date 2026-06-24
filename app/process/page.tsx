@@ -20,7 +20,7 @@ export default function ProcessPage() {
       <Container size="lg" mb="xl">
         <Breadcrumbs mb="md">{breadcrumbs}</Breadcrumbs>
         
-        <Box style={{ borderLeft: '4px solid #ffc104', paddingLeft: rem(16) }} mb="xl">
+        <Box style={{ borderLeft: '4px solid #6D94C5', paddingLeft: rem(16) }} mb="xl">
           <Title order={1} fw={900} style={{ fontFamily: 'var(--font-open-sans), sans-serif' }}>
             Our Structured Work Process
           </Title>
@@ -32,16 +32,16 @@ export default function ProcessPage() {
 
       {/* Timeline Section */}
       <Container size="md" mt={60}>
-        <Timeline active={4} bulletSize={38} lineWidth={3} color="brandYellow">
+        <Timeline active={4} bulletSize={38} lineWidth={3} color="brandBlue">
           {/* Step 1 */}
           <Timeline.Item
             bullet={
-              <ThemeIcon size={38} radius="xl" color="brandYellow">
-                <IconMapPin size={20} style={{ color: '#2a2f35' }} />
+              <ThemeIcon size={38} radius="xl" color="brandBlue">
+                <IconMapPin size={20} style={{ color: '#ffffff' }} />
               </ThemeIcon>
             }
             title={
-              <Text fw={800} size="md" style={{ color: '#e6ad00', fontFamily: 'var(--font-open-sans), sans-serif' }}>
+              <Text fw={800} size="md" style={{ color: '#6D94C5', fontFamily: 'var(--font-open-sans), sans-serif' }}>
                 Step 1: Free Site Inspection
               </Text>
             }
@@ -56,12 +56,12 @@ export default function ProcessPage() {
           {/* Step 2 */}
           <Timeline.Item
             bullet={
-              <ThemeIcon size={38} radius="xl" color="brandYellow">
-                <IconReportSearch size={20} style={{ color: '#2a2f35' }} />
+              <ThemeIcon size={38} radius="xl" color="brandBlue">
+                <IconReportSearch size={20} style={{ color: '#ffffff' }} />
               </ThemeIcon>
             }
             title={
-              <Text fw={800} size="md" style={{ color: '#e6ad00', fontFamily: 'var(--font-open-sans), sans-serif' }}>
+              <Text fw={800} size="md" style={{ color: '#6D94C5', fontFamily: 'var(--font-open-sans), sans-serif' }}>
                 Step 2: Snag List Preparation
               </Text>
             }
@@ -76,12 +76,12 @@ export default function ProcessPage() {
           {/* Step 3 */}
           <Timeline.Item
             bullet={
-              <ThemeIcon size={38} radius="xl" color="brandYellow">
-                <IconCircleCheck size={20} style={{ color: '#2a2f35' }} />
+              <ThemeIcon size={38} radius="xl" color="brandBlue">
+                <IconCircleCheck size={20} style={{ color: '#ffffff' }} />
               </ThemeIcon>
             }
             title={
-              <Text fw={800} size="md" style={{ color: '#e6ad00', fontFamily: 'var(--font-open-sans), sans-serif' }}>
+              <Text fw={800} size="md" style={{ color: '#6D94C5', fontFamily: 'var(--font-open-sans), sans-serif' }}>
                 Step 3: Quotation & Proposal Approval
               </Text>
             }
@@ -96,12 +96,12 @@ export default function ProcessPage() {
           {/* Step 4 */}
           <Timeline.Item
             bullet={
-              <ThemeIcon size={38} radius="xl" color="brandYellow">
-                <IconTools size={20} style={{ color: '#2a2f35' }} />
+              <ThemeIcon size={38} radius="xl" color="brandBlue">
+                <IconTools size={20} style={{ color: '#ffffff' }} />
               </ThemeIcon>
             }
             title={
-              <Text fw={800} size="md" style={{ color: '#e6ad00', fontFamily: 'var(--font-open-sans), sans-serif' }}>
+              <Text fw={800} size="md" style={{ color: '#6D94C5', fontFamily: 'var(--font-open-sans), sans-serif' }}>
                 Step 4: Maintenance Execution
               </Text>
             }
@@ -116,12 +116,12 @@ export default function ProcessPage() {
           {/* Step 5 */}
           <Timeline.Item
             bullet={
-              <ThemeIcon size={38} radius="xl" color="brandYellow">
-                <IconShieldCheck size={20} style={{ color: '#2a2f35' }} />
+              <ThemeIcon size={38} radius="xl" color="brandBlue">
+                <IconShieldCheck size={20} style={{ color: '#ffffff' }} />
               </ThemeIcon>
             }
             title={
-              <Text fw={800} size="md" style={{ color: '#e6ad00', fontFamily: 'var(--font-open-sans), sans-serif' }}>
+              <Text fw={800} size="md" style={{ color: '#6D94C5', fontFamily: 'var(--font-open-sans), sans-serif' }}>
                 Step 5: Final Inspection & Reporting
               </Text>
             }

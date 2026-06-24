@@ -1,7 +1,7 @@
 import { createTheme } from '@mantine/core';
 
 export const theme = createTheme({
-  primaryColor: 'brandYellow',
+  primaryColor: 'brandBlue',
   fontFamily: 'var(--font-pt-sans), sans-serif',
   headings: {
     fontFamily: 'var(--font-open-sans), sans-serif',
@@ -13,35 +13,50 @@ export const theme = createTheme({
     },
   },
   colors: {
-    brandYellow: [
-      '#fffde6',
-      '#fff9cc',
-      '#fff299',
-      '#ffeb66',
-      '#ffe033',
-      '#ffc104', // index 5
-      '#e6ad00',
-      '#cc9900',
-      '#997300',
-      '#664d00',
+    // Steel blue — primary accent #6D94C5 is index 5
+    brandBlue: [
+      '#eef3f9', // 0 — lightest
+      '#CBDCEB', // 1 — sky blue (user palette)
+      '#adc8e3', // 2
+      '#8db4d9', // 3
+      '#7da4ce', // 4
+      '#6D94C5', // 5 — primary (user palette)
+      '#5a80b0', // 6 — hover
+      '#4a6e9a', // 7
+      '#3a5a84', // 8
+      '#2B3A55', // 9 — dark navy (user-derived)
     ],
+    // Warm cream palette — body/backgrounds
+    brandCream: [
+      '#ffffff', // 0
+      '#F5EFE6', // 1 — main background (user palette)
+      '#EDE4D5', // 2
+      '#E8DFCA', // 3 — sand (user palette)
+      '#ddd2b5', // 4
+      '#cfc2a0', // 5
+      '#b8a880', // 6
+      '#9e8e65', // 7
+      '#7a6e4e', // 8
+      '#504738', // 9
+    ],
+    // Dark navy — replaces old brandDark charcoal
     brandDark: [
-      '#f8f9fa',
-      '#f1f3f5',
-      '#e9ecef',
-      '#dee2e6',
-      '#ced4da',
-      '#adb5bd',
-      '#495057',
-      '#343a40',
-      '#2a2f35', // index 8
-      '#212529',
+      '#f0f3f8', // 0
+      '#dde4ef', // 1
+      '#b8c6de', // 2
+      '#8fa8cc', // 3
+      '#6d8fbd', // 4
+      '#5077ab', // 5
+      '#3D4F6A', // 6 — secondary navy
+      '#2B3A55', // 7 — primary dark (user-derived)
+      '#1e2b40', // 8
+      '#111825', // 9
     ],
   },
   components: {
     Button: {
       defaultProps: {
-        radius: 'xl', // Bricks uses rounded pills or square. In index.html btn: border-radius: 25px (pills)
+        radius: 'xl',
       },
     },
     Card: {

@@ -128,7 +128,7 @@ export default function ServicesPage() {
 
         <Box
           style={{
-            borderLeft: '4px solid #ffc104',
+            borderLeft: '4px solid #6D94C5',
             paddingLeft: rem(16),
           }}
           mb="xl"
@@ -226,7 +226,7 @@ export default function ServicesPage() {
       {/* Bottom CTA */}
       <Box
         style={{
-          backgroundColor: '#2a2f35',
+          backgroundColor: '#2B3A55',
           color: '#ffffff',
         }}
         mt={{ base: 50, md: 80 }}
@@ -249,11 +249,11 @@ export default function ServicesPage() {
             <Button
               component={Link}
               href="/contact"
-              color="brandYellow"
+              color="brandBlue"
               radius="xl"
               size="md"
               id="services-cta-contact"
-              styles={{ root: { color: '#2a2f35', fontWeight: 700 } }}
+              styles={{ root: { color: '#ffffff', fontWeight: 700 } }}
               rightSection={<IconArrowRight size={16} />}
             >
               Get Free Consultation

@@ -66,12 +66,12 @@ export default function Header() {
         width: '100%',
         transition: 'all 0.3s ease',
         backgroundColor: scrolled
-          ? 'rgba(42, 47, 53, 0.96)' // Bricks solid dark charcoal when scrolled
-          : 'rgba(0, 0, 0, 0.3)', // Transparent overlay at the top (scrollY === 0)
+          ? 'rgba(245, 239, 230, 0.97)' // cream when scrolled
+          : 'rgba(43, 58, 85, 0.55)',    // dark navy overlay at top
         borderBottom: scrolled
-          ? '1px solid rgba(255, 255, 255, 0.1)'
+          ? '1px solid rgba(109, 148, 197, 0.25)'
           : '1px solid rgba(255, 255, 255, 0.15)',
-        boxShadow: scrolled ? '0 4px 20px rgba(0, 0, 0, 0.15)' : 'none',
+        boxShadow: scrolled ? '0 4px 20px rgba(43, 58, 85, 0.12)' : 'none',
       }}
     >
       {/* 1. TOP HEADER STRIP */}
@@ -81,7 +81,8 @@ export default function Header() {
           opacity: scrolled ? 0 : 1,
           overflow: 'hidden',
           transition: 'all 0.3s ease',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.12)',
+          backgroundColor: '#2B3A55',
           fontSize: rem(13),
           color: '#adb5bd',
         }}
@@ -107,7 +108,7 @@ export default function Header() {
                 }}
                 className="top-header-link"
               >
-                <IconPhone size={14} style={{ color: '#ffc104' }} />
+                <IconPhone size={14} style={{ color: '#CBDCEB' }} />
                 <span>+91 90000 00000</span>
               </a>
               <a
@@ -126,29 +127,29 @@ export default function Header() {
                 }}
                 className="top-header-link"
               >
-                <IconMail size={14} style={{ color: '#ffc104' }} />
+                <IconMail size={14} style={{ color: '#CBDCEB' }} />
                 <span>info@fullmaintenance.com</span>
               </a>
             </div>
 
             {/* Social profiles */}
             <Group gap="xs" style={{ paddingRight: rem(16) }}>
-              <ActionIcon size="sm" variant="subtle" color="gray" component="a" href="#" target="_blank" styles={{ root: { color: 'rgba(255, 255, 255, 0.7)', '&:hover': { color: '#ffc104' } } }}>
+              <ActionIcon size="sm" variant="subtle" color="gray" component="a" href="#" target="_blank" styles={{ root: { color: 'rgba(255, 255, 255, 0.7)', '&:hover': { color: '#CBDCEB' } } }}>
                 <IconBrandFacebook size={16} />
               </ActionIcon>
-              <ActionIcon size="sm" variant="subtle" color="gray" component="a" href="#" target="_blank" styles={{ root: { color: 'rgba(255, 255, 255, 0.7)', '&:hover': { color: '#ffc104' } } }}>
+              <ActionIcon size="sm" variant="subtle" color="gray" component="a" href="#" target="_blank" styles={{ root: { color: 'rgba(255, 255, 255, 0.7)', '&:hover': { color: '#CBDCEB' } } }}>
                 <IconBrandTwitter size={16} />
               </ActionIcon>
-              <ActionIcon size="sm" variant="subtle" color="gray" component="a" href="#" target="_blank" styles={{ root: { color: 'rgba(255, 255, 255, 0.7)', '&:hover': { color: '#ffc104' } } }}>
+              <ActionIcon size="sm" variant="subtle" color="gray" component="a" href="#" target="_blank" styles={{ root: { color: 'rgba(255, 255, 255, 0.7)', '&:hover': { color: '#CBDCEB' } } }}>
                 <IconBrandInstagram size={16} />
               </ActionIcon>
-              <ActionIcon size="sm" variant="subtle" color="gray" component="a" href="#" target="_blank" styles={{ root: { color: 'rgba(255, 255, 255, 0.7)', '&:hover': { color: '#ffc104' } } }}>
+              <ActionIcon size="sm" variant="subtle" color="gray" component="a" href="#" target="_blank" styles={{ root: { color: 'rgba(255, 255, 255, 0.7)', '&:hover': { color: '#CBDCEB' } } }}>
                 <IconWorld size={16} />
               </ActionIcon>
-              <ActionIcon size="sm" variant="subtle" color="gray" component="a" href="#" target="_blank" styles={{ root: { color: 'rgba(255, 255, 255, 0.7)', '&:hover': { color: '#ffc104' } } }}>
+              <ActionIcon size="sm" variant="subtle" color="gray" component="a" href="#" target="_blank" styles={{ root: { color: 'rgba(255, 255, 255, 0.7)', '&:hover': { color: '#CBDCEB' } } }}>
                 <IconBrandPinterest size={16} />
               </ActionIcon>
-              <ActionIcon size="sm" variant="subtle" color="gray" component="a" href="#" target="_blank" styles={{ root: { color: 'rgba(255, 255, 255, 0.7)', '&:hover': { color: '#ffc104' } } }}>
+              <ActionIcon size="sm" variant="subtle" color="gray" component="a" href="#" target="_blank" styles={{ root: { color: 'rgba(255, 255, 255, 0.7)', '&:hover': { color: '#CBDCEB' } } }}>
                 <IconBrandLinkedin size={16} />
               </ActionIcon>
             </Group>
@@ -160,34 +161,36 @@ export default function Header() {
       <div style={{ height: rem(80), display: 'flex', alignItems: 'center' }}>
         <Container size="xl" style={{ width: '100%' }}>
           <Group justify="space-between" align="center" wrap="nowrap">
-            {/* Logo in Bricks style */}
+            {/* Logo */}
             <Link href="/" style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column' }}>
               <span
                 style={{
                   fontWeight: 800,
                   fontSize: rem(20),
                   letterSpacing: rem(1),
-                  color: '#ffffff',
+                  color: scrolled ? '#2B3A55' : '#ffffff',
                   fontFamily: 'var(--font-open-sans), sans-serif',
                   lineHeight: 1.1,
+                  transition: 'color 0.3s ease',
                 }}
               >
-                FULL MAINTENANCE<span style={{ color: '#ffc104' }}>.</span>
+                FULL MAINTENANCE<span style={{ color: '#6D94C5' }}>.</span>
               </span>
               <span
                 style={{
                   fontSize: rem(10),
                   fontWeight: 600,
-                  color: '#adb5bd',
+                  color: scrolled ? '#6D94C5' : '#CBDCEB',
                   letterSpacing: rem(1.5),
                   textTransform: 'uppercase',
+                  transition: 'color 0.3s ease',
                 }}
               >
                 Facility Services
               </span>
             </Link>
 
-            {/* Desktop Navigation Links (Uppercase, 13px, bold, white/gold, Bricks outline for active) */}
+            {/* Desktop Navigation Links */}
             <Group gap={rem(4)} visibleFrom="lg" wrap="nowrap">
               {navLinks.map((link) => {
                 const isActive = pathname === link.path;
@@ -198,14 +201,14 @@ export default function Header() {
                     style={{
                       fontSize: rem(12),
                       fontWeight: 700,
-                      color: isActive ? '#ffc104' : '#ffffff',
+                      color: isActive ? '#6D94C5' : (scrolled ? '#2B3A55' : '#ffffff'),
                       transition: 'all 0.2s ease',
                       textDecoration: 'none',
                       padding: `${rem(6)} ${rem(10)}`,
                       textTransform: 'uppercase',
                       letterSpacing: rem(0.5),
                       border: isActive
-                        ? '1px solid rgba(255, 193, 4, 0.35)'
+                        ? '1px solid rgba(109, 148, 197, 0.4)'
                         : '1px solid transparent',
                       borderRadius: rem(2),
                     }}
@@ -225,15 +228,14 @@ export default function Header() {
                 onClick={toggleColorScheme}
                 variant="subtle"
                 size="lg"
-                color={colorScheme === 'dark' ? 'yellow' : 'gray'}
                 aria-label="Toggle theme color"
                 radius="md"
-                styles={{ root: { color: '#ffffff', '&:hover': { color: '#ffc104' } } }}
+                styles={{ root: { color: scrolled ? '#2B3A55' : '#ffffff', '&:hover': { color: '#6D94C5' } } }}
               >
                 {colorScheme === 'dark' ? (
-                  <IconSun size={20} stroke={1.5} style={{ color: '#ffc104' }} />
+                  <IconSun size={20} stroke={1.5} style={{ color: '#6D94C5' }} />
                 ) : (
-                  <IconMoon size={20} stroke={1.5} style={{ color: '#ffffff' }} />
+                  <IconMoon size={20} stroke={1.5} style={{ color: scrolled ? '#2B3A55' : '#ffffff' }} />
                 )}
               </ActionIcon>
 
@@ -242,19 +244,19 @@ export default function Header() {
                 component={Link}
                 href="/contact"
                 variant="filled"
-                color="brandYellow"
+                color="brandBlue"
                 size="sm"
                 styles={{
                   root: {
-                    backgroundColor: '#ffc104',
-                    color: '#2a2f35',
+                    backgroundColor: '#6D94C5',
+                    color: '#ffffff',
                     fontWeight: 800,
-                    borderRadius: rem(2), // match blocky Bricks theme
+                    borderRadius: rem(2),
                     textTransform: 'uppercase',
                     fontSize: rem(12),
                     letterSpacing: rem(0.5),
                     '&:hover': {
-                      backgroundColor: '#e6ad00',
+                      backgroundColor: '#5a80b0',
                     },
                   },
                 }}
@@ -265,7 +267,7 @@ export default function Header() {
               </Button>
 
               {/* Burger Menu for Mobile */}
-              <Burger opened={opened} onClick={toggle} hiddenFrom="lg" size="sm" color="#ffffff" aria-label="Toggle navigation drawer" />
+              <Burger opened={opened} onClick={toggle} hiddenFrom="lg" size="sm" color={scrolled ? '#2B3A55' : '#ffffff'} aria-label="Toggle navigation drawer" />
             </Group>
           </Group>
         </Container>
@@ -279,23 +281,23 @@ export default function Header() {
         padding="md"
         styles={{
           header: {
-            backgroundColor: '#2a2f35',
-            borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+            backgroundColor: '#F5EFE6',
+            borderBottom: '1px solid #CBDCEB',
           },
           body: {
-            backgroundColor: '#2a2f35',
+            backgroundColor: '#F5EFE6',
           },
           close: {
-            color: '#ffffff',
+            color: '#2B3A55',
             '&:hover': {
-              backgroundColor: 'rgba(255, 255, 255, 0.1)',
+              backgroundColor: '#E8DFCA',
             },
           },
         }}
         title={
           <Group gap="xs">
-            <span style={{ fontWeight: 800, fontSize: rem(18), color: '#ffffff' }}>
-              FULL MAINTENANCE<span style={{ color: '#ffc104' }}>.</span>
+            <span style={{ fontWeight: 800, fontSize: rem(18), color: '#2B3A55' }}>
+              FULL MAINTENANCE<span style={{ color: '#6D94C5' }}>.</span>
             </span>
           </Group>
         }
@@ -312,12 +314,12 @@ export default function Header() {
                 href={link.path}
                 onClick={close}
                 variant={isActive ? 'filled' : 'subtle'}
-                color={isActive ? 'brandYellow' : 'gray'}
+                color={isActive ? 'brandBlue' : 'gray'}
                 fullWidth
                 size="lg"
                 styles={{
                   root: {
-                    color: isActive ? '#2a2f35' : '#ffffff',
+                    color: isActive ? '#ffffff' : '#2B3A55',
                     justifyContent: 'flex-start',
                     textTransform: 'uppercase',
                     fontWeight: 700,
@@ -333,13 +335,13 @@ export default function Header() {
             href="/contact"
             onClick={close}
             variant="filled"
-            color="brandYellow"
+            color="brandBlue"
             fullWidth
             size="lg"
             mt="lg"
             styles={{
               root: {
-                color: '#2a2f35',
+                color: '#ffffff',
                 fontWeight: 700,
               },
             }}

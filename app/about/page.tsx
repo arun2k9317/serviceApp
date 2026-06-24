@@ -89,7 +89,7 @@ export default function AboutPage() {
     <Box py={{ base: 30, md: 50 }}>
       {/* 1. HERO HEADER */}
       <Box
-        style={{ background: 'linear-gradient(135deg, rgba(255, 193, 4, 0.08) 0%, rgba(42, 47, 53, 0.04) 100%)' }}
+        style={{ background: 'linear-gradient(135deg, rgba(109, 148, 197, 0.08) 0%, rgba(203, 220, 235, 0.06) 100%)' }}
         py={{ base: 40, md: 60 }}
         mb={{ base: 40, md: 60 }}
       >
@@ -127,10 +127,10 @@ export default function AboutPage() {
           <Grid.Col span={{ base: 12, md: 6 }}>
             <Stack gap="md">
               <Group gap="xs" wrap="nowrap">
-                <ThemeIcon color="brandYellow" variant="light" size="md" style={{ flexShrink: 0 }}>
-                  <IconAward size={18} style={{ color: '#e6ad00' }} />
+                <ThemeIcon color="brandBlue" variant="light" size="md" style={{ flexShrink: 0 }}>
+                  <IconAward size={18} style={{ color: '#6D94C5' }} />
                 </ThemeIcon>
-                <Text fw={700} c="var(--mantine-color-brandYellow-6)" size="sm">Who We Are</Text>
+                <Text fw={700} c="var(--mantine-color-brandBlue-6)" size="sm">Who We Are</Text>
               </Group>
 
               <Title order={2} fw={900} fz={{ base: rem(22), md: rem(28) }} lh={1.3}>
@@ -176,7 +176,7 @@ export default function AboutPage() {
                 h={{ base: rem(200), md: rem(280) }}
                 style={{
                   borderRadius: rem(12),
-                  background: 'linear-gradient(135deg, #2a2f35 0%, #343a40 100%)',
+                  background: 'linear-gradient(135deg, #2B3A55 0%, #3D4F6A 100%)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -188,11 +188,11 @@ export default function AboutPage() {
                   style={{
                     position: 'absolute',
                     top: 0, left: 0, right: 0, bottom: 0,
-                    background: 'radial-gradient(circle at 30% 50%, rgba(255, 193, 4, 0.15), transparent 70%)',
+                    background: 'radial-gradient(circle at 30% 50%, rgba(109, 148, 197, 0.2), transparent 70%)',
                   }}
                 />
                 <Stack align="center" gap="xs" style={{ position: 'relative', zIndex: 1 }}>
-                  <IconEye size={64} style={{ color: '#ffc104', opacity: 0.9 }} />
+                  <IconEye size={64} style={{ color: '#CBDCEB', opacity: 0.9 }} />
                   <Text fw={800} fz="xl" c="#ffffff" lts={rem(2)} ff="var(--font-open-sans), sans-serif">
                     VISION
                   </Text>
@@ -210,7 +210,7 @@ export default function AboutPage() {
                 h={{ base: rem(220), md: rem(320) }}
                 style={{
                   borderRadius: rem(12),
-                  background: 'linear-gradient(135deg, #2a2f35 0%, #343a40 100%)',
+                  background: 'linear-gradient(135deg, #2B3A55 0%, #3D4F6A 100%)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -222,11 +222,11 @@ export default function AboutPage() {
                   style={{
                     position: 'absolute',
                     top: 0, left: 0, right: 0, bottom: 0,
-                    background: 'radial-gradient(circle at 70% 50%, rgba(255, 193, 4, 0.15), transparent 70%)',
+                    background: 'radial-gradient(circle at 70% 50%, rgba(109, 148, 197, 0.2), transparent 70%)',
                   }}
                 />
                 <Stack align="center" gap="xs" style={{ position: 'relative', zIndex: 1 }}>
-                  <IconTarget size={64} style={{ color: '#ffc104', opacity: 0.9 }} />
+                  <IconTarget size={64} style={{ color: '#CBDCEB', opacity: 0.9 }} />
                   <Text fw={800} fz="xl" c="#ffffff" lts={rem(2)} ff="var(--font-open-sans), sans-serif">
                     MISSION
                   </Text>
@@ -290,12 +290,12 @@ export default function AboutPage() {
                   padding="lg"
                   radius="md"
                   withBorder
-                  style={{ height: '100%', borderLeft: '4px solid #ffc104' }}
+                  style={{ height: '100%', borderLeft: '4px solid #6D94C5' }}
                   className="hover-lift"
                 >
                   <Group gap="md" mb="xs" wrap="nowrap">
-                    <ThemeIcon radius="md" size="lg" color="brandYellow" variant="light" style={{ flexShrink: 0 }}>
-                      <item.icon size={20} style={{ color: '#e6ad00' }} />
+                    <ThemeIcon radius="md" size="lg" color="brandBlue" variant="light" style={{ flexShrink: 0 }}>
+                      <item.icon size={20} style={{ color: '#6D94C5' }} />
                     </ThemeIcon>
                     <Text fw={700} size="md" ff="var(--font-open-sans), sans-serif">
                       {item.title}
@@ -318,7 +318,7 @@ export default function AboutPage() {
           withBorder
           style={{
             textAlign: 'center',
-            background: 'linear-gradient(135deg, rgba(255, 193, 4, 0.08) 0%, rgba(42, 47, 53, 0.04) 100%)',
+            background: 'linear-gradient(135deg, rgba(109, 148, 197, 0.08) 0%, rgba(203, 220, 235, 0.06) 100%)',
           }}
         >
           <Stack align="center" gap="md">
@@ -332,12 +332,12 @@ export default function AboutPage() {
               <Button
                 component={Link}
                 href="/contact"
-                color="brandYellow"
+                color="brandBlue"
                 radius="xl"
                 size="md"
                 id="about-cta-contact"
                 rightSection={<IconArrowRight size={16} />}
-                styles={{ root: { color: '#2a2f35', fontWeight: 700 } }}
+                styles={{ root: { color: '#ffffff', fontWeight: 700 } }}
               >
                 Get Free Consultation
               </Button>
@@ -345,7 +345,7 @@ export default function AboutPage() {
                 component={Link}
                 href="/services"
                 variant="outline"
-                color="brandYellow"
+                color="brandBlue"
                 radius="xl"
                 size="md"
                 id="about-cta-services"
