@@ -105,7 +105,7 @@ export default function RootLayout({
           <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
             <Header />
             
-            <main style={{ flex: 1, paddingTop: '120px' }}>
+            <main className="main-content">
               {children}
             </main>
             

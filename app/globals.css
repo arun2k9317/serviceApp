@@ -271,3 +271,20 @@ h1, h2, h3, h4, h5, h6 {
   background-color: rgba(26, 27, 30, 0.4) !important;
   border-color: #25262b !important;
 }
+
+/* Responsive Header & Main Layout Overrides */
+.main-content {
+  flex: 1;
+  padding-top: 120px;
+}
+
+@media (max-width: 991px) {
+  .top-header-strip {
+    display: none !important;
+  }
+  
+  .main-content {
+    padding-top: 80px;
+  }
+}
+

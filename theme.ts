@@ -26,6 +26,18 @@ export const theme = createTheme({
       '#3a5a84', // 8
       '#2B3A55', // 9 — dark navy (user-derived)
     ],
+    primaryBlue: [
+      '#eef3f9', // 0 — lightest
+      '#CBDCEB', // 1 — sky blue (user palette)
+      '#adc8e3', // 2
+      '#8db4d9', // 3
+      '#7da4ce', // 4
+      '#6D94C5', // 5 — primary (user palette)
+      '#5a80b0', // 6 — hover
+      '#4a6e9a', // 7
+      '#3a5a84', // 8
+      '#2B3A55', // 9 — dark navy (user-derived)
+    ],
     // Warm cream palette — body/backgrounds
     brandCream: [
       '#ffffff', // 0

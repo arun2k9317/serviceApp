@@ -76,6 +76,7 @@ export default function Header() {
     >
       {/* 1. TOP HEADER STRIP */}
       <div
+        className="top-header-strip"
         style={{
           height: scrolled ? 0 : rem(40),
           opacity: scrolled ? 0 : 1,
