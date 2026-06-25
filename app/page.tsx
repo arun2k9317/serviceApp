@@ -358,7 +358,7 @@ export default function HomePage() {
           marginTop: rem(-120),
           overflow: 'hidden',
         }}
-        h={{ base: rem(650), sm: rem(720), md: rem(780) }}
+        h={{ base: rem(600), sm: rem(650), md: rem(680) }}
       >
         <Carousel
           withIndicators={false}
@@ -397,7 +397,7 @@ export default function HomePage() {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
-              pt={{ base: rem(80), md: rem(120) }}
+              pt={{ base: rem(70), md: rem(100) }}
               px={{ base: 'sm', md: 0 }}
             >
               <motion.div
@@ -534,7 +534,7 @@ export default function HomePage() {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
-              pt={{ base: rem(80), md: rem(120) }}
+              pt={{ base: rem(70), md: rem(100) }}
               px={{ base: 'sm', md: 0 }}
             >
               <motion.div
