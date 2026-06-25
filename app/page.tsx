@@ -18,6 +18,7 @@ import {
   Badge,
   Avatar,
   Divider,
+  Grid,
 } from '@mantine/core';
 import { Carousel } from '@mantine/carousel';
 import {
@@ -209,15 +210,7 @@ const industries = [
   { title: 'Industrial Facilities', imgLeft: '/buildings/factory-left.png', imgRight: '/buildings/factory-right.png' },
 ];
 
-// ─── CORE VALUES DATA ────────────────────────────────────────────────────────
-const coreValues = [
-  { icon: IconStar, title: 'Excellence', desc: 'Delivering superior quality in every project.' },
-  { icon: IconHeartHandshake, title: 'Integrity', desc: 'Operating with honesty, transparency, and accountability.' },
-  { icon: IconShieldCheck, title: 'Reliability', desc: 'Providing dependable services that clients can trust.' },
-  { icon: IconBulb, title: 'Innovation', desc: 'Adopting modern techniques and technologies.' },
-  { icon: IconShieldCheck, title: 'Safety', desc: 'Protecting people, property, and the environment.' },
-  { icon: IconTargetArrow, title: 'Commitment', desc: 'Dedicated to exceeding customer expectations.' },
-];
+
 
 // ─── INDUSTRY CARD HELPER COMPONENT (Zooms building asset on hover) ──────────
 function IndustryCard({ title, imgLeft }: { title: string; imgLeft: string }) {
@@ -293,6 +286,8 @@ function IndustryCard({ title, imgLeft }: { title: string; imgLeft: string }) {
     </Card>
   );
 }
+
+const angles = [-2, 2.5, -1.5, 3, -2.5, 1.5];
 
 export default function HomePage() {
   const [testimonials, setTestimonials] = useState<any[]>([]);
@@ -872,37 +867,119 @@ export default function HomePage() {
       {/* ═══════════════════════ 4. WHY CHOOSE US ═══════════════════════ */}
       <Box style={{ backgroundColor: '#E8DFCA' }} py={{ base: 50, md: 80 }} className="why-us-bg">
         <Container size="lg">
-          <SectionHeader
-            subtitle="Why Choose Us"
-            title="Your Trusted Facility Partner"
-            description="We set high standards in facility management by focusing on quality, safety, and customer satisfaction."
-          />
-
-          <SimpleGrid cols={{ base: 1, xs: 2, md: 4 }} spacing="lg">
-            {whyChooseUs.map((item, index) => (
+          <Grid gap={{ base: 'xl', md: 50 }} align="stretch">
+            {/* Left Column: Visual/Stats Panel */}
+            <Grid.Col span={{ base: 12, md: 5 }}>
               <motion.div
-                key={item.title}
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: index * 0.05 }}
+                transition={{ duration: 0.6 }}
+                style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
               >
-                <Card padding="lg" radius="md" withBorder style={{ height: '100%', textAlign: 'center' }} className="hover-lift">
-                  <Stack align="center" gap="sm">
-                    <ThemeIcon radius="xl" size={56} color="brandBlue" variant="light">
-                      <item.icon size={28} style={{ color: '#6D94C5' }} />
-                    </ThemeIcon>
-                    <Text fw={700} size="md">
-                      {item.title}
-                    </Text>
-                    <Text size="sm" c="dimmed" lh={1.5}>
-                      {item.desc}
-                    </Text>
+                <div style={{ position: 'sticky', top: '140px' }}>
+                  <Badge color="brandBlue" variant="light" size="lg" mb="md" styles={{ root: { fontWeight: 800 } }}>
+                    Our Core Promise
+                  </Badge>
+                  
+                  <Title
+                    order={2}
+                    fw={900}
+                    fz={{ base: rem(28), sm: rem(36) }}
+                    lh={1.15}
+                    mb="md"
+                    style={{ fontFamily: 'var(--font-open-sans), sans-serif' }}
+                  >
+                    Your Trusted <span className="gradient-text-primary">Facility Partner</span>
+                  </Title>
+                  
+                  <Text c="dimmed" fz="md" mb={40} lh={1.6}>
+                    We set high standards in facility management by focusing on quality, safety, and customer satisfaction. Our systematic approach ensures your assets are always running at peak efficiency.
+                  </Text>
+
+                  {/* Sleek Stats Block */}
+                  <Stack gap="lg" style={{ borderLeft: '3px solid #6D94C5', paddingLeft: rem(20) }}>
+                    <div>
+                      <Text fw={900} fz={rem(32)} lh={1} style={{ color: '#2B3A55' }} className="why-us-stat-num">
+                        10,000+
+                      </Text>
+                      <Text size="sm" fw={600} c="dimmed" mt={4}>
+                        Satisified Residential & Commercial Clients
+                      </Text>
+                    </div>
+                    <div>
+                      <Text fw={900} fz={rem(32)} lh={1} style={{ color: '#2B3A55' }} className="why-us-stat-num">
+                        98%
+                      </Text>
+                      <Text size="sm" fw={600} c="dimmed" mt={4}>
+                        SLA Response Within 2 Hours
+                      </Text>
+                    </div>
+                    <div>
+                      <Text fw={900} fz={rem(32)} lh={1} style={{ color: '#2B3A55' }} className="why-us-stat-num">
+                        24/7
+                      </Text>
+                      <Text size="sm" fw={600} c="dimmed" mt={4}>
+                        Emergency Support Dispatch Available
+                      </Text>
+                    </div>
                   </Stack>
-                </Card>
+                </div>
               </motion.div>
-            ))}
-          </SimpleGrid>
+            </Grid.Col>
+
+            {/* Right Column: Dynamic Modern List (No Cards) */}
+            <Grid.Col span={{ base: 12, md: 7 }}>
+              <Stack gap="md">
+                {whyChooseUs.map((item, index) => (
+                  <motion.div
+                    key={item.title}
+                    initial={{ opacity: 0, x: 30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: index * 0.08 }}
+                  >
+                    <motion.div
+                      whileHover={{ x: 8 }}
+                      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                      style={{
+                        display: 'flex',
+                        gap: rem(20),
+                        alignItems: 'flex-start',
+                        padding: rem(20),
+                        borderRadius: rem(12),
+                        border: '1px solid rgba(109, 148, 197, 0.15)',
+                        backgroundColor: 'rgba(255, 255, 255, 0.45)',
+                        transition: 'background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease',
+                        cursor: 'default',
+                      }}
+                      className="why-us-row"
+                    >
+                      <ThemeIcon
+                        radius="md"
+                        size={48}
+                        color="brandBlue"
+                        variant="light"
+                        style={{ flexShrink: 0, transition: 'transform 0.3s ease' }}
+                        className="why-us-row-icon"
+                      >
+                        <item.icon size={24} style={{ color: '#6D94C5' }} />
+                      </ThemeIcon>
+                      
+                      <div style={{ flex: 1 }}>
+                        <Text fw={700} fz="md" style={{ color: '#2B3A55' }} className="why-us-row-title">
+                          {item.title}
+                        </Text>
+                        <Text size="sm" c="dimmed" lh={1.5} mt={4}>
+                          {item.desc}
+                        </Text>
+                      </div>
+                    </motion.div>
+                  </motion.div>
+                ))}
+              </Stack>
+            </Grid.Col>
+          </Grid>
         </Container>
       </Box>
 
@@ -948,56 +1025,14 @@ export default function HomePage() {
         </Container>
       </Box>
 
-      {/* ═══════════════════════ 6. CORE VALUES ═══════════════════════ */}
-      <Container size="lg" py={{ base: 50, md: 80 }}>
-        <SectionHeader
-          subtitle="What Drives Us"
-          title="Our Core Values"
-          description="Our work is guided by strong values that ensure every project meets the highest standards of professionalism."
-        />
 
-        <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing="lg">
-          {coreValues.map((value, index) => (
-            <motion.div
-              key={value.title}
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: index * 0.08 }}
-            >
-              <Card
-                padding="xl"
-                radius="md"
-                withBorder
-                style={{
-                  height: '100%',
-                  borderLeft: '4px solid #6D94C5',
-                }}
-                className="hover-lift"
-              >
-                <Group gap="md" mb="xs" wrap="nowrap">
-                  <ThemeIcon radius="md" size="lg" color="brandBlue" variant="light" style={{ flexShrink: 0 }}>
-                    <value.icon size={22} style={{ color: '#6D94C5' }} />
-                  </ThemeIcon>
-                  <Text fw={800} size="md" style={{ fontFamily: 'var(--font-open-sans), sans-serif' }}>
-                    {value.title}
-                  </Text>
-                </Group>
-                <Text size="sm" c="dimmed" lh={1.6}>
-                  {value.desc}
-                </Text>
-              </Card>
-            </motion.div>
-          ))}
-        </SimpleGrid>
-      </Container>
 
       {/* ═══════════════════════ 7. TESTIMONIALS ═══════════════════════ */}
       {testimonials.length > 0 && (
         <Box
           style={{
             position: 'relative',
-            backgroundImage: 'linear-gradient(rgba(43, 58, 85, 0.88), rgba(43, 58, 85, 0.88)), url("/hero_female_engineer.png")',
+            backgroundImage: 'linear-gradient(135deg, rgba(43, 58, 85, 0.95) 0%, rgba(43, 58, 85, 0.8) 50%, rgba(109, 148, 197, 0.25) 100%), url("/people.jpg")',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             color: '#ffffff',
@@ -1012,8 +1047,8 @@ export default function HomePage() {
               white
             />
 
-            <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing={40}>
-              {testimonials.slice(0, 6).map((t) => {
+            <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing={30} style={{ overflow: 'visible' }}>
+              {testimonials.slice(0, 6).map((t, index) => {
                 const initials = t.customer_name
                   .split(' ')
                   .map((n: string) => n[0])
@@ -1021,51 +1056,73 @@ export default function HomePage() {
                   .slice(0, 2);
 
                 return (
-                  <Stack key={t.id} gap="sm" style={{ height: '100%' }}>
-                    <Group gap="md" align="center" wrap="nowrap">
-                      <Avatar
-                        color="brandBlue"
-                        radius="xl"
-                        size={60}
-                        style={{ border: '2px solid rgba(109, 148, 197, 0.4)', flexShrink: 0 }}
-                        styles={{ placeholder: { color: '#ffffff', fontWeight: 700 } }}
-                      >
-                        {initials}
-                      </Avatar>
-                      <Box>
+                  <motion.div
+                    key={t.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: index * 0.05 }}
+                    style={{ height: '100%' }}
+                  >
+                    <div
+                      style={{
+                        height: '100%',
+                        backgroundColor: 'rgba(255, 255, 255, 0.07)',
+                        backdropFilter: 'blur(12px)',
+                        WebkitBackdropFilter: 'blur(12px)',
+                        border: '1px solid rgba(255, 255, 255, 0.12)',
+                        borderRadius: rem(12),
+                        padding: rem(24),
+                      }}
+                      className="testimonial-glass-card"
+                    >
+                      <Stack gap="sm">
+                        <Group gap="md" align="center" wrap="nowrap">
+                          <Avatar
+                            color="brandBlue"
+                            radius="xl"
+                            size={50}
+                            style={{ border: '2px solid rgba(109, 148, 197, 0.4)', flexShrink: 0 }}
+                            styles={{ placeholder: { color: '#ffffff', fontWeight: 700 } }}
+                          >
+                            {initials}
+                          </Avatar>
+                          <Box>
+                            <Text
+                              size="sm"
+                              fw={700}
+                              c="#ffffff"
+                              tt="uppercase"
+                              lts={rem(0.5)}
+                              ff="var(--font-open-sans), sans-serif"
+                            >
+                              {t.customer_name}
+                            </Text>
+                            {t.designation && (
+                              <Text
+                                size="xs"
+                                c="#CBDCEB"
+                                fs="italic"
+                                ff="var(--font-pt-sans), sans-serif"
+                              >
+                                {t.designation}
+                              </Text>
+                            )}
+                          </Box>
+                        </Group>
                         <Text
                           size="sm"
-                          fw={700}
-                          c="#ffffff"
-                          tt="uppercase"
-                          lts={rem(0.5)}
-                          ff="var(--font-open-sans), sans-serif"
+                          fs="italic"
+                          lh={1.6}
+                          c="#dee2e6"
+                          ff="var(--font-pt-sans), sans-serif"
+                          style={{ marginTop: rem(4) }}
                         >
-                          {t.customer_name}
+                          « {t.review} »
                         </Text>
-                        {t.designation && (
-                          <Text
-                            size="xs"
-                            c="#CBDCEB"
-                            fs="italic"
-                            ff="var(--font-pt-sans), sans-serif"
-                          >
-                            {t.designation}
-                          </Text>
-                        )}
-                      </Box>
-                    </Group>
-                    <Text
-                      size="sm"
-                      fs="italic"
-                      lh={1.6}
-                      c="#dee2e6"
-                      ff="var(--font-pt-sans), sans-serif"
-                      pl={4}
-                    >
-                      « {t.review} »
-                    </Text>
-                  </Stack>
+                      </Stack>
+                    </div>
+                  </motion.div>
                 );
               })}
             </SimpleGrid>

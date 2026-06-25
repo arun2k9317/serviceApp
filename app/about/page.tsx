@@ -84,6 +84,8 @@ const coreValues = [
   { icon: IconTargetArrow, title: 'Commitment', desc: 'Dedicated to exceeding customer expectations.' },
 ];
 
+const angles = [-2, 2.5, -1.5, 3, -2.5, 1.5];
+
 export default function AboutPage() {
   return (
     <Box py={{ base: 30, md: 50 }}>
@@ -277,34 +279,44 @@ export default function AboutPage() {
             description="Our operations are built on professionalism, integrity, and complete dedication to every client."
           />
 
-          <SimpleGrid cols={{ base: 1, xs: 2, md: 3 }} spacing="lg">
+          <SimpleGrid 
+            cols={{ base: 1, sm: 2, md: 3 }} 
+            spacing={{ base: 'lg', md: 30 }} 
+            verticalSpacing={{ base: 'lg', md: 35 }} 
+            style={{ overflow: 'visible' }}
+          >
             {coreValues.map((item, index) => (
               <motion.div
                 key={item.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 30, rotate: angles[index % angles.length] }}
+                whileInView={{ opacity: 1, y: 0, rotate: angles[index % angles.length] }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
+                whileHover={{ 
+                  scale: 1.06, 
+                  rotate: 0, 
+                  zIndex: 10,
+                  boxShadow: '0 20px 35px rgba(43, 58, 85, 0.15)',
+                }}
+                transition={{ 
+                  type: 'spring', 
+                  stiffness: 260, 
+                  damping: 20,
+                }}
+                style={{ height: '100%', position: 'relative' }}
               >
-                <Card
-                  padding="lg"
-                  radius="md"
-                  withBorder
-                  style={{ height: '100%', borderLeft: '4px solid #6D94C5' }}
-                  className="hover-lift"
-                >
+                <div className="core-value-badge">
                   <Group gap="md" mb="xs" wrap="nowrap">
-                    <ThemeIcon radius="md" size="lg" color="brandBlue" variant="light" style={{ flexShrink: 0 }}>
+                    <ThemeIcon radius="md" size="md" color="brandBlue" variant="light" style={{ flexShrink: 0 }}>
                       <item.icon size={20} style={{ color: '#6D94C5' }} />
                     </ThemeIcon>
-                    <Text fw={700} size="md" ff="var(--font-open-sans), sans-serif">
+                    <Text fw={800} size="md" style={{ fontFamily: 'var(--font-open-sans), sans-serif' }}>
                       {item.title}
                     </Text>
                   </Group>
-                  <Text size="sm" c="dimmed" lh={1.6}>
+                  <Text size="sm" c="dimmed" lh={1.5}>
                     {item.desc}
                   </Text>
-                </Card>
+                </div>
               </motion.div>
             ))}
           </SimpleGrid>
