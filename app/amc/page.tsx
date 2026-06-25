@@ -1,12 +1,9 @@
+'use client';
+
 import React from 'react';
 import { Container, Title, Text, SimpleGrid, Card, List, Button, Stack, Group, ThemeIcon, Box, rem, Breadcrumbs, Anchor } from '@mantine/core';
 import { IconCheck, IconChevronRight, IconAlertCircle, IconAward } from '@tabler/icons-react';
 import AMCRequestForm from '../../components/forms/AMCRequestForm';
-
-export const metadata = {
-  title: 'Annual Maintenance Contracts (AMC) Packages',
-  description: 'Select from our Residential or Commercial Annual Maintenance Contracts (AMC) for complete peace of mind with scheduled checks and 24/7 priority support.',
-};
 
 const amcPackages = [
   {

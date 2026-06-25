@@ -1,7 +1,7 @@
 'use server';
 
 import { z } from 'zod';
-import { createServerClientInstance, isSupabaseConfigured } from './supabase';
+import { createServerClientInstance, isSupabaseConfigured, supabase } from './supabase';
 import { revalidatePath } from 'next/cache';
 
 // ============================================================================
@@ -286,7 +286,6 @@ export async function updateCallbackStatus(id: string, status: string) {
 export async function getGalleryItems() {
   if (isSupabaseConfigured()) {
     try {
-      const supabase = await createServerClientInstance();
       const { data, error } = await supabase.from('gallery').select('*').order('created_at', { ascending: false });
       if (!error) return data || [];
     } catch (e) {
@@ -339,7 +338,6 @@ export async function deleteGalleryItem(id: string) {
 export async function getTestimonials() {
   if (isSupabaseConfigured()) {
     try {
-      const supabase = await createServerClientInstance();
       const { data, error } = await supabase.from('testimonials').select('*').order('created_at', { ascending: false });
       if (!error) return data || [];
     } catch (e) {
@@ -392,7 +390,6 @@ export async function deleteTestimonial(id: string) {
 export async function getOffers() {
   if (isSupabaseConfigured()) {
     try {
-      const supabase = await createServerClientInstance();
       const { data, error } = await supabase.from('offers').select('*').order('created_at', { ascending: false });
       if (!error) return data || [];
     } catch (e) {
@@ -471,7 +468,6 @@ export async function deleteOffer(id: string) {
 export async function getServices() {
   if (isSupabaseConfigured()) {
     try {
-      const supabase = await createServerClientInstance();
       const { data, error } = await supabase.from('services').select('*').order('created_at', { ascending: true });
       if (!error && data && data.length > 0) {
         return data.map(s => ({
@@ -489,7 +485,6 @@ export async function getServices() {
 export async function getServiceBySlug(slug: string) {
   if (isSupabaseConfigured()) {
     try {
-      const supabase = await createServerClientInstance();
       const { data, error } = await supabase.from('services').select('*').eq('slug', slug).single();
       if (!error && data) {
         return {

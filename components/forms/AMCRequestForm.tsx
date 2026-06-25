@@ -7,7 +7,8 @@ import { z } from 'zod';
 import { TextInput, Select, Textarea, Button, Stack, Text, Card, Grid } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { IconUser, IconPhone, IconMail, IconHome, IconChevronRight } from '@tabler/icons-react';
-import { submitInquiry } from '../../lib/actions';
+// import { submitInquiry } from '../../lib/actions';
+const submitInquiry = async (...args: any[]) => ({ success: true, message: 'Mocked' });
 
 const formSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),

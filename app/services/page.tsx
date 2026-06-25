@@ -160,14 +160,14 @@ export default function ServicesPage() {
               id={service.slug}
             >
               <Card
-                padding={{ base: 'md', md: 'xl' }}
+                p={{ base: 'md', md: 'xl' }}
                 radius="md"
                 withBorder
                 style={{ height: '100%' }}
                 className="hover-lift"
               >
                 <Group gap="md" mb="md" wrap="nowrap">
-                  <ThemeIcon radius="md" size={{ base: 40, md: 48 }} color={service.color} variant="light" style={{ flexShrink: 0 }}>
+                  <ThemeIcon radius="md" size={44} color={service.color} variant="light" style={{ flexShrink: 0 }}>
                     <service.icon size={26} />
                   </ThemeIcon>
                   <Box>

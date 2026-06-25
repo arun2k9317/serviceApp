@@ -113,7 +113,7 @@ export default function AboutPage() {
 
       <Container size="lg">
         {/* 2. ABOUT US OVERVIEW */}
-        <Grid gutter={{ base: 'xl', md: 40 }} align="center" mb={{ base: 50, md: 80 }}>
+        <Grid gap={{ base: 'xl', md: 40 }} align="center" mb={{ base: 50, md: 80 }}>
           <Grid.Col span={{ base: 12, md: 6 }}>
             <Box style={{ position: 'relative', borderRadius: rem(12), overflow: 'hidden' }} h={{ base: rem(260), md: rem(360) }} w="100%">
               <Image
@@ -152,7 +152,7 @@ export default function AboutPage() {
 
         {/* 3. OUR VISION */}
         <Box mb={{ base: 50, md: 80 }}>
-          <Grid gutter={{ base: 'xl', md: 40 }} align="center">
+          <Grid gap={{ base: 'xl', md: 40 }} align="center">
             <Grid.Col span={{ base: 12, md: 6 }} order={{ base: 2, md: 1 }}>
               <Stack gap="md">
                 <Group gap="xs" wrap="nowrap">
@@ -204,7 +204,7 @@ export default function AboutPage() {
 
         {/* 4. OUR MISSION */}
         <Box mb={{ base: 50, md: 80 }}>
-          <Grid gutter={{ base: 'xl', md: 40 }} align="center">
+          <Grid gap={{ base: 'xl', md: 40 }} align="center">
             <Grid.Col span={{ base: 12, md: 6 }}>
               <Box
                 h={{ base: rem(220), md: rem(320) }}
@@ -314,7 +314,7 @@ export default function AboutPage() {
         <Card
           shadow="md"
           radius="lg"
-          padding={{ base: 'lg', md: 'xl' }}
+          p={{ base: 'lg', md: 'xl' }}
           withBorder
           style={{
             textAlign: 'center',

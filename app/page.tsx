@@ -225,7 +225,7 @@ function IndustryCard({ title, imgLeft }: { title: string; imgLeft: string }) {
 
   return (
     <Card
-      padding={{ base: 'sm', md: 'md' }}
+      p={{ base: 'sm', md: 'md' }}
       radius="md"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -941,7 +941,6 @@ export default function HomePage() {
                 <IndustryCard
                   title={industry.title}
                   imgLeft={industry.imgLeft}
-                  imgRight={industry.imgRight}
                 />
               </motion.div>
             ))}

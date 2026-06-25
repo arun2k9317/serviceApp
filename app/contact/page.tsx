@@ -1,16 +1,12 @@
+
 'use client';
 
-import React from 'react';
-import { useSearchParams } from 'next/navigation';
+import React, { Suspense } from 'react';
 import { Container, Title, Text, Grid, Card, ThemeIcon, Stack, Group, Box, rem, Breadcrumbs, Anchor, SimpleGrid } from '@mantine/core';
 import { IconPhone, IconMail, IconMapPin, IconBrandWhatsapp, IconClock } from '@tabler/icons-react';
-import ContactForm from '../../components/forms/ContactForm';
+import ContactFormWithParams from '../../components/forms/ContactFormWithParams';
 
 export default function ContactPage() {
-  const searchParams = useSearchParams();
-  const initialService = searchParams.get('service') || '';
-  const initialMessage = searchParams.get('message') || '';
-
   const breadcrumbs = [
     { title: 'Home', href: '/' },
     { title: 'Contact Us', href: '/contact' },
@@ -157,8 +153,9 @@ export default function ContactPage() {
 
           {/* Right Column: Contact Inquiry Form */}
           <Grid.Col span={{ base: 12, md: 7 }}>
-            {/* contact form gets the initial preloaded service if available in query */}
-            <ContactForm initialService={initialService} />
+            <Suspense fallback={<div>Loading form...</div>}>
+              <ContactFormWithParams />
+            </Suspense>
           </Grid.Col>
         </Grid>
       </Container>

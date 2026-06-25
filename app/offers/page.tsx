@@ -94,24 +94,24 @@ export default async function OffersPage() {
                     )}
                   </Stack>
 
-                  <Button
-                    component={Link}
-                    href={claimUrl}
-                    color="brandYellow"
-                    variant="light"
-                    fullWidth
-                    size="md"
-                    mt="lg"
-                    rightSection={<IconChevronRight size={14} />}
-                    styles={{
-                      root: {
-                        color: '#e6ad00',
-                        fontWeight: 700,
-                      }
-                    }}
-                  >
-                    Claim Voucher
-                  </Button>
+                  <Link href={claimUrl} style={{ textDecoration: 'none' }}>
+                    <Button
+                      color="brandYellow"
+                      variant="light"
+                      fullWidth
+                      size="md"
+                      mt="lg"
+                      rightSection={<IconChevronRight size={14} />}
+                      styles={{
+                        root: {
+                          color: '#e6ad00',
+                          fontWeight: 700,
+                        }
+                      }}
+                    >
+                      Claim Voucher
+                    </Button>
+                  </Link>
                 </Card>
               );
             })}
