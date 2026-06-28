@@ -175,7 +175,7 @@ export default function Footer() {
                   <IconPhone size={18} style={{ color: '#CBDCEB', marginTop: rem(2), flexShrink: 0 }} />
                   <div>
                     <Text size="sm" fw={600} style={{ color: '#ffffff' }}>
-                      +91 90000 00000
+                      +91 90481 99754
                     </Text>
                     <Text size="xs" style={{ color: '#adb5bd' }}>
                       Toll-Free support 24/7

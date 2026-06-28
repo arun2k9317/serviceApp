@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
+import NextImage from 'next/image';
 import {
   Container,
   Title,
@@ -19,8 +19,11 @@ import {
   Avatar,
   Divider,
   Grid,
+  Image,
 } from '@mantine/core';
 import { Carousel } from '@mantine/carousel';
+import { useMediaQuery } from '@mantine/hooks';
+import Autoplay from 'embla-carousel-autoplay';
 import {
   IconShieldCheck,
   IconClock,
@@ -52,6 +55,12 @@ import {
   IconAward,
   IconTargetArrow,
   IconCheck,
+  IconCalendar,
+  IconFileText,
+  IconHeadset,
+  IconUserCheck,
+  IconFileCheck,
+  IconMapPin,
 } from '@tabler/icons-react';
 import { motion } from 'framer-motion';
 
@@ -116,7 +125,7 @@ const serviceCategories = [
     title: 'Electrical Services',
     color: 'yellow',
     accentHex: '#f59f00',
-    illustration: '/electrical_services.png',
+    illustrations: ['/electrical1.jpeg', '/electrical2.jpeg'],
     items: ['Electrical Installation & Wiring', 'Electrical Maintenance', 'Lighting Installation', 'Panel Board Maintenance', 'Generator Support', 'Emergency Electrical Repairs'],
   },
   {
@@ -124,7 +133,7 @@ const serviceCategories = [
     title: 'Plumbing Services',
     color: 'blue',
     accentHex: '#228be6',
-    illustration: '/plumbing_services.png',
+    illustrations: ['/plumbing1.jpeg', '/plumbing2.jpeg'],
     items: ['Pipe Installation & Repair', 'Leak Detection', 'Drain Cleaning', 'Water Tank Maintenance', 'Pump Installation & Maintenance', 'Bathroom & Kitchen Plumbing'],
   },
   {
@@ -132,7 +141,7 @@ const serviceCategories = [
     title: 'HVAC & Air Conditioning',
     color: 'cyan',
     accentHex: '#15aabf',
-    illustration: '/hvac_and_air_conditioning.png',
+    illustrations: ['/ac1.jpeg'],
     items: ['AC Installation', 'AC Repair & Servicing', 'HVAC Maintenance', 'Duct Cleaning', 'Preventive Maintenance', 'Commercial HVAC Solutions'],
   },
   {
@@ -140,7 +149,7 @@ const serviceCategories = [
     title: 'Deep Cleaning Services',
     color: 'green',
     accentHex: '#2f9e44',
-    illustration: '/deep_cleaning_services.png',
+    illustrations: ['/cleaning1.jpeg', '/cleaning2.jpeg'],
     items: ['Residential Deep Cleaning', 'Commercial Deep Cleaning', 'Move-In / Move-Out Cleaning', 'Floor Cleaning & Polishing', 'Post-Construction Cleaning', 'Sanitization Services'],
   },
   {
@@ -148,7 +157,7 @@ const serviceCategories = [
     title: 'Sofa, Carpet & Upholstery',
     color: 'grape',
     accentHex: '#ae3ec9',
-    illustration: '/sofa_carpet_and_upholstery.png',
+    illustrations: ['/sofa1.jpeg', '/sofa2.jpeg'],
     items: ['Sofa Shampooing', 'Fabric Cleaning', 'Leather Cleaning', 'Carpet Cleaning', 'Mattress Cleaning', 'Curtain Cleaning'],
   },
   {
@@ -156,7 +165,7 @@ const serviceCategories = [
     title: 'Painting & Renovation',
     color: 'orange',
     accentHex: '#f76707',
-    illustration: '/painting_and_renovation.png',
+    illustrations: ['/painting1.jpeg','/painting2.jpeg'],
     items: ['Interior Painting', 'Exterior Painting', 'Wall Repairs', 'Waterproofing', 'Minor Renovation Works', 'Property Refurbishment'],
   },
   {
@@ -164,7 +173,7 @@ const serviceCategories = [
     title: 'Housekeeping Services',
     color: 'teal',
     accentHex: '#0c8599',
-    illustration: '/house_keeping_services.png',
+    illustrations: ['/housekeeping1.jpeg'],
     items: ['Office Housekeeping', 'Apartment Maintenance', 'Building Cleaning', 'Facility Support Staff', 'Janitorial Services'],
   },
   {
@@ -172,7 +181,7 @@ const serviceCategories = [
     title: 'Pest Control Services',
     color: 'red',
     accentHex: '#e03131',
-    illustration: '/pest_control_services.png',
+    illustrations: ['/pest1.jpeg'],
     items: ['Residential Pest Control', 'Commercial Pest Management', 'Termite Control', 'Rodent Control', 'Mosquito Treatment'],
   },
   {
@@ -180,8 +189,48 @@ const serviceCategories = [
     title: 'General Maintenance',
     color: 'indigo',
     accentHex: '#3b5bdb',
-    illustration: '/general_maintenance.png',
+    illustrations: ['/maintenance.jpeg'],
     items: ['Handyman Services', 'Preventive Maintenance', 'Property Inspection', 'Building Maintenance', 'Emergency Breakdown Support'],
+  },
+];
+
+// ─── HOMEPAGE SPECIFIC COMPACT SERVICES ──────────────────────────────────────
+const homepageCategories = [
+  {
+    icon: IconBolt,
+    title: 'Electrical Services',
+    illustrations: ['/electrical1.jpeg', '/electrical2.jpeg', '/electrical3.jpeg'],
+    accentHex: '#f59f00',
+  },
+  {
+    icon: IconDroplet,
+    title: 'Plumbing Services',
+    illustrations: ['/plumbing1.jpeg', '/plumbing2.jpeg'],
+    accentHex: '#228be6',
+  },
+  {
+    icon: IconSnowflake,
+    title: 'HVAC Maintenance',
+    illustrations: ['/ac1.jpeg', '/ac2.jpeg'],
+    accentHex: '#15aabf',
+  },
+  {
+    icon: IconSparkles,
+    title: 'Deep Cleaning Services',
+    illustrations: ['/cleaning1.jpeg', '/cleaning2.jpeg'],
+    accentHex: '#2f9e44',
+  },
+  {
+    icon: IconTool,
+    title: 'Preventive Maintenance',
+    illustrations: ['/general_maintenance.png'],
+    accentHex: '#3b5bdb',
+  },
+  {
+    icon: IconShieldCheck,
+    title: 'Security & Support Services',
+    illustrations: ['/corporate_office.png'],
+    accentHex: '#ae3ec9',
   },
 ];
 
@@ -251,7 +300,7 @@ function IndustryCard({ title, imgLeft }: { title: string; imgLeft: string }) {
             zIndex: hovered ? 20 : 1,
           }}
         >
-          <Image
+          <NextImage
             src={imgLeft}
             alt={title}
             width={80}
@@ -291,6 +340,7 @@ const angles = [-2, 2.5, -1.5, 3, -2.5, 1.5];
 
 export default function HomePage() {
   const [testimonials, setTestimonials] = useState<any[]>([]);
+  const isDesktop = useMediaQuery('(min-width: 992px)');
 
   useEffect(() => {
     getTestimonials().then((res) => {
@@ -305,7 +355,7 @@ export default function HomePage() {
     "image": "https://fullmaintenance.com/og-image.jpg",
     "@id": "https://fullmaintenance.com/#organization",
     "url": "https://fullmaintenance.com",
-    "telephone": "+919000000000",
+    "telephone": "+919048199754",
     "priceRange": "$$",
     "address": {
       "@type": "PostalAddress",
@@ -332,7 +382,7 @@ export default function HomePage() {
         "name": "What facility management services do you provide?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "We provide comprehensive facility management including electrical maintenance, plumbing, HVAC services, deep cleaning, housekeeping, painting, pest control, and general property maintenance."
+          "text": "We provide comprehensive facility management including electrical maintenance, plumbing, HVAC services, deep cleaning, housekeeping, painting, pest control, and comprehensive property maintenance."
         }
       },
       {
@@ -347,522 +397,420 @@ export default function HomePage() {
   };
 
   return (
-    <Box>
+    <Box style={{ backgroundColor: '#ffffff' }}>
       <JsonLd schema={businessSchema} />
       <JsonLd schema={faqSchema} />
 
-      {/* ═══════════════════════ 1. HERO SECTION ═══════════════════════ */}
+      {/* ═══════════════════════ FIRST FOLD CONTAINER ═══════════════════════ */}
       <Box
-        style={{
+        style={isDesktop ? {
+          display: 'flex',
+          flexDirection: 'column',
+          height: 'calc(100vh - 65px)',
           position: 'relative',
-          marginTop: rem(-120),
+          backgroundColor: '#ffffff',
           overflow: 'hidden',
+        } : {
+          backgroundColor: '#ffffff',
         }}
-        h={{ base: rem(600), sm: rem(650), md: rem(680) }}
       >
-        <Carousel
-          withIndicators={false}
-          emblaOptions={{ loop: true, align: 'center', duration: 35 }}
-          style={{ height: '100%' }}
-          styles={{
-            root: { height: '100%' },
-            viewport: { height: '100%' },
-            container: { height: '100%' },
-            control: {
-              backgroundColor: 'transparent',
-              border: 'none',
-              boxShadow: 'none',
-              color: '#ffffff',
-              opacity: 0.6,
-              '&:hover': {
-                opacity: 1,
-                backgroundColor: 'rgba(255, 255, 255, 0.1)',
-              },
-              width: rem(50),
-              height: rem(50),
-              borderRadius: rem(25),
-            },
-          }}
-          nextControlIcon={<IconChevronRight size={36} stroke={1.5} />}
-          previousControlIcon={<IconChevronLeft size={36} stroke={1.5} />}
-        >
-          {/* Slide 1 */}
-          <Carousel.Slide>
-            <Box
-              style={{
-                position: 'relative',
-                height: '100%',
-                overflow: 'hidden',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-              pt={{ base: rem(70), md: rem(100) }}
-              px={{ base: 'sm', md: 0 }}
-            >
-              <motion.div
-                initial={{ scale: 1.15, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 8, ease: 'easeOut' }}
-                style={{
-                  position: 'absolute',
-                  top: 0, left: 0, right: 0, bottom: 0,
-                  backgroundImage: 'linear-gradient(rgba(43, 58, 85, 0.72), rgba(43, 58, 85, 0.72)), url("/homes.jpg")',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  zIndex: 1,
-                }}
-              />
-              <Container size="md" style={{ position: 'relative', zIndex: 2 }}>
-                <Stack align="center" gap="md" ta="center">
-                  <motion.div
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, ease: 'easeOut' }}
-                  >
-                    <Badge
-                      color="brandBlue"
-                      size="lg"
-                      radius="sm"
-                      mb="sm"
-                      styles={{ root: { color: '#ffffff', fontWeight: 700 } }}
-                    >
-                      Reliable Service | Skilled Professionals | Quality Assured
-                    </Badge>
-                    <Title
-                      order={1}
-                      fz={{ base: rem(28), sm: rem(38), md: rem(48) }}
-                      fw={900}
-                      c="#ffffff"
-                      style={{
-                        textTransform: 'uppercase',
-                        letterSpacing: rem(1.5),
-                        fontFamily: 'var(--font-open-sans), sans-serif',
-                        lineHeight: 1.15,
-                      }}
-                    >
-                      Complete Facility Management{' '}
-                      <Text component="span" inherit c="#CBDCEB">Solutions</Text>{' '}
-                      Under One Roof
-                    </Title>
-                  </motion.div>
 
-                  <motion.div
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.6, ease: 'easeOut' }}
-                  >
-                    <Text
-                      fz={{ base: rem(15), md: rem(18) }}
-                      ff="var(--font-pt-sans), sans-serif"
-                      fs="italic"
-                      c="#f8f9fa"
-                      maw={760}
-                      lh={1.6}
-                    >
-                      Keeping Homes, Offices, Commercial Buildings, Hospitals, Hotels, and Industrial Facilities Running Efficiently.
-                    </Text>
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 1.2, ease: 'easeOut' }}
-                  >
-                    <Group gap="md" wrap="wrap" justify="center">
-                      <Button
-                        component={Link}
-                        href="/contact"
-                        size="md"
-                        radius="xl"
-                        id="hero-cta-consultation"
-                        styles={{
-                          root: {
-                            backgroundColor: '#6D94C5',
-                            color: '#ffffff',
-                            fontWeight: 700,
-                            paddingLeft: rem(28),
-                            paddingRight: rem(28),
-                            fontSize: rem(13),
-                            textTransform: 'uppercase',
-                            letterSpacing: rem(1),
-                            boxShadow: '0 4px 15px rgba(109, 148, 197, 0.35)',
-                            '&:hover': { backgroundColor: '#5a80b0' },
-                          },
-                        }}
-                      >
-                        Get Free Consultation
-                      </Button>
-                      <Button
-                        component={Link}
-                        href="/contact?service=Quote"
-                        size="md"
-                        radius="xl"
-                        variant="outline"
-                        id="hero-cta-quote"
-                        styles={{
-                          root: {
-                            borderColor: '#ffffff',
-                            color: '#ffffff',
-                            fontWeight: 700,
-                            paddingLeft: rem(28),
-                            paddingRight: rem(28),
-                            fontSize: rem(13),
-                            textTransform: 'uppercase',
-                            letterSpacing: rem(1),
-                            '&:hover': { borderColor: '#CBDCEB', color: '#CBDCEB' },
-                          },
-                        }}
-                      >
-                        Request a Quote
-                      </Button>
-                    </Group>
-                  </motion.div>
-                </Stack>
-              </Container>
-            </Box>
-          </Carousel.Slide>
-
-          {/* Slide 2 */}
-          <Carousel.Slide>
-            <Box
-              style={{
-                position: 'relative',
-                height: '100%',
-                overflow: 'hidden',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-              pt={{ base: rem(70), md: rem(100) }}
-              px={{ base: 'sm', md: 0 }}
-            >
-              <motion.div
-                initial={{ scale: 1.15, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 8, ease: 'easeOut' }}
-                style={{
-                  position: 'absolute',
-                  top: 0, left: 0, right: 0, bottom: 0,
-                  backgroundImage: 'linear-gradient(rgba(43, 58, 85, 0.72), rgba(43, 58, 85, 0.72)), url("/beach.jpg")',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  zIndex: 1,
-                }}
-              />
-              <Container size="md" style={{ position: 'relative', zIndex: 2 }}>
-                <Stack align="center" gap="md" ta="center">
-                  <motion.div
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, ease: 'easeOut' }}
-                  >
-                    <Title
-                      order={1}
-                      fz={{ base: rem(30), sm: rem(42), md: rem(52) }}
-                      fw={900}
-                      c="#ffffff"
-                      style={{
-                        textTransform: 'uppercase',
-                        letterSpacing: rem(1.5),
-                        fontFamily: 'var(--font-open-sans), sans-serif',
-                        lineHeight: 1.15,
-                      }}
-                    >
-                      Your Property.{' '}
-                      <Text component="span" inherit c="#CBDCEB">Our Responsibility.</Text>
-                    </Title>
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.6, ease: 'easeOut' }}
-                  >
-                    <Text
-                      fz={{ base: rem(15), md: rem(18) }}
-                      ff="var(--font-pt-sans), sans-serif"
-                      fs="italic"
-                      c="#f8f9fa"
-                      maw={760}
-                      lh={1.6}
-                    >
-                      Professional Facility Management Solutions for Every Space. We provide dependable services tailored to your requirements.
-                    </Text>
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 1.2, ease: 'easeOut' }}
-                  >
-                    <Button
-                      component={Link}
-                      href="/services"
-                      size="md"
-                      radius="xl"
-                      id="hero-cta-services"
-                      styles={{
-                        root: {
-                          backgroundColor: '#ffc104',
-                          color: '#2a2f35',
-                          fontWeight: 700,
-                          paddingLeft: rem(28),
-                          paddingRight: rem(28),
-                          fontSize: rem(13),
-                          textTransform: 'uppercase',
-                          letterSpacing: rem(1),
-                          boxShadow: '0 4px 15px rgba(255, 193, 4, 0.3)',
-                          '&:hover': { backgroundColor: '#e6ad00' },
-                        },
-                      }}
-                    >
-                      Explore Our Services
-                    </Button>
-                  </motion.div>
-                </Stack>
-              </Container>
-            </Box>
-          </Carousel.Slide>
-        </Carousel>
-
-        {/* Scroll Down Chevrons */}
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
-          style={{
-            position: 'absolute',
-            bottom: rem(25),
-            left: '50%',
-            transform: 'translateX(-50%)',
-            zIndex: 10,
-            cursor: 'pointer',
-            color: '#ffffff',
-            opacity: 0.8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-          onClick={() => {
-            window.scrollTo({
-              top: window.innerHeight - 100,
-              behavior: 'smooth'
-            });
-          }}
-        >
-          <IconChevronsDown size={28} style={{ color: '#CBDCEB' }} />
-        </motion.div>
-      </Box>
-
-      {/* ═══════════════════════ 2. STATISTICS SECTION ═══════════════════════ */}
       <Box
+        h={isDesktop ? undefined : rem(580)}
         style={{
-          backgroundColor: '#6D94C5',
-          borderTop: '1px solid rgba(255, 255, 255, 0.1)',
-          borderBottom: '1px solid rgba(109, 148, 197, 0.3)',
-          color: '#FFFFFF',
+          flex: isDesktop ? 1 : 'none',
+          minHeight: isDesktop ? rem(280) : rem(480),
+          position: 'relative',
+          overflow: 'hidden',
+          backgroundImage: 'linear-gradient(90deg, rgba(10, 25, 47, 0.95) 0%, rgba(10, 25, 47, 0.75) 50%, rgba(10, 25, 47, 0.25) 100%), url("/homepage.jpeg")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center right',
         }}
-        py={{ base: 40, md: 50 }}
+        pt={isDesktop ? rem(10) : rem(50)}
       >
-        <Container size="lg">
-          <SimpleGrid cols={{ base: 2, md: 4 }} spacing="xl">
-            <Stack gap={5} align="center">
-              <Title order={3} fz={{ base: 'h2', md: 'h1' }} fw={900}>
-                <Counter value={5200} suffix="+" />
-              </Title>
-              <Text size="sm" style={{ opacity: 0.85, fontWeight: 600 }}>Happy Clients</Text>
-            </Stack>
-            <Stack gap={5} align="center">
-              <Title order={3} fz={{ base: 'h2', md: 'h1' }} fw={900}>
-                <Counter value={50} suffix="+" />
-              </Title>
-              <Text size="sm" style={{ opacity: 0.85, fontWeight: 600 }}>Services Offered</Text>
-            </Stack>
-            <Stack gap={5} align="center">
-              <Title order={3} fz={{ base: 'h2', md: 'h1' }} fw={900}>
-                <Counter value={8900} suffix="+" />
-              </Title>
-              <Text size="sm" style={{ opacity: 0.85, fontWeight: 600 }}>Projects Completed</Text>
-            </Stack>
-            <Stack gap={5} align="center">
-              <Title order={3} fz={{ base: 'h2', md: 'h1' }} fw={900}>
-                <Counter value={12} suffix="+" />
-              </Title>
-              <Text size="sm" style={{ opacity: 0.85, fontWeight: 600 }}>Years Experience</Text>
-            </Stack>
-          </SimpleGrid>
-        </Container>
-      </Box>
-
-      {/* ═══════════════════════ 3. OUR SERVICES ═══════════════════════ */}
-      <Container size="lg" py={{ base: 50, md: 80 }}>
-        <SectionHeader
-          subtitle="What We Offer"
-          title="Our Professional Services"
-          description="We provide professional facility management services including electrical maintenance, plumbing solutions, HVAC services, deep cleaning, and comprehensive property maintenance."
-        />
-
-        <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing="xl">
-          {serviceCategories.map((service, index) => (
+        <Container size="xl" style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
+          <Stack gap={isDesktop ? 'xs' : 'lg'} style={{ maxWidth: rem(680), zIndex: 5, paddingBottom: isDesktop ? rem(50) : rem(60) }}>
+            {/* Small top tagline indicator */}
             <motion.div
-              key={service.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: index * 0.05 }}
-              style={{ height: '100%' }}
+              initial={{ opacity: 0, x: -15 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
             >
-              <Card
-                padding={0}
-                radius="xl"
-                className="hover-lift service-full-card"
-                id={`service-${service.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
+              <Group gap="xs" align="center">
+                <Box style={{ width: rem(3), height: rem(18), backgroundColor: '#00a8ff' }} />
+                <Text fz="xs" fw={700} style={{ letterSpacing: rem(1.5), color: '#00a8ff', textTransform: 'uppercase' }}>
+                  SMARTER SPACES. BETTER LIVING.
+                </Text>
+              </Group>
+            </motion.div>
+
+            {/* Main Page Title */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <Title
+                order={2}
+                fz={{ base: rem(32), sm: rem(38), md: isDesktop ? rem(40) : rem(48) }}
+                fw={800}
+                c="#ffffff"
                 style={{
-                  height: rem(340),
-                  position: 'relative',
-                  overflow: 'hidden',
-                  border: `1px solid ${service.accentHex}44`,
-                  boxShadow: `0 4px 20px rgba(0,0,0,0.10)`,
-                  transition: 'box-shadow 0.3s ease, transform 0.3s ease',
-                  cursor: 'default',
+                  lineHeight: 1.15,
+                  fontFamily: 'var(--font-open-sans), sans-serif',
                 }}
               >
-                {/* Next.js Optimized Image background */}
-                <Image
-                  src={service.illustration}
-                  alt={service.title}
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  priority={index < 3}
-                  style={{
-                    objectFit: 'cover',
-                    zIndex: 0,
+                Complete Facility Management Solutions{' '}
+                <Text component="span" inherit style={{ color: '#00a8ff' }}>for Modern Buildings</Text>
+              </Title>
+            </motion.div>
+
+            {/* Subtext description */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+            >
+              <Text
+                fz={{ base: rem(14), md: rem(16) }}
+                c="#CBDCEB"
+                style={{
+                  lineHeight: 1.6,
+                  maxWidth: rem(560),
+                }}
+              >
+                Delivering world-class maintenance, cleaning and technical solutions that keep your spaces safe, efficient, and always operational.
+              </Text>
+            </motion.div>
+
+            {/* CTA Action Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              style={{ marginTop: rem(10) }}
+            >
+              <Group gap="md" wrap="wrap">
+                <Button
+                  component={Link}
+                  href="/contact"
+                  size="md"
+                  radius="md"
+                  leftSection={<IconCalendar size={18} />}
+                  id="hero-cta-inspection"
+                  styles={{
+                    root: {
+                      backgroundColor: '#00a8ff',
+                      color: '#ffffff',
+                      fontWeight: 700,
+                      paddingLeft: rem(22),
+                      paddingRight: rem(22),
+                      boxShadow: '0 4px 14px rgba(0, 168, 255, 0.3)',
+                      transition: 'all 0.2s ease',
+                      '&:hover': {
+                        backgroundColor: '#0096e6',
+                        transform: 'translateY(-1px)',
+                      },
+                    },
                   }}
-                  className="service-card-img"
-                />
+                >
+                  GET A FREE SITE INSPECTION
+                </Button>
+                <Button
+                  component={Link}
+                  href="/contact?subject=amc"
+                  size="md"
+                  radius="md"
+                  variant="outline"
+                  leftSection={<IconFileText size={18} />}
+                  id="hero-cta-amc"
+                  styles={{
+                    root: {
+                      borderColor: '#ffffff',
+                      color: '#ffffff',
+                      fontWeight: 700,
+                      paddingLeft: rem(22),
+                      paddingRight: rem(22),
+                      backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                      transition: 'all 0.2s ease',
+                      '&:hover': {
+                        backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                        borderColor: '#ffffff',
+                        transform: 'translateY(-1px)',
+                      },
+                    },
+                  }}
+                >
+                  REQUEST AN AMC QUOTE
+                </Button>
+              </Group>
+            </motion.div>
+          </Stack>
+        </Container>
 
-                {/* strong bottom gradient scrim for readability */}
-                <div style={{
-                  position: 'absolute',
-                  inset: 0,
-                  background: `linear-gradient(to bottom,
-                    rgba(0,0,0,0.08) 0%,
-                    rgba(0,0,0,0.18) 35%,
-                    rgba(0,0,0,0.68) 70%,
-                    rgba(0,0,0,0.88) 100%)`,
-                  transition: 'background 0.3s ease',
-                  zIndex: 1,
-                }} className="service-card-scrim" />
+        {/* Floating Dark Highlight Banner at bottom */}
+        <Box
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            backgroundColor: 'rgba(7, 21, 41, 0.9)',
+            backdropFilter: 'blur(8px)',
+            borderTopLeftRadius: rem(16),
+            borderTopRightRadius: rem(16),
+            borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+            zIndex: 10,
+          }}
+          py={rem(22)}
+        >
+          <Container size="xl">
+            <SimpleGrid cols={{ base: 1, sm: 3, md: 5 }} spacing="xl">
+              <Group gap="sm" wrap="nowrap">
+                <ThemeIcon size="lg" radius="xl" variant="transparent" style={{ color: '#00a8ff' }}>
+                  <IconHeadset size={24} />
+                </ThemeIcon>
+                <Stack gap={0}>
+                  <Text size="13px" fw={800} c="#ffffff" lh={1.2}>24/7</Text>
+                  <Text size="11px" c="#8F9CAE" lh={1.2} fw={600}>Emergency Support</Text>
+                </Stack>
+              </Group>
 
-                {/* subtle accent tint top-left */}
-                <div style={{
-                  position: 'absolute',
-                  inset: 0,
-                  background: `radial-gradient(ellipse at top left, ${service.accentHex}30 0%, transparent 60%)`,
-                  pointerEvents: 'none',
-                  zIndex: 2,
-                }} />
+              <Group gap="sm" wrap="nowrap">
+                <ThemeIcon size="lg" radius="xl" variant="transparent" style={{ color: '#00a8ff' }}>
+                  <IconUserCheck size={24} />
+                </ThemeIcon>
+                <Stack gap={0}>
+                  <Text size="13px" fw={800} c="#ffffff" lh={1.2}>Trained &</Text>
+                  <Text size="11px" c="#8F9CAE" lh={1.2} fw={600}>Verified Technicians</Text>
+                </Stack>
+              </Group>
 
-                {/* all content pinned to bottom */}
-                <div style={{
-                  position: 'absolute',
-                  inset: 0,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'flex-end',
-                  padding: rem(18),
-                  gap: rem(10),
-                  zIndex: 3,
-                }}>
-                  {/* badge chips */}
-                  <div style={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    gap: rem(6),
-                  }}>
-                    {service.items.map((item) => (
-                      <Badge
-                        key={item}
-                        radius="xl"
-                        size="xs"
-                        styles={{
-                          root: {
-                            backgroundColor: 'rgba(255,255,255,0.13)',
-                            color: '#ffffff',
-                            border: `1px solid rgba(255,255,255,0.28)`,
-                            backdropFilter: 'blur(6px)',
-                            fontWeight: 500,
-                            fontSize: rem(10.5),
-                            textTransform: 'none',
-                            letterSpacing: 0,
-                            padding: `${rem(4)} ${rem(9)}`,
-                            height: 'auto',
-                            whiteSpace: 'normal',
-                            lineHeight: 1.35,
-                            cursor: 'default',
-                          },
-                        }}
-                      >
-                        {item}
-                      </Badge>
-                    ))}
-                  </div>
+              <Group gap="sm" wrap="nowrap">
+                <ThemeIcon size="lg" radius="xl" variant="transparent" style={{ color: '#00a8ff' }}>
+                  <IconShieldCheck size={24} />
+                </ThemeIcon>
+                <Stack gap={0}>
+                  <Text size="13px" fw={800} c="#ffffff" lh={1.2}>ISO Standard</Text>
+                  <Text size="11px" c="#8F9CAE" lh={1.2} fw={600}>Procedures</Text>
+                </Stack>
+              </Group>
 
-                  {/* icon + title row */}
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: rem(12),
-                  }}>
-                    <div style={{
-                      width: rem(44),
-                      height: rem(44),
-                      borderRadius: rem(12),
-                      backgroundColor: service.accentHex,
+              <Group gap="sm" wrap="nowrap">
+                <ThemeIcon size="lg" radius="xl" variant="transparent" style={{ color: '#00a8ff' }}>
+                  <IconClock size={24} />
+                </ThemeIcon>
+                <Stack gap={0}>
+                  <Text size="13px" fw={800} c="#ffffff" lh={1.2}>Fast</Text>
+                  <Text size="11px" c="#8F9CAE" lh={1.2} fw={600}>Response Time</Text>
+                </Stack>
+              </Group>
+
+              <Group gap="sm" wrap="nowrap">
+                <ThemeIcon size="lg" radius="xl" variant="transparent" style={{ color: '#00a8ff' }}>
+                  <IconFileCheck size={24} />
+                </ThemeIcon>
+                <Stack gap={0}>
+                  <Text size="13px" fw={800} c="#ffffff" lh={1.2}>Annual Maintenance</Text>
+                  <Text size="11px" c="#8F9CAE" lh={1.2} fw={600}>Contracts (AMC)</Text>
+                </Stack>
+              </Group>
+            </SimpleGrid>
+          </Container>
+        </Box>
+      </Box>
+
+      {/* ═══════════════════════ 2. OUR SERVICES (HORIZONTAL CAROUSEL) ═══════════════════════ */}
+      <Box
+        style={{
+          flex: isDesktop ? '0 0 auto' : 'none',
+          backgroundColor: '#ffffff',
+          display: 'flex',
+          alignItems: 'center',
+        }}
+        py={isDesktop ? rem(14) : rem(40)}
+      >
+        <Container size="xl" style={{ width: '100%' }}>
+          <Carousel
+            slideSize={{ base: '100%', sm: '50%', md: '33.333%', lg: '25%', xl: '16.666%' }}
+            slideGap="md"
+            withControls={true}
+            emblaOptions={{ loop: true, align: 'start', slidesToScroll: 1 }}
+            styles={{
+              root: { width: '100%' },
+              controls: {
+                paddingLeft: rem(10),
+                paddingRight: rem(10),
+              },
+              control: {
+                backgroundColor: 'rgba(10, 25, 47, 0.85)',
+                border: 'none',
+                color: '#ffffff',
+                width: rem(36),
+                height: rem(36),
+                boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                '&:hover': {
+                  backgroundColor: '#00a8ff',
+                },
+              },
+            }}
+          >
+            {serviceCategories.map((service, index) => (
+              <Carousel.Slide key={service.title}>
+                <motion.div
+                  initial={{ opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: index * 0.05 }}
+                  style={{ height: '100%' }}
+                >
+                  <Card
+                    padding={0}
+                    radius="md"
+                    className="hover-lift"
+                    id={`service-${service.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
+                    style={{
+                      height: isDesktop ? rem(175) : rem(240),
+                      position: 'relative',
+                      overflow: 'hidden',
+                      border: '1px solid #eaeaea',
+                      backgroundColor: '#ffffff',
+                      boxShadow: '0 4px 12px rgba(0,0,0,0.04)',
                       display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      flexShrink: 0,
-                      boxShadow: `0 4px 16px ${service.accentHex}77`,
-                    }}>
-                      <service.icon size={22} color="#ffffff" stroke={1.8} />
-                    </div>
-                    <Text
-                      fw={800}
-                      size="md"
-                      c="#ffffff"
+                      flexDirection: 'column',
+                    }}
+                  >
+                    {/* Top Image/Carousel Section */}
+                    <Box style={{ height: isDesktop ? rem(135) : rem(130), position: 'relative', overflow: 'hidden' }}>
+                      {service.illustrations && service.illustrations.length > 1 ? (
+                        <Carousel
+                          withIndicators={true}
+                          withControls={isDesktop ? false : true}
+                          emblaOptions={{ loop: true }}
+                          plugins={[Autoplay({ delay: 3500 + index * 200, stopOnInteraction: false })]}
+                          style={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            width: '100%',
+                            height: '100%',
+                            zIndex: 0,
+                          }}
+                          styles={{
+                            root: { height: '100%', width: '100%' },
+                            viewport: { height: '100%', width: '100%' },
+                            container: { height: '100%', width: '100%' },
+                            control: {
+                              backgroundColor: 'rgba(0, 0, 0, 0.45)',
+                              border: 'none',
+                              color: '#ffffff',
+                              width: rem(20),
+                              height: rem(20),
+                            },
+                          }}
+                        >
+                          {service.illustrations.map((imgUrl, idx) => (
+                            <Carousel.Slide key={idx} style={{ height: '100%', width: '100%' }}>
+                              <Image
+                                src={imgUrl}
+                                alt={`${service.title} - ${idx + 1}`}
+                                style={{
+                                  width: '100%',
+                                  height: '100%',
+                                  objectFit: 'cover',
+                                }}
+                              />
+                            </Carousel.Slide>
+                          ))}
+                        </Carousel>
+                      ) : (
+                        <Image
+                          src={service.illustrations?.[0] || ''}
+                          alt={service.title}
+                          style={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover',
+                            zIndex: 0,
+                          }}
+                          className="service-card-img"
+                        />
+                      )}
+                    </Box>
+
+                    {/* Overlapping Icon Badge */}
+                    <ThemeIcon
+                      size={rem(32)}
+                      radius="xl"
+                      color="blue"
                       style={{
-                        fontFamily: 'var(--font-open-sans), sans-serif',
-                        lineHeight: 1.2,
-                        textShadow: '0 2px 8px rgba(0,0,0,0.6)',
-                        letterSpacing: rem(0.2),
+                        position: 'absolute',
+                        top: isDesktop ? rem(119) : rem(114),
+                        left: rem(16),
+                        zIndex: 10,
+                        border: '2px solid #ffffff',
+                        boxShadow: '0 2px 8px rgba(11, 94, 215, 0.2)',
                       }}
                     >
-                      {service.title}
-                    </Text>
-                  </div>
-                </div>
-              </Card>
-            </motion.div>
-          ))}
-        </SimpleGrid>
+                      <service.icon size={16} />
+                    </ThemeIcon>
 
-
-
-        <Group justify="center" mt={40}>
-          <Button
-            component={Link}
-            href="/services"
-            variant="outline"
-            color="brandBlue"
-            size="md"
-            id="services-explore-all"
-            rightSection={<IconArrowRight size={16} />}
-          >
-            View All Services
-          </Button>
-        </Group>
-      </Container>
+                    {/* Bottom Inline Row Details Section */}
+                    <div
+                      style={{
+                        padding: isDesktop ? `${rem(8)} ${rem(10)}` : `${rem(14)} ${rem(16)}`,
+                        flex: 1,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        backgroundColor: '#ffffff',
+                        gap: rem(8),
+                      }}
+                    >
+                      <Text
+                        fw={800}
+                        fz={isDesktop ? rem(11) : rem(13)}
+                        c="#0A192F"
+                        style={{
+                          lineHeight: 1.2,
+                          fontFamily: 'var(--font-open-sans), sans-serif',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          whiteSpace: 'nowrap',
+                          flex: 1,
+                        }}
+                      >
+                        {service.title}
+                      </Text>
+                      <Link
+                        href={`/services#${service.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: rem(2),
+                          textDecoration: 'none',
+                          color: '#00a8ff',
+                          cursor: 'pointer',
+                          flexShrink: 0,
+                        }}
+                      >
+                        <Text size={isDesktop ? '10px' : 'xs'} fw={700}>
+                          Read More
+                        </Text>
+                        <IconArrowRight size={isDesktop ? 10 : 12} />
+                      </Link>
+                    </div>
+                  </Card>
+                </motion.div>
+              </Carousel.Slide>
+            ))}
+          </Carousel>
+        </Container>
+      </Box>
+    </Box>
 
       {/* ═══════════════════════ 4. WHY CHOOSE US ═══════════════════════ */}
       <Box style={{ backgroundColor: '#E8DFCA' }} py={{ base: 50, md: 80 }} className="why-us-bg">

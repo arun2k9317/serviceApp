@@ -6,7 +6,7 @@ import { IconBrandWhatsapp } from '@tabler/icons-react';
 import { motion } from 'framer-motion';
 
 export default function WhatsAppButton() {
-  const whatsappNumber = '919000000000'; // Placeholder Kerala number - change in production
+  const whatsappNumber = '919048199754'; // Kerala number
   const message = encodeURIComponent('Hello, I would like to inquire about your facility maintenance & deep cleaning services.');
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
 

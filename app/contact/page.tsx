@@ -63,7 +63,7 @@ export default function ContactPage() {
                       </ThemeIcon>
                       <div>
                         <Text size="sm" fw={700}>Phone Support</Text>
-                        <Text size="sm">+91 90000 00000</Text>
+                        <Text size="sm">+91 90481 99754</Text>
                         <Text size="xs" c="dimmed">Toll-free, active 24/7 for breakdowns</Text>
                       </div>
                     </Group>
@@ -74,7 +74,7 @@ export default function ContactPage() {
                       </ThemeIcon>
                       <div>
                         <Text size="sm" fw={700}>WhatsApp Dispatcher</Text>
-                        <Text size="sm">+91 90000 00000</Text>
+                        <Text size="sm">+91 90481 99754</Text>
                         <Text size="xs" c="dimmed">Tap the floating widget to text instantly</Text>
                       </div>
                     </Group>

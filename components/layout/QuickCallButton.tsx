@@ -5,8 +5,8 @@ import { Button, Grid } from '@mantine/core';
 import { IconPhone, IconBrandWhatsapp } from '@tabler/icons-react';
 
 export default function QuickCallButton() {
-  const phoneNumber = '+919000000000'; // Placeholder Kerala number
-  const whatsappNumber = '919000000000';
+  const phoneNumber = '+919048199754'; // Kerala number
+  const whatsappNumber = '919048199754';
   const whatsappMsg = encodeURIComponent('Hello, I want to book a maintenance inspection.');
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMsg}`;
 

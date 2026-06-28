@@ -48,7 +48,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 ::-webkit-scrollbar-track {
-  background: #E8DFCA;
+  background: #ffffff;
 }
 
 [data-mantine-color-scheme="dark"] ::-webkit-scrollbar-track {
@@ -275,7 +275,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Responsive Header & Main Layout Overrides */
 .main-content {
   flex: 1;
-  padding-top: 120px;
+  padding-top: 65px;
 }
 
 @media (max-width: 991px) {
@@ -284,7 +284,7 @@ h1, h2, h3, h4, h5, h6 {
   }
   
   .main-content {
-    padding-top: 80px;
+    padding-top: 65px;
   }
 }
 
@@ -359,6 +359,19 @@ h1, h2, h3, h4, h5, h6 {
   background-color: rgba(255, 255, 255, 0.12) !important;
   border-color: rgba(255, 255, 255, 0.25) !important;
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.2);
+}
+
+/* Mantine Carousel Indicator custom styles */
+.mantine-Carousel-indicator {
+  width: 6px !important;
+  height: 3px !important;
+  background-color: rgba(255, 255, 255, 0.5) !important;
+  transition: width 200ms ease, background-color 200ms ease !important;
+}
+
+.mantine-Carousel-indicator[data-active] {
+  width: 12px !important;
+  background-color: #ffffff !important;
 }
 
 
