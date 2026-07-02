@@ -431,6 +431,197 @@ function IndustryCard({ title, tagline, img1, img2, index }: {
 
 const angles = [-2, 2.5, -1.5, 3, -2.5, 1.5];
 
+function ServiceCategoryCard({ service }: { service: any }) {
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+  const images = service.illustrations || [];
+
+  useEffect(() => {
+    if (!isHovered || images.length <= 1) {
+      setActiveImageIndex(0);
+      return;
+    }
+
+    const interval = setInterval(() => {
+      setActiveImageIndex((prev) => (prev + 1) % images.length);
+    }, 1500);
+
+    return () => clearInterval(interval);
+  }, [isHovered, images]);
+
+  return (
+    <Link
+      href={`/services#${service.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
+      style={{ textDecoration: 'none', display: 'block', height: '100%' }}
+    >
+      <div
+        className="service-glass-card"
+        id={`service-${service.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        style={{
+          position: 'relative',
+          borderRadius: rem(20),
+          overflow: 'hidden',
+          aspectRatio: '4 / 3',
+          cursor: 'pointer',
+          boxShadow: '0 10px 30px rgba(0, 0, 0, 0.04)',
+          height: '100%',
+        }}
+      >
+        {/* Top Image Section with Transitions */}
+        <div className="service-glass-card-img-wrap" style={{ position: 'absolute', inset: 0 }}>
+          {images.map((src: string, idx: number) => (
+            <motion.div
+              key={src}
+              initial={{ opacity: idx === 0 ? 1 : 0 }}
+              animate={{ opacity: idx === activeImageIndex ? 1 : 0 }}
+              transition={{ duration: 0.4 }}
+              style={{
+                position: 'absolute',
+                inset: 0,
+              }}
+            >
+              <Image
+                src={src}
+                alt={service.title}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                }}
+                className="service-glass-card-img"
+              />
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Gradient Scrim */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background: 'linear-gradient(to bottom, transparent 30%, rgba(10, 25, 47, 0.35) 60%, rgba(10, 25, 47, 0.88) 100%)',
+            zIndex: 1,
+          }}
+        />
+
+        {/* Frosted Glass Bottom Panel */}
+        <div
+          className="service-glass-panel"
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            zIndex: 2,
+            padding: `${rem(16)} ${rem(20)}`,
+            display: 'flex',
+            alignItems: 'center',
+            gap: rem(12),
+          }}
+        >
+          {/* Floating Icon Wrapper */}
+          <div
+            className="service-glass-icon"
+            style={{
+              width: rem(40),
+              height: rem(40),
+              borderRadius: rem(12),
+              background: `linear-gradient(135deg, ${service.accentHex}33, ${service.accentHex}66)`,
+              border: `1px solid ${service.accentHex}44`,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexShrink: 0,
+              transition: 'transform 0.3s ease',
+            }}
+          >
+            <service.icon size={20} color="#ffffff" />
+          </div>
+
+          {/* Text Label & Action */}
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <Text
+              fw={700}
+              fz={{ base: rem(14), md: rem(15) }}
+              c="#ffffff"
+              style={{
+                fontFamily: 'var(--font-open-sans), sans-serif',
+                lineHeight: 1.25,
+              }}
+            >
+              {service.title}
+            </Text>
+            <div
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: rem(4),
+                color: '#00a8ff',
+                marginTop: rem(4),
+              }}
+            >
+              <Text size="11px" fw={700} className="service-glass-cta-text">
+                Explore Service
+              </Text>
+              <IconArrowRight size={11} className="service-glass-cta-icon" />
+            </div>
+          </div>
+        </div>
+
+        {/* Carousel Indicators */}
+        {images.length > 1 && (
+          <Group
+            gap={6}
+            style={{
+              position: 'absolute',
+              top: rem(16),
+              right: rem(16),
+              zIndex: 4,
+              backgroundColor: 'rgba(10, 25, 47, 0.6)',
+              padding: `${rem(4)} ${rem(8)}`,
+              borderRadius: rem(10),
+              backdropFilter: 'blur(4px)',
+              opacity: isHovered ? 1 : 0.6,
+              transition: 'opacity 0.3s ease',
+            }}
+          >
+            {images.map((_: any, idx: number) => (
+              <div
+                key={idx}
+                style={{
+                  width: rem(6),
+                  height: rem(6),
+                  borderRadius: '50%',
+                  backgroundColor: idx === activeImageIndex ? '#00a8ff' : 'rgba(255, 255, 255, 0.4)',
+                  transition: 'background-color 0.3s ease',
+                }}
+              />
+            ))}
+          </Group>
+        )}
+
+        {/* Top Gradient Highlight Accent Line */}
+        <div
+          className="service-glass-accent"
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            height: rem(4),
+            background: `linear-gradient(90deg, ${service.accentHex}, ${service.accentHex}88)`,
+            zIndex: 3,
+            opacity: isHovered ? 1 : 0,
+            transition: 'opacity 0.4s ease',
+          }}
+        />
+      </div>
+    </Link>
+  );
+}
+
 export default function HomePage() {
   const [testimonials, setTestimonials] = useState<any[]>([]);
   const isDesktop = useMediaQuery('(min-width: 992px)');
@@ -800,127 +991,7 @@ export default function HomePage() {
                 transition={{ duration: 0.5, delay: index * 0.05, ease: [0.25, 0.8, 0.25, 1] }}
                 style={{ height: '100%' }}
               >
-                <Link
-                  href={`/services#${service.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
-                  style={{ textDecoration: 'none', display: 'block', height: '100%' }}
-                >
-                  <div
-                    className="service-glass-card"
-                    id={`service-${service.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
-                    style={{
-                      position: 'relative',
-                      borderRadius: rem(20),
-                      overflow: 'hidden',
-                      aspectRatio: '4 / 3',
-                      cursor: 'pointer',
-                      boxShadow: '0 10px 30px rgba(0, 0, 0, 0.04)',
-                    }}
-                  >
-                    {/* Top Image Section */}
-                    <div className="service-glass-card-img-wrap" style={{ position: 'absolute', inset: 0 }}>
-                      <Image
-                        src={service.illustrations?.[0] || ''}
-                        alt={service.title}
-                        style={{
-                          width: '100%',
-                          height: '100%',
-                          objectFit: 'cover',
-                        }}
-                        className="service-glass-card-img"
-                      />
-                    </div>
-
-                    {/* Gradient Scrim */}
-                    <div
-                      style={{
-                        position: 'absolute',
-                        inset: 0,
-                        background: 'linear-gradient(to bottom, transparent 30%, rgba(10, 25, 47, 0.35) 60%, rgba(10, 25, 47, 0.88) 100%)',
-                        zIndex: 1,
-                      }}
-                    />
-
-                    {/* Frosted Glass Bottom Panel */}
-                    <div
-                      className="service-glass-panel"
-                      style={{
-                        position: 'absolute',
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                        zIndex: 2,
-                        padding: `${rem(16)} ${rem(20)}`,
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: rem(12),
-                      }}
-                    >
-                      {/* Floating Icon Wrapper */}
-                      <div
-                        className="service-glass-icon"
-                        style={{
-                          width: rem(40),
-                          height: rem(40),
-                          borderRadius: rem(12),
-                          background: `linear-gradient(135deg, ${service.accentHex}33, ${service.accentHex}66)`,
-                          border: `1px solid ${service.accentHex}44`,
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          flexShrink: 0,
-                          transition: 'transform 0.3s ease',
-                        }}
-                      >
-                        <service.icon size={20} color="#ffffff" />
-                      </div>
-
-                      {/* Text Label & Action */}
-                      <div style={{ flex: 1, minWidth: 0 }}>
-                        <Text
-                          fw={700}
-                          fz={{ base: rem(14), md: rem(15) }}
-                          c="#ffffff"
-                          style={{
-                            fontFamily: 'var(--font-open-sans), sans-serif',
-                            lineHeight: 1.25,
-                          }}
-                        >
-                          {service.title}
-                        </Text>
-                        <div
-                          style={{
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: rem(4),
-                            color: '#00a8ff',
-                            marginTop: rem(4),
-                          }}
-                        >
-                          <Text size="11px" fw={700} className="service-glass-cta-text">
-                            Explore Service
-                          </Text>
-                          <IconArrowRight size={11} className="service-glass-cta-icon" />
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Top Gradient Highlight Accent Line */}
-                    <div
-                      className="service-glass-accent"
-                      style={{
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        height: rem(4),
-                        background: `linear-gradient(90deg, ${service.accentHex}, ${service.accentHex}88)`,
-                        zIndex: 3,
-                        opacity: 0,
-                        transition: 'opacity 0.4s ease',
-                      }}
-                    />
-                  </div>
-                </Link>
+                <ServiceCategoryCard service={service} />
               </motion.div>
             ))}
           </SimpleGrid>
