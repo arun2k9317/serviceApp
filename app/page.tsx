@@ -509,14 +509,15 @@ export default function HomePage() {
       >
 
       <Box
-        h={isDesktop ? undefined : rem(580)}
+        h={isDesktop ? undefined : 'auto'}
         style={{
           flex: isDesktop ? 1 : 'none',
-          minHeight: isDesktop ? rem(280) : rem(480),
+          minHeight: isDesktop ? rem(280) : rem(450),
           position: 'relative',
           overflow: 'hidden',
         }}
-        pt={isDesktop ? rem(10) : rem(50)}
+        pt={isDesktop ? rem(10) : rem(40)}
+        pb={isDesktop ? undefined : rem(20)}
       >
         {/* ── Hero background image carousel ── */}
         <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
@@ -573,8 +574,8 @@ export default function HomePage() {
             background: 'linear-gradient(90deg, rgba(10, 25, 47, 0.95) 0%, rgba(10, 25, 47, 0.75) 50%, rgba(10, 25, 47, 0.25) 100%)',
           }}
         />
-        <Container size="xl" style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
-          <Stack gap={isDesktop ? 'xs' : 'lg'} style={{ maxWidth: rem(680), zIndex: 5, paddingBottom: isDesktop ? rem(50) : rem(60) }}>
+        <Container size="xl" style={{ height: isDesktop ? '100%' : 'auto', display: 'flex', alignItems: 'center', position: 'relative', zIndex: 5 }}>
+          <Stack gap={isDesktop ? 'xs' : 'sm'} style={{ maxWidth: rem(680), zIndex: 5, paddingBottom: isDesktop ? rem(50) : rem(10) }}>
             {/* Small top tagline indicator */}
             <motion.div
               initial={{ opacity: 0, x: -15 }}
@@ -597,7 +598,7 @@ export default function HomePage() {
             >
               <Title
                 order={2}
-                fz={{ base: rem(32), sm: rem(38), md: isDesktop ? rem(40) : rem(48) }}
+                fz={{ base: rem(24), sm: rem(32), md: isDesktop ? rem(40) : rem(48) }}
                 fw={800}
                 c="#ffffff"
                 style={{
@@ -617,7 +618,7 @@ export default function HomePage() {
               transition={{ duration: 0.8, delay: 0.4 }}
             >
               <Text
-                fz={{ base: rem(14), md: rem(16) }}
+                fz={{ base: rem(13), sm: rem(14), md: rem(16) }}
                 c="#CBDCEB"
                 style={{
                   lineHeight: 1.6,
@@ -635,11 +636,11 @@ export default function HomePage() {
               transition={{ duration: 0.8, delay: 0.6 }}
               style={{ marginTop: rem(10) }}
             >
-              <Group gap="md" wrap="wrap">
+              <Group gap="sm" wrap="wrap">
                 <Button
                   component={Link}
                   href="/contact"
-                  size="md"
+                  size={isDesktop ? "md" : "sm"}
                   radius="md"
                   leftSection={<IconCalendar size={18} />}
                   id="hero-cta-inspection"
@@ -648,8 +649,8 @@ export default function HomePage() {
                       backgroundColor: '#00a8ff',
                       color: '#ffffff',
                       fontWeight: 700,
-                      paddingLeft: rem(22),
-                      paddingRight: rem(22),
+                      paddingLeft: isDesktop ? rem(22) : rem(16),
+                      paddingRight: isDesktop ? rem(22) : rem(16),
                       boxShadow: '0 4px 14px rgba(0, 168, 255, 0.3)',
                       transition: 'all 0.2s ease',
                       '&:hover': {
@@ -664,7 +665,7 @@ export default function HomePage() {
                 <Button
                   component={Link}
                   href="/contact?subject=amc"
-                  size="md"
+                  size={isDesktop ? "md" : "sm"}
                   radius="md"
                   variant="outline"
                   leftSection={<IconFileText size={18} />}
@@ -674,8 +675,8 @@ export default function HomePage() {
                       borderColor: '#ffffff',
                       color: '#ffffff',
                       fontWeight: 700,
-                      paddingLeft: rem(22),
-                      paddingRight: rem(22),
+                      paddingLeft: isDesktop ? rem(22) : rem(16),
+                      paddingRight: isDesktop ? rem(22) : rem(16),
                       backgroundColor: 'rgba(255, 255, 255, 0.05)',
                       transition: 'all 0.2s ease',
                       '&:hover': {
@@ -696,68 +697,69 @@ export default function HomePage() {
         {/* Floating Dark Highlight Banner at bottom */}
         <Box
           style={{
-            position: 'absolute',
-            bottom: 0,
-            left: 0,
-            right: 0,
-            backgroundColor: 'rgba(7, 21, 41, 0.9)',
+            position: isDesktop ? 'absolute' : 'relative',
+            bottom: isDesktop ? 0 : undefined,
+            left: isDesktop ? 0 : undefined,
+            right: isDesktop ? 0 : undefined,
+            backgroundColor: 'rgba(7, 21, 41, 0.95)',
             backdropFilter: 'blur(8px)',
-            borderTopLeftRadius: rem(16),
-            borderTopRightRadius: rem(16),
+            borderTopLeftRadius: isDesktop ? rem(16) : 0,
+            borderTopRightRadius: isDesktop ? rem(16) : 0,
             borderTop: '1px solid rgba(255, 255, 255, 0.08)',
             zIndex: 10,
+            marginTop: isDesktop ? 0 : rem(30),
           }}
           py={rem(22)}
         >
           <Container size="xl">
-            <SimpleGrid cols={{ base: 1, sm: 3, md: 5 }} spacing="xl">
-              <Group gap="sm" wrap="nowrap">
-                <ThemeIcon size="lg" radius="xl" variant="transparent" style={{ color: '#00a8ff' }}>
-                  <IconHeadset size={24} />
+            <SimpleGrid cols={{ base: 2, sm: 3, md: 5 }} spacing={{ base: 'md', md: 'xl' }}>
+              <Group gap="xs" wrap="nowrap">
+                <ThemeIcon size={isDesktop ? "lg" : "md"} radius="xl" variant="transparent" style={{ color: '#00a8ff', flexShrink: 0 }}>
+                  <IconHeadset size={isDesktop ? 24 : 20} />
                 </ThemeIcon>
                 <Stack gap={0}>
-                  <Text size="13px" fw={800} c="#ffffff" lh={1.2}>24/7</Text>
-                  <Text size="11px" c="#8F9CAE" lh={1.2} fw={600}>Emergency Support</Text>
+                  <Text size={isDesktop ? "13px" : "12px"} fw={800} c="#ffffff" lh={1.2}>24/7</Text>
+                  <Text size={isDesktop ? "11px" : "10px"} c="#8F9CAE" lh={1.2} fw={600}>Emergency Support</Text>
                 </Stack>
               </Group>
 
-              <Group gap="sm" wrap="nowrap">
-                <ThemeIcon size="lg" radius="xl" variant="transparent" style={{ color: '#00a8ff' }}>
-                  <IconUserCheck size={24} />
+              <Group gap="xs" wrap="nowrap">
+                <ThemeIcon size={isDesktop ? "lg" : "md"} radius="xl" variant="transparent" style={{ color: '#00a8ff', flexShrink: 0 }}>
+                  <IconUserCheck size={isDesktop ? 24 : 20} />
                 </ThemeIcon>
                 <Stack gap={0}>
-                  <Text size="13px" fw={800} c="#ffffff" lh={1.2}>Trained &</Text>
-                  <Text size="11px" c="#8F9CAE" lh={1.2} fw={600}>Verified Technicians</Text>
+                  <Text size={isDesktop ? "13px" : "12px"} fw={800} c="#ffffff" lh={1.2}>Trained &</Text>
+                  <Text size={isDesktop ? "11px" : "10px"} c="#8F9CAE" lh={1.2} fw={600}>Verified Technicians</Text>
                 </Stack>
               </Group>
 
-              <Group gap="sm" wrap="nowrap">
-                <ThemeIcon size="lg" radius="xl" variant="transparent" style={{ color: '#00a8ff' }}>
-                  <IconShieldCheck size={24} />
+              <Group gap="xs" wrap="nowrap">
+                <ThemeIcon size={isDesktop ? "lg" : "md"} radius="xl" variant="transparent" style={{ color: '#00a8ff', flexShrink: 0 }}>
+                  <IconShieldCheck size={isDesktop ? 24 : 20} />
                 </ThemeIcon>
                 <Stack gap={0}>
-                  <Text size="13px" fw={800} c="#ffffff" lh={1.2}>ISO Standard</Text>
-                  <Text size="11px" c="#8F9CAE" lh={1.2} fw={600}>Procedures</Text>
+                  <Text size={isDesktop ? "13px" : "12px"} fw={800} c="#ffffff" lh={1.2}>ISO Standard</Text>
+                  <Text size={isDesktop ? "11px" : "10px"} c="#8F9CAE" lh={1.2} fw={600}>Procedures</Text>
                 </Stack>
               </Group>
 
-              <Group gap="sm" wrap="nowrap">
-                <ThemeIcon size="lg" radius="xl" variant="transparent" style={{ color: '#00a8ff' }}>
-                  <IconClock size={24} />
+              <Group gap="xs" wrap="nowrap">
+                <ThemeIcon size={isDesktop ? "lg" : "md"} radius="xl" variant="transparent" style={{ color: '#00a8ff', flexShrink: 0 }}>
+                  <IconClock size={isDesktop ? 24 : 20} />
                 </ThemeIcon>
                 <Stack gap={0}>
-                  <Text size="13px" fw={800} c="#ffffff" lh={1.2}>Fast</Text>
-                  <Text size="11px" c="#8F9CAE" lh={1.2} fw={600}>Response Time</Text>
+                  <Text size={isDesktop ? "13px" : "12px"} fw={800} c="#ffffff" lh={1.2}>Fast</Text>
+                  <Text size={isDesktop ? "11px" : "10px"} c="#8F9CAE" lh={1.2} fw={600}>Response Time</Text>
                 </Stack>
               </Group>
 
-              <Group gap="sm" wrap="nowrap">
-                <ThemeIcon size="lg" radius="xl" variant="transparent" style={{ color: '#00a8ff' }}>
-                  <IconFileCheck size={24} />
+              <Group gap="xs" wrap="nowrap">
+                <ThemeIcon size={isDesktop ? "lg" : "md"} radius="xl" variant="transparent" style={{ color: '#00a8ff', flexShrink: 0 }}>
+                  <IconFileCheck size={isDesktop ? 24 : 20} />
                 </ThemeIcon>
                 <Stack gap={0}>
-                  <Text size="13px" fw={800} c="#ffffff" lh={1.2}>Annual Maintenance</Text>
-                  <Text size="11px" c="#8F9CAE" lh={1.2} fw={600}>Contracts (AMC)</Text>
+                  <Text size={isDesktop ? "13px" : "12px"} fw={800} c="#ffffff" lh={1.2}>Annual Maintenance</Text>
+                  <Text size={isDesktop ? "11px" : "10px"} c="#8F9CAE" lh={1.2} fw={600}>Contracts (AMC)</Text>
                 </Stack>
               </Group>
             </SimpleGrid>
