@@ -374,6 +374,263 @@ h1, h2, h3, h4, h5, h6 {
   background-color: #ffffff !important;
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════════
+   HERO BACKGROUND CAROUSEL — Smooth auto-crossfade between three hero images
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.hero-bg-img {
+  will-change: opacity, transform;
+  backface-visibility: hidden;
+}
+
+.hero-bg-img-a {
+  animation: heroCrossfadeA 12s ease-in-out infinite;
+}
+
+.hero-bg-img-b {
+  animation: heroCrossfadeB 12s ease-in-out infinite;
+}
+
+.hero-bg-img-c {
+  animation: heroCrossfadeC 12s ease-in-out infinite;
+}
+
+/* Subtle Ken Burns slow-zoom for depth across 3 images */
+@keyframes heroCrossfadeA {
+  0%       { opacity: 1; transform: scale(1); }
+  28%      { opacity: 1; transform: scale(1.03); }
+  38%      { opacity: 0; transform: scale(1.03); }
+  90%      { opacity: 0; transform: scale(1); }
+  100%     { opacity: 1; transform: scale(1); }
+}
+
+@keyframes heroCrossfadeB {
+  0%       { opacity: 0; transform: scale(1); }
+  28%      { opacity: 0; transform: scale(1); }
+  38%      { opacity: 1; transform: scale(1); }
+  62%      { opacity: 1; transform: scale(1.03); }
+  72%      { opacity: 0; transform: scale(1.03); }
+  100%     { opacity: 0; transform: scale(1); }
+}
+
+@keyframes heroCrossfadeC {
+  0%       { opacity: 0; transform: scale(1.03); }
+  62%      { opacity: 0; transform: scale(1); }
+  72%      { opacity: 1; transform: scale(1); }
+  90%      { opacity: 1; transform: scale(1.03); }
+  100%     { opacity: 0; transform: scale(1.03); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-bg-img-a,
+  .hero-bg-img-b,
+  .hero-bg-img-c {
+    animation: none !important;
+  }
+  .hero-bg-img-a { opacity: 1; }
+  .hero-bg-img-b { opacity: 0; }
+  .hero-bg-img-c { opacity: 0; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   INDUSTRY PHOTO CARDS — Premium layered design with crossfade & parallax hover
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+/* Base card — subtle border, shadow, lift transition */
+.industry-photo-card {
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(255, 255, 255, 0.06);
+  transition:
+    transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  will-change: transform, box-shadow;
+}
+
+/* Hover: spring lift + deep shadow */
+.industry-photo-card:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.45),
+    0 8px 20px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(203, 220, 235, 0.15);
+}
+
+/* Image wrapper — hover zoom */
+.industry-card-img-wrap {
+  transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.industry-photo-card:hover .industry-card-img-wrap {
+  transform: scale(1.05);
+}
+
+/* Image base — GPU layer promotion */
+.industry-card-img {
+  will-change: opacity;
+  backface-visibility: hidden;
+}
+
+/* Image A: visible by default, fades out on hover */
+.industry-card-img-a {
+  opacity: 1;
+  transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
+}
+
+/* Image B: hidden by default, fades in on hover */
+.industry-card-img-b {
+  opacity: 0;
+  transform: scale(1.04);
+  transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 1.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 0;
+}
+
+/* On card hover (desktop): swap images */
+.industry-photo-card:hover .industry-card-img-a {
+  opacity: 0;
+}
+
+.industry-photo-card:hover .industry-card-img-b {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* On swipe (mobile touch): swap images via JS-toggled class */
+.industry-photo-card--swiped .industry-card-img-a {
+  opacity: 0 !important;
+}
+
+.industry-photo-card--swiped .industry-card-img-b {
+  opacity: 1 !important;
+  transform: scale(1) !important;
+}
+
+/* Dot indicators: hidden on desktop (hover suffices), visible on touch */
+.industry-card-dots {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  .industry-card-dots {
+    display: flex !important;
+  }
+}
+
+/* Scrim deepens on hover for dramatic effect */
+.industry-photo-card:hover .industry-card-scrim {
+  background: linear-gradient(
+    to bottom,
+    transparent 15%,
+    rgba(10, 25, 47, 0.55) 50%,
+    rgba(10, 25, 47, 0.94) 100%
+  ) !important;
+}
+
+/* Accent line expands on hover */
+.industry-photo-card:hover .industry-card-accent {
+  width: 48px !important;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .industry-photo-card,
+  .industry-card-img-wrap,
+  .industry-card-img-a,
+  .industry-card-img-b {
+    transition: none !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   GLASSMORPHIC SERVICES GRID — Dribbble / Behance Showcase Styles
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.service-glass-card {
+  box-shadow: 
+    0 8px 30px rgba(0, 0, 0, 0.05),
+    0 1px 2px rgba(0, 0, 0, 0.02);
+  transition: 
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, box-shadow;
+}
+
+/* Image Wrap Zoom */
+.service-glass-card-img-wrap {
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.service-glass-card-img {
+  transition: filter 0.5s ease;
+}
+
+/* Frosted glass bottom panel styling */
+.service-glass-panel {
+  background: rgba(10, 25, 47, 0.45);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  transition: 
+    background-color 0.4s ease,
+    border-color 0.4s ease;
+}
+
+/* Hover States */
+.service-glass-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 
+    0 24px 48px rgba(10, 25, 47, 0.16),
+    0 8px 16px rgba(10, 25, 47, 0.08);
+}
+
+.service-glass-card:hover .service-glass-card-img-wrap {
+  transform: scale(1.06);
+}
+
+.service-glass-card:hover .service-glass-card-img {
+  filter: brightness(0.9);
+}
+
+.service-glass-card:hover .service-glass-panel {
+  background: rgba(10, 25, 47, 0.65);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Accent Line */
+.service-glass-card:hover .service-glass-accent {
+  opacity: 1;
+}
+
+/* Icon & CTA details hover */
+.service-glass-card:hover .service-glass-icon {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 168, 255, 0.25);
+}
+
+.service-glass-card:hover .service-glass-cta {
+  color: #00a8ff !important;
+}
+
+.service-glass-card:hover .service-glass-cta-text {
+  letter-spacing: 0.5px;
+}
+
+.service-glass-card:hover .service-glass-cta-icon {
+  transform: translateX(4px);
+  transition: transform 0.3s ease;
+}
+
+/* Active touch state for mobile click responsiveness */
+.service-glass-card:active {
+  transform: translateY(-2px) scale(0.98);
+  box-shadow: 
+    0 12px 24px rgba(10, 25, 47, 0.1),
+    0 4px 8px rgba(10, 25, 47, 0.05);
+}
 
 
 

@@ -17,10 +17,10 @@ export default function ContactPage() {
   ));
 
   const branchLocations = [
-    { city: 'Headquarters', address: '100 Main Street, Suite 400, Metro City - 10001' },
-    { city: 'North Dispatch Hub', address: '500 Industrial Boulevard, Industrial Area - 10020' },
-    { city: 'South Regional Office', address: '200 Commercial Way, Suite 10, South Zone - 10030' },
-    { city: 'West Dispatch Center', address: '350 Logistics Road, West District - 10040' },
+    { city: 'Headquarters', address: 'Edappally, Kochi, Ernakulam - 682024 (Coordinates: 10.011307, 76.277076)' },
+    { city: 'Aluva Dispatch Hub', address: 'Aluva Town, Ernakulam - 683101' },
+    { city: 'Tripunithura Office', address: 'Tripunithura, Ernakulam - 682301' },
+    { city: 'Kakkanad Dispatch Center', address: 'Near Infopark, Kakkanad, Ernakulam - 682030' },
   ];
 
   return (
@@ -85,7 +85,7 @@ export default function ContactPage() {
                       </ThemeIcon>
                       <div>
                         <Text size="sm" fw={700}>Support Email</Text>
-                        <Text size="sm">support@fullmaintenance.com</Text>
+                        <Text size="sm">info@maintex.com</Text>
                         <Text size="xs" c="dimmed">Email us for AMC tenders and commercial contracts</Text>
                       </div>
                     </Group>
@@ -105,7 +105,7 @@ export default function ContactPage() {
               </Card>
 
               {/* Branch Locations */}
-              <Card withBorder padding="xl" radius="md" shadow="sm">
+              {/* <Card withBorder padding="xl" radius="md" shadow="sm">
                 <Stack gap="sm">
                   <Text fw={800} size="lg" style={{ color: '#6D94C5', fontFamily: 'var(--font-open-sans), sans-serif' }}>
                     Branch Dispatch Hubs
@@ -123,7 +123,7 @@ export default function ContactPage() {
                     ))}
                   </SimpleGrid>
                 </Stack>
-              </Card>
+              </Card> */}
 
               {/* Interactive Iframe Map (Service Coverage Map) */}
               <div
@@ -139,7 +139,7 @@ export default function ContactPage() {
               >
                 <iframe
                   title="Service Coverage Area Map"
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d193595.2528082184!2d-74.11976373099967!3d40.69767006346215!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY!5e0!3m2!1sen!2sus!4v1655458000000!5m2!1sen!2sus"
+                  src="https://maps.google.com/maps?q=10.011307389206726,76.27707605122248&t=&z=15&ie=UTF8&iwloc=&output=embed"
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}

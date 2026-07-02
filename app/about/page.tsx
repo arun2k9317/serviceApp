@@ -29,6 +29,7 @@ import {
   IconStar,
   IconTargetArrow,
   IconArrowRight,
+  IconMapPin,
 } from '@tabler/icons-react';
 import { motion } from 'framer-motion';
 
@@ -322,7 +323,67 @@ export default function AboutPage() {
           </SimpleGrid>
         </Box>
 
-        {/* 6. CTA */}
+        {/* 6. OUR LOCATION */}
+        <Box mb={{ base: 50, md: 80 }}>
+          <SectionHeader
+            subtitle="Where to Find Us"
+            title="Our Location"
+            description="We are headquartered in Ernakulam, Kerala. Feel free to visit or contact us for any service requirements."
+          />
+          <Grid gap={{ base: 'xl', md: 40 }} align="center">
+            <Grid.Col span={{ base: 12, md: 6 }}>
+              <Stack gap="md">
+                <Group gap="xs" wrap="nowrap">
+                  <ThemeIcon color="brandBlue" variant="light" size="md" style={{ flexShrink: 0 }}>
+                    <IconMapPin size={18} style={{ color: '#6D94C5' }} />
+                  </ThemeIcon>
+                  <Text fw={700} c="var(--mantine-color-brandBlue-6)" size="sm">Headquarters</Text>
+                </Group>
+                
+                <Title order={3} fw={900} fz={{ base: rem(20), md: rem(24) }} lh={1.3}>
+                  Ernakulam, Kochi, Kerala
+                </Title>
+                
+                <Text c="dimmed" lh={1.7}>
+                  Our main office is located at Edappally, Kochi. From this central hub, we coordinate our teams and dispatch experienced technicians to homes and commercial spaces across the Ernakulam district.
+                </Text>
+
+                <Box style={{ borderLeft: '3px solid #6D94C5', paddingLeft: rem(12) }} my="sm">
+                  <Text fw={700} size="sm">Coordinates:</Text>
+                  <Text size="sm" c="dimmed">
+                    10.011307389206726, 76.27707605122248
+                  </Text>
+                </Box>
+              </Stack>
+            </Grid.Col>
+            <Grid.Col span={{ base: 12, md: 6 }}>
+              <div
+                style={{
+                  position: 'relative',
+                  width: '100%',
+                  height: rem(300),
+                  borderRadius: rem(12),
+                  overflow: 'hidden',
+                  boxShadow: 'var(--mantine-shadow-xs)',
+                  border: '1px solid var(--mantine-color-default-border)',
+                }}
+              >
+                <iframe
+                  title="Our Location Map"
+                  src="https://maps.google.com/maps?q=10.011307389206726,76.27707605122248&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                ></iframe>
+              </div>
+            </Grid.Col>
+          </Grid>
+        </Box>
+
+        {/* 7. CTA */}
         <Card
           shadow="md"
           radius="lg"

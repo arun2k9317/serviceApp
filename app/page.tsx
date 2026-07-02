@@ -247,92 +247,185 @@ const whyChooseUs = [
 
 // ─── INDUSTRIES WE SERVE DATA ────────────────────────────────────────────────
 const industries = [
-  { title: 'Corporate Offices', imgLeft: '/buildings/citytower-left.png', imgRight: '/buildings/citytower-right.png' },
-  { title: 'Commercial Buildings', imgLeft: '/buildings/building01-left.png', imgRight: '/buildings/building01-right.png' },
-  { title: 'Residential Apartments', imgLeft: '/buildings/apartment-left.png', imgRight: '/buildings/apartment-right.png' },
-  { title: 'Villas & Homes', imgLeft: '/buildings/house-left.png', imgRight: '/buildings/house-right.png' },
-  { title: 'Hospitals & Healthcare', imgLeft: '/buildings/hospital-left.png', imgRight: '/buildings/hospital-right.png' },
-  { title: 'Hotels & Resorts', imgLeft: '/buildings/beachhouse-left.png', imgRight: '/buildings/beachhouse-right.png' },
-  { title: 'Educational Institutions', imgLeft: '/buildings/building02-left.png', imgRight: '/buildings/building02-right.png' },
-  { title: 'Retail Stores & Malls', imgLeft: '/buildings/mall-left.png', imgRight: '/buildings/mall-right.png' },
-  { title: 'Warehouses & Garages', imgLeft: '/buildings/garage-left.png', imgRight: '/buildings/garage-right.png' },
-  { title: 'Industrial Facilities', imgLeft: '/buildings/factory-left.png', imgRight: '/buildings/factory-right.png' },
+  { title: 'Corporate Offices', tagline: 'Workplace Excellence', img1: '/corporate_office1.jpeg', img2: '/corporate_office2.jpeg' },
+  { title: 'Commercial Buildings', tagline: 'Premium Upkeep', img1: '/commercial_building1.jpeg', img2: '/commercial_building2.jpeg' },
+  { title: 'Residential Apartments', tagline: 'Modern Living', img1: '/residential_apartment1.jpeg', img2: '/residential_apartment2.jpeg' },
+  { title: 'Villas & Homes', tagline: 'Personal Comfort', img1: '/villa1.jpeg', img2: '/villa2.jpeg' },
+  { title: 'Hospitals & Healthcare', tagline: 'Critical Environments', img1: '/hospital1.jpeg', img2: '/hospital2.jpeg' },
+  { title: 'Hotels & Resorts', tagline: 'Hospitality Standards', img1: '/hotel1.jpeg', img2: '/hotel2.jpeg' },
+  { title: 'Educational Institutions', tagline: 'Campus Care', img1: '/edcational_institution1.jpeg', img2: '/educational_institution2.jpeg' },
+  { title: 'Retail Stores & Malls', tagline: 'Shopper Experience', img1: '/retail_store_and_mall1.jpeg', img2: '/retail_store_and_mall2.jpeg' },
+  { title: 'Warehouses & Garages', tagline: 'Industrial Spaces', img1: '/warehouse1.jpeg', img2: '/warehouse2.jpeg' },
+  { title: 'Industrial Facilities', tagline: 'Heavy Duty Solutions', img1: '/industry1.jpeg', img2: '/industry2.jpeg' },
 ];
 
 
 
-// ─── INDUSTRY CARD HELPER COMPONENT (Zooms building asset on hover) ──────────
-function IndustryCard({ title, imgLeft }: { title: string; imgLeft: string }) {
-  const [hovered, setHovered] = useState(false);
+// ─── INDUSTRY CARD — Premium photo card with swipe (mobile) & hover (desktop) ─
+function IndustryCard({ title, tagline, img1, img2, index }: {
+  title: string;
+  tagline: string;
+  img1: string;
+  img2: string;
+  index: number;
+}) {
+  const [showSecond, setShowSecond] = useState(false);
+  const touchRef = React.useRef<{ startX: number; startY: number } | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchRef.current = {
+      startX: e.touches[0].clientX,
+      startY: e.touches[0].clientY,
+    };
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (!touchRef.current) return;
+    const deltaX = e.changedTouches[0].clientX - touchRef.current.startX;
+    const deltaY = e.changedTouches[0].clientY - touchRef.current.startY;
+    // Only trigger if horizontal swipe is dominant and > 40px
+    if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY)) {
+      setShowSecond(deltaX < 0 ? true : false);
+    }
+    touchRef.current = null;
+  };
 
   return (
-    <Card
-      p={{ base: 'sm', md: 'md' }}
-      radius="md"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+    <div
+      className={`industry-photo-card${showSecond ? ' industry-photo-card--swiped' : ''}`}
+      id={`industry-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
       style={{
-        backgroundColor: hovered ? 'rgba(255, 255, 255, 0.10)' : 'rgba(255, 255, 255, 0.06)',
-        border: hovered ? '1px solid rgba(203, 220, 235, 0.35)' : '1px solid rgba(255, 255, 255, 0.1)',
-        textAlign: 'center',
-        height: '100%',
-        cursor: 'default',
-        transition: 'background-color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease',
-        boxShadow: hovered ? '0 12px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(203,220,235,0.2)' : 'none',
-        // overflow must be visible so the image can burst out
-        overflow: 'visible',
         position: 'relative',
-        zIndex: hovered ? 10 : 1,
+        borderRadius: rem(16),
+        overflow: 'hidden',
+        aspectRatio: '3 / 4',
+        cursor: 'default',
       }}
     >
-      <Stack align="center" gap="sm" style={{ paddingTop: rem(28) }}>
-        {/* Icon wrapper: tall enough for the zoomed image to not reflow text */}
+      {/* ── Dual-image layer ── */}
+      <div style={{ position: 'absolute', inset: 0 }} className="industry-card-img-wrap">
+        <Image
+          src={img1}
+          alt={`${title} — Photo 1`}
+          style={{
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+          }}
+          className="industry-card-img industry-card-img-a"
+        />
+        <Image
+          src={img2}
+          alt={`${title} — Photo 2`}
+          style={{
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+          }}
+          className="industry-card-img industry-card-img-b"
+        />
+      </div>
+
+      {/* ── Cinematic gradient scrim ── */}
+      <div
+        className="industry-card-scrim"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'linear-gradient(to bottom, transparent 30%, rgba(10, 25, 47, 0.45) 60%, rgba(10, 25, 47, 0.88) 100%)',
+          zIndex: 2,
+          transition: 'background 0.5s ease',
+        }}
+      />
+
+      {/* ── Dot indicators (mobile) ── */}
+      <div
+        style={{
+          position: 'absolute',
+          top: rem(10),
+          right: rem(10),
+          zIndex: 4,
+          display: 'flex',
+          gap: rem(5),
+        }}
+        className="industry-card-dots"
+      >
         <div
           style={{
-            position: 'relative',
-            width: rem(80),
-            height: rem(80),
-            display: 'flex',
-            alignItems: 'flex-end',
-            justifyContent: 'center',
-            // overflow visible so the scaled image bursts outside the card
-            overflow: 'visible',
-            zIndex: hovered ? 20 : 1,
+            width: rem(6),
+            height: rem(6),
+            borderRadius: '50%',
+            backgroundColor: showSecond ? 'rgba(255,255,255,0.4)' : '#ffffff',
+            transition: 'background-color 0.3s ease',
           }}
-        >
-          <NextImage
-            src={imgLeft}
-            alt={title}
-            width={80}
-            height={80}
-            style={{
-              objectFit: 'contain',
-              transformOrigin: 'center bottom',
-              transform: hovered
-                ? 'scale(1.75) translateY(-14px)'
-                : 'scale(1) translateY(0px)',
-              transition: 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
-              filter: hovered
-                ? 'drop-shadow(0 16px 24px rgba(0,0,0,0.55)) drop-shadow(0 0 8px rgba(203,220,235,0.25))'
-                : 'drop-shadow(0 4px 6px rgba(0,0,0,0.3))',
-              willChange: 'transform, filter',
-            }}
-          />
-        </div>
-        <Text
-          fw={600}
-          fz={{ base: 'xs', md: 'sm' }}
-          c={hovered ? '#ffffff' : '#e9ecef'}
+        />
+        <div
           style={{
-            lineHeight: 1.3,
-            transition: 'color 0.3s ease',
-            marginTop: rem(6),
+            width: rem(6),
+            height: rem(6),
+            borderRadius: '50%',
+            backgroundColor: showSecond ? '#ffffff' : 'rgba(255,255,255,0.4)',
+            transition: 'background-color 0.3s ease',
+          }}
+        />
+      </div>
+
+      {/* ── Bottom text content ── */}
+      <div
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          zIndex: 3,
+          padding: `${rem(20)} ${rem(16)} ${rem(16)}`,
+        }}
+      >
+        {/* Thin accent line */}
+        <div
+          className="industry-card-accent"
+          style={{
+            width: rem(28),
+            height: rem(2),
+            backgroundColor: '#00a8ff',
+            borderRadius: rem(1),
+            marginBottom: rem(8),
+            transition: 'width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
+          }}
+        />
+        <Text
+          fw={700}
+          fz={{ base: rem(13), md: rem(14) }}
+          c="#ffffff"
+          style={{
+            fontFamily: 'var(--font-open-sans), sans-serif',
+            textTransform: 'uppercase',
+            letterSpacing: rem(0.8),
+            lineHeight: 1.25,
           }}
         >
           {title}
         </Text>
-      </Stack>
-    </Card>
+        <Text
+          fz={{ base: rem(11), md: rem(11) }}
+          c="rgba(203, 220, 235, 0.8)"
+          style={{
+            marginTop: rem(3),
+            letterSpacing: rem(0.3),
+            lineHeight: 1.3,
+            fontStyle: 'italic',
+          }}
+        >
+          {tagline}
+        </Text>
+      </div>
+    </div>
   );
 }
 
@@ -359,11 +452,11 @@ export default function HomePage() {
     "priceRange": "$$",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "100 Main Street, Suite 400",
-      "addressLocality": "Metro City",
-      "addressRegion": "MC",
-      "postalCode": "10001",
-      "addressCountry": "US"
+      "streetAddress": "Edappally, Kochi",
+      "addressLocality": "Ernakulam",
+      "addressRegion": "Kerala",
+      "postalCode": "682024",
+      "addressCountry": "IN"
     },
     "openingHoursSpecification": {
       "@type": "OpeningHoursSpecification",
@@ -422,12 +515,64 @@ export default function HomePage() {
           minHeight: isDesktop ? rem(280) : rem(480),
           position: 'relative',
           overflow: 'hidden',
-          backgroundImage: 'linear-gradient(90deg, rgba(10, 25, 47, 0.95) 0%, rgba(10, 25, 47, 0.75) 50%, rgba(10, 25, 47, 0.25) 100%), url("/homepage.jpeg")',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center right',
         }}
         pt={isDesktop ? rem(10) : rem(50)}
       >
+        {/* ── Hero background image carousel ── */}
+        <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+          <img
+            src="/homepage1.jpeg"
+            alt=""
+            aria-hidden="true"
+            className="hero-bg-img hero-bg-img-a"
+            style={{
+              position: 'absolute',
+              inset: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              objectPosition: 'center right',
+            }}
+          />
+          <img
+            src="/homepage2.jpeg"
+            alt=""
+            aria-hidden="true"
+            className="hero-bg-img hero-bg-img-b"
+            style={{
+              position: 'absolute',
+              inset: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              objectPosition: 'center right',
+            }}
+          />
+             <img
+            src="/homepage3.jpeg"
+            alt=""
+            aria-hidden="true"
+            className="hero-bg-img hero-bg-img-c"
+            style={{
+              position: 'absolute',
+              inset: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              objectPosition: 'center right',
+            }}
+          />
+        </div>
+
+        {/* ── Gradient overlay ── */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            zIndex: 1,
+            background: 'linear-gradient(90deg, rgba(10, 25, 47, 0.95) 0%, rgba(10, 25, 47, 0.75) 50%, rgba(10, 25, 47, 0.25) 100%)',
+          }}
+        />
         <Container size="xl" style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
           <Stack gap={isDesktop ? 'xs' : 'lg'} style={{ maxWidth: rem(680), zIndex: 5, paddingBottom: isDesktop ? rem(50) : rem(60) }}>
             {/* Small top tagline indicator */}
@@ -619,202 +764,248 @@ export default function HomePage() {
           </Container>
         </Box>
       </Box>
-
-      {/* ═══════════════════════ 2. OUR SERVICES (HORIZONTAL CAROUSEL) ═══════════════════════ */}
-      <Box
-        style={{
-          flex: isDesktop ? '0 0 auto' : 'none',
-          backgroundColor: '#ffffff',
-          display: 'flex',
-          alignItems: 'center',
-        }}
-        py={isDesktop ? rem(14) : rem(40)}
-      >
-        <Container size="xl" style={{ width: '100%' }}>
-          <Carousel
-            slideSize={{ base: '100%', sm: '50%', md: '33.333%', lg: '25%', xl: '16.666%' }}
-            slideGap="md"
-            withControls={true}
-            emblaOptions={{ loop: true, align: 'start', slidesToScroll: 1 }}
-            styles={{
-              root: { width: '100%' },
-              controls: {
-                paddingLeft: rem(10),
-                paddingRight: rem(10),
-              },
-              control: {
-                backgroundColor: 'rgba(10, 25, 47, 0.85)',
-                border: 'none',
-                color: '#ffffff',
-                width: rem(36),
-                height: rem(36),
-                boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-                '&:hover': {
-                  backgroundColor: '#00a8ff',
-                },
-              },
-            }}
-          >
-            {serviceCategories.map((service, index) => (
-              <Carousel.Slide key={service.title}>
-                <motion.div
-                  initial={{ opacity: 0, y: 15 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: index * 0.05 }}
-                  style={{ height: '100%' }}
-                >
-                  <Card
-                    padding={0}
-                    radius="md"
-                    className="hover-lift"
-                    id={`service-${service.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
-                    style={{
-                      height: isDesktop ? rem(175) : rem(240),
-                      position: 'relative',
-                      overflow: 'hidden',
-                      border: '1px solid #eaeaea',
-                      backgroundColor: '#ffffff',
-                      boxShadow: '0 4px 12px rgba(0,0,0,0.04)',
-                      display: 'flex',
-                      flexDirection: 'column',
-                    }}
-                  >
-                    {/* Top Image/Carousel Section */}
-                    <Box style={{ height: isDesktop ? rem(135) : rem(130), position: 'relative', overflow: 'hidden' }}>
-                      {service.illustrations && service.illustrations.length > 1 ? (
-                        <Carousel
-                          withIndicators={true}
-                          withControls={isDesktop ? false : true}
-                          emblaOptions={{ loop: true }}
-                          plugins={[Autoplay({ delay: 3500 + index * 200, stopOnInteraction: false })]}
-                          style={{
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                            width: '100%',
-                            height: '100%',
-                            zIndex: 0,
-                          }}
-                          styles={{
-                            root: { height: '100%', width: '100%' },
-                            viewport: { height: '100%', width: '100%' },
-                            container: { height: '100%', width: '100%' },
-                            control: {
-                              backgroundColor: 'rgba(0, 0, 0, 0.45)',
-                              border: 'none',
-                              color: '#ffffff',
-                              width: rem(20),
-                              height: rem(20),
-                            },
-                          }}
-                        >
-                          {service.illustrations.map((imgUrl, idx) => (
-                            <Carousel.Slide key={idx} style={{ height: '100%', width: '100%' }}>
-                              <Image
-                                src={imgUrl}
-                                alt={`${service.title} - ${idx + 1}`}
-                                style={{
-                                  width: '100%',
-                                  height: '100%',
-                                  objectFit: 'cover',
-                                }}
-                              />
-                            </Carousel.Slide>
-                          ))}
-                        </Carousel>
-                      ) : (
-                        <Image
-                          src={service.illustrations?.[0] || ''}
-                          alt={service.title}
-                          style={{
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                            width: '100%',
-                            height: '100%',
-                            objectFit: 'cover',
-                            zIndex: 0,
-                          }}
-                          className="service-card-img"
-                        />
-                      )}
-                    </Box>
-
-                    {/* Overlapping Icon Badge */}
-                    <ThemeIcon
-                      size={rem(32)}
-                      radius="xl"
-                      color="blue"
-                      style={{
-                        position: 'absolute',
-                        top: isDesktop ? rem(119) : rem(114),
-                        left: rem(16),
-                        zIndex: 10,
-                        border: '2px solid #ffffff',
-                        boxShadow: '0 2px 8px rgba(11, 94, 215, 0.2)',
-                      }}
-                    >
-                      <service.icon size={16} />
-                    </ThemeIcon>
-
-                    {/* Bottom Inline Row Details Section */}
-                    <div
-                      style={{
-                        padding: isDesktop ? `${rem(8)} ${rem(10)}` : `${rem(14)} ${rem(16)}`,
-                        flex: 1,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        backgroundColor: '#ffffff',
-                        gap: rem(8),
-                      }}
-                    >
-                      <Text
-                        fw={800}
-                        fz={isDesktop ? rem(11) : rem(13)}
-                        c="#0A192F"
-                        style={{
-                          lineHeight: 1.2,
-                          fontFamily: 'var(--font-open-sans), sans-serif',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis',
-                          whiteSpace: 'nowrap',
-                          flex: 1,
-                        }}
-                      >
-                        {service.title}
-                      </Text>
-                      <Link
-                        href={`/services#${service.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
-                        style={{
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          gap: rem(2),
-                          textDecoration: 'none',
-                          color: '#00a8ff',
-                          cursor: 'pointer',
-                          flexShrink: 0,
-                        }}
-                      >
-                        <Text size={isDesktop ? '10px' : 'xs'} fw={700}>
-                          Read More
-                        </Text>
-                        <IconArrowRight size={isDesktop ? 10 : 12} />
-                      </Link>
-                    </div>
-                  </Card>
-                </motion.div>
-              </Carousel.Slide>
-            ))}
-          </Carousel>
-        </Container>
-      </Box>
     </Box>
 
+      {/* ═══════════════════════ 2. OUR SERVICES (GLASSMORPHIC GRID) ═══════════════════════ */}
+      <Box
+        style={{
+          background: 'linear-gradient(180deg, #ffffff 0%, #f4f6f9 100%)',
+          minHeight: isDesktop ? 'calc(100vh - 65px)' : 'auto',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+        }}
+        py={{ base: rem(40), md: rem(48) }}
+      >
+        <Container size="xl" style={{ width: '100%' }}>
+          <SectionHeader
+            subtitle="What We Offer"
+            title="Our Services"
+            description="Premium, reliable facility management solutions crafted to keep your property running flawlessly."
+          />
+
+          <SimpleGrid
+            cols={{ base: 1, sm: 3 }}
+            spacing={{ base: rem(16), md: rem(24) }}
+            style={{ marginTop: rem(20) }}
+          >
+            {serviceCategories.map((service, index) => (
+              <motion.div
+                key={service.title}
+                initial={{ opacity: 0, y: 24, scale: 0.98 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, margin: '-20px' }}
+                transition={{ duration: 0.5, delay: index * 0.05, ease: [0.25, 0.8, 0.25, 1] }}
+                style={{ height: '100%' }}
+              >
+                <Link
+                  href={`/services#${service.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
+                  style={{ textDecoration: 'none', display: 'block', height: '100%' }}
+                >
+                  <div
+                    className="service-glass-card"
+                    id={`service-${service.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
+                    style={{
+                      position: 'relative',
+                      borderRadius: rem(20),
+                      overflow: 'hidden',
+                      aspectRatio: '4 / 3',
+                      cursor: 'pointer',
+                      boxShadow: '0 10px 30px rgba(0, 0, 0, 0.04)',
+                    }}
+                  >
+                    {/* Top Image Section */}
+                    <div className="service-glass-card-img-wrap" style={{ position: 'absolute', inset: 0 }}>
+                      <Image
+                        src={service.illustrations?.[0] || ''}
+                        alt={service.title}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
+                        }}
+                        className="service-glass-card-img"
+                      />
+                    </div>
+
+                    {/* Gradient Scrim */}
+                    <div
+                      style={{
+                        position: 'absolute',
+                        inset: 0,
+                        background: 'linear-gradient(to bottom, transparent 30%, rgba(10, 25, 47, 0.35) 60%, rgba(10, 25, 47, 0.88) 100%)',
+                        zIndex: 1,
+                      }}
+                    />
+
+                    {/* Frosted Glass Bottom Panel */}
+                    <div
+                      className="service-glass-panel"
+                      style={{
+                        position: 'absolute',
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        zIndex: 2,
+                        padding: `${rem(16)} ${rem(20)}`,
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: rem(12),
+                      }}
+                    >
+                      {/* Floating Icon Wrapper */}
+                      <div
+                        className="service-glass-icon"
+                        style={{
+                          width: rem(40),
+                          height: rem(40),
+                          borderRadius: rem(12),
+                          background: `linear-gradient(135deg, ${service.accentHex}33, ${service.accentHex}66)`,
+                          border: `1px solid ${service.accentHex}44`,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          flexShrink: 0,
+                          transition: 'transform 0.3s ease',
+                        }}
+                      >
+                        <service.icon size={20} color="#ffffff" />
+                      </div>
+
+                      {/* Text Label & Action */}
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <Text
+                          fw={700}
+                          fz={{ base: rem(14), md: rem(15) }}
+                          c="#ffffff"
+                          style={{
+                            fontFamily: 'var(--font-open-sans), sans-serif',
+                            lineHeight: 1.25,
+                          }}
+                        >
+                          {service.title}
+                        </Text>
+                        <div
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: rem(4),
+                            color: '#00a8ff',
+                            marginTop: rem(4),
+                          }}
+                        >
+                          <Text size="11px" fw={700} className="service-glass-cta-text">
+                            Explore Service
+                          </Text>
+                          <IconArrowRight size={11} className="service-glass-cta-icon" />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Top Gradient Highlight Accent Line */}
+                    <div
+                      className="service-glass-accent"
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        height: rem(4),
+                        background: `linear-gradient(90deg, ${service.accentHex}, ${service.accentHex}88)`,
+                        zIndex: 3,
+                        opacity: 0,
+                        transition: 'opacity 0.4s ease',
+                      }}
+                    />
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
+          </SimpleGrid>
+        </Container>
+      </Box>
+
       {/* ═══════════════════════ 4. WHY CHOOSE US ═══════════════════════ */}
-      <Box style={{ backgroundColor: '#E8DFCA' }} py={{ base: 50, md: 80 }} className="why-us-bg">
-        <Container size="lg">
+      <Box 
+        style={{ 
+          backgroundColor: '#E8DFCA',
+          position: 'relative',
+          overflow: 'hidden',
+        }} 
+        py={{ base: 50, md: 80 }} 
+        className="why-us-bg"
+      >
+        {/* Animated Background Vector Shape 1 */}
+        <motion.div
+          animate={{
+            x: [0, 30, -20, 0],
+            y: [0, -40, 20, 0],
+            scale: [1, 1.15, 0.9, 1],
+            rotate: [0, 90, 180, 360],
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          style={{
+            position: 'absolute',
+            top: '-10%',
+            left: '-10%',
+            width: rem(350),
+            height: rem(350),
+            borderRadius: '45% 55% 70% 30% / 45% 60% 40% 55%',
+            background: 'linear-gradient(135deg, rgba(109, 148, 197, 0.3) 0%, rgba(203, 220, 235, 0.15) 100%)',
+            filter: 'blur(40px)',
+            pointerEvents: 'none',
+            zIndex: 1,
+          }}
+        />
+
+        {/* Animated Background Vector Shape 2 */}
+        <motion.div
+          animate={{
+            x: [0, -40, 30, 0],
+            y: [0, 30, -30, 0],
+            scale: [1, 0.85, 1.1, 1],
+            rotate: [360, 270, 90, 0],
+          }}
+          transition={{
+            duration: 25,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          style={{
+            position: 'absolute',
+            bottom: '-10%',
+            right: '-10%',
+            width: rem(400),
+            height: rem(400),
+            borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%',
+            background: 'linear-gradient(135deg, rgba(43, 58, 85, 0.15) 0%, rgba(109, 148, 197, 0.25) 100%)',
+            filter: 'blur(50px)',
+            pointerEvents: 'none',
+            zIndex: 1,
+          }}
+        />
+
+        {/* Decorative Dot Grid Pattern */}
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            opacity: 0.08,
+            backgroundImage: `radial-gradient(var(--mantine-color-brandBlue-6) 1px, transparent 1px)`,
+            backgroundSize: '24px 24px',
+            pointerEvents: 'none',
+            zIndex: 1,
+          }}
+        />
+
+        <Container size="lg" style={{ position: 'relative', zIndex: 2 }}>
           <Grid gap={{ base: 'xl', md: 50 }} align="stretch">
             {/* Left Column: Visual/Stats Panel */}
             <Grid.Col span={{ base: 12, md: 5 }}>
@@ -950,22 +1141,27 @@ export default function HomePage() {
           />
 
           <SimpleGrid
-            cols={{ base: 2, xs: 3, sm: 4, md: 5 }}
-            spacing={{ base: 'sm', md: 'lg' }}
-            style={{ overflow: 'visible' }}
+            cols={{ base: 2, xs: 2, sm: 3, md: 5 }}
+            spacing={{ base: 'sm', md: rem(16) }}
           >
             {industries.map((industry, index) => (
               <motion.div
                 key={industry.title}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.3, delay: index * 0.04 }}
-                style={{ position: 'relative', overflow: 'visible' }}
+                initial={{ opacity: 0, y: 24, scale: 0.96 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{
+                  duration: 0.5,
+                  delay: index * 0.06,
+                  ease: [0.25, 0.8, 0.25, 1],
+                }}
               >
                 <IndustryCard
                   title={industry.title}
-                  imgLeft={industry.imgLeft}
+                  tagline={industry.tagline}
+                  img1={industry.img1}
+                  img2={industry.img2}
+                  index={index}
                 />
               </motion.div>
             ))}

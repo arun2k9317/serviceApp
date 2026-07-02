@@ -199,10 +199,10 @@ export default function Footer() {
                   <IconMapPin size={18} style={{ color: '#CBDCEB', marginTop: rem(2), flexShrink: 0 }} />
                   <div>
                     <Text size="sm" fw={600} style={{ color: '#ffffff' }}>
-                      Metro City
+                      Ernakulam, Kerala
                     </Text>
                     <Text size="xs" style={{ color: '#adb5bd' }}>
-                      Serving all major areas & surrounding metropolitan regions
+                      Serving Ernakulam, Kochi & surrounding regions
                     </Text>
                   </div>
                 </Group>
