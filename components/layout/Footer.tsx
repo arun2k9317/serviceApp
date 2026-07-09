@@ -224,7 +224,7 @@ export default function Footer() {
         {/* Copyright */}
         <Group justify="space-between" align="center" wrap="wrap">
           <Text size="xs" style={{ color: '#adb5bd' }}>
-            © {currentYear} Full Maintenance & Deep Cleaning. All rights reserved.
+            © {currentYear} Maintex Interntional Facility Management LLP. All rights reserved.
           </Text>
           <Group gap="md">
             <Link
