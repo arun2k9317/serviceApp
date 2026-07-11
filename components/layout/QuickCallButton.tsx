@@ -4,7 +4,14 @@ import React from 'react';
 import { Button, Grid } from '@mantine/core';
 import { IconPhone, IconBrandWhatsapp } from '@tabler/icons-react';
 
+import { usePathname } from 'next/navigation';
+
 export default function QuickCallButton() {
+  const pathname = usePathname();
+  if (pathname && pathname.startsWith('/admin')) {
+    return null;
+  }
+
   const phoneNumber = '+919048199754'; // Kerala number
   const whatsappNumber = '919048199754';
   const whatsappMsg = encodeURIComponent('Hello, I want to book a maintenance inspection.');

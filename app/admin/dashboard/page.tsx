@@ -9,6 +9,11 @@ import {
   getTestimonials,
   getOffers,
   getGalleryItems,
+  getProperties,
+  getTechniciansAndCaretakers,
+  getServiceRequests,
+  getServicesList,
+  getWorkLogs,
 } from '../../../lib/actions';
 
 export const metadata = {
@@ -28,13 +33,18 @@ export default async function AdminDashboardPage() {
   }
 
   // 2. Query Data in parallel on the server
-  const [stats, inquiries, callbacks, testimonials, offers, gallery] = await Promise.all([
+  const [stats, inquiries, callbacks, testimonials, offers, gallery, properties, technicians, requests, services, workLogs] = await Promise.all([
     getDashboardStats(),
     getInquiries(),
     getCallbacks(),
     getTestimonials(),
     getOffers(),
     getGalleryItems(),
+    getProperties(),
+    getTechniciansAndCaretakers(),
+    getServiceRequests(),
+    getServicesList(),
+    getWorkLogs(),
   ]);
 
   return (
@@ -45,6 +55,11 @@ export default async function AdminDashboardPage() {
       testimonials={testimonials}
       offers={offers}
       gallery={gallery}
+      properties={properties}
+      technicians={technicians}
+      requests={requests}
+      services={services}
+      workLogs={workLogs}
     />
   );
 }

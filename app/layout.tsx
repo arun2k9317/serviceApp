@@ -11,10 +11,7 @@ import './globals.css';
 
 // Custom Configuration & Layout Components
 import { theme } from '../theme';
-import Header from '../components/layout/Header';
-import Footer from '../components/layout/Footer';
-import WhatsAppButton from '../components/layout/WhatsAppButton';
-import QuickCallButton from '../components/layout/QuickCallButton';
+import LayoutContent from '../components/layout/LayoutContent';
 import ReactPolyfill from '../components/SEO/ReactPolyfill';
 
 // Fonts Setup
@@ -102,21 +99,9 @@ export default function RootLayout({
           <ReactPolyfill />
           <Notifications position="top-right" zIndex={2000} />
           
-          <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-            <Header />
-            
-            <main className="main-content">
-              {children}
-            </main>
-            
-            <Footer />
-          </div>
-
-          {/* Global Floating Action Buttons */}
-          <div className="floating-widgets">
-            <WhatsAppButton />
-          </div>
-          <QuickCallButton />
+          <LayoutContent>
+            {children}
+          </LayoutContent>
         </MantineProvider>
       </body>
     </html>

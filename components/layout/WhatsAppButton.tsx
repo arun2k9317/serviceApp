@@ -5,7 +5,14 @@ import { ActionIcon, Tooltip } from '@mantine/core';
 import { IconBrandWhatsapp } from '@tabler/icons-react';
 import { motion } from 'framer-motion';
 
+import { usePathname } from 'next/navigation';
+
 export default function WhatsAppButton() {
+  const pathname = usePathname();
+  if (pathname && pathname.startsWith('/admin')) {
+    return null;
+  }
+
   const whatsappNumber = '919048199754'; // Kerala number
   const message = encodeURIComponent('Hello, I would like to inquire about your facility maintenance & deep cleaning services.');
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;

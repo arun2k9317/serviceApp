@@ -3,6 +3,7 @@
 import { z } from 'zod';
 import { createServerClientInstance, isSupabaseConfigured, supabase } from './supabase';
 import { revalidatePath } from 'next/cache';
+import { randomUUID } from 'crypto';
 
 // ============================================================================
 // VALIDATION SCHEMAS
@@ -184,9 +185,8 @@ export async function getDashboardStats() {
         .eq('status', 'pending');
 
       const { count: activeAmc } = await supabase
-        .from('inquiries')
+        .from('service_requests')
         .select('*', { count: 'exact', head: true })
-        .eq('service_type', 'Annual Maintenance Contracts (AMC)')
         .eq('status', 'pending');
 
       return {
@@ -633,11 +633,20 @@ export async function adminLogin(rawState: any, formData: FormData) {
   if (isSupabaseConfigured()) {
     try {
       const supabase = await createServerClientInstance();
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-      if (error) throw error;
+      const { data: profile, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('email', email.trim().toLowerCase())
+        .eq('password', password)
+        .eq('role', 'admin')
+        .single();
+
+      if (error || !profile) {
+        return { success: false, error: 'Invalid credentials or not authorized as admin' };
+      }
+
+      const cookieStore = await (await import('next/headers')).cookies();
+      cookieStore.set('admin-session-email', email.trim().toLowerCase(), { path: '/', maxAge: 60 * 60 * 24 });
       return { success: true };
     } catch (e: any) {
       return { success: false, error: e.message || 'Authentication failed' };
@@ -654,17 +663,9 @@ export async function adminLogin(rawState: any, formData: FormData) {
 }
 
 export async function adminLogout() {
-  if (isSupabaseConfigured()) {
-    try {
-      const supabase = await createServerClientInstance();
-      await supabase.auth.signOut();
-    } catch (e) {
-      console.error(e);
-    }
-  }
-
   try {
     const cookieStore = await (await import('next/headers')).cookies();
+    cookieStore.delete('admin-session-email');
     cookieStore.delete('mock-admin-session');
   } catch (e) {
     console.error(e);
@@ -677,9 +678,8 @@ export async function adminLogout() {
 export async function checkAdminAuth() {
   if (isSupabaseConfigured()) {
     try {
-      const supabase = await createServerClientInstance();
-      const { data: { user } } = await supabase.auth.getUser();
-      return user !== null;
+      const cookieStore = await (await import('next/headers')).cookies();
+      return cookieStore.has('admin-session-email');
     } catch (e) {
       return false;
     }
@@ -692,5 +692,211 @@ export async function checkAdminAuth() {
     return false;
   }
 }
+
+// ============================================================================
+// WEB PORTAL ADMIN MANAGEMENT ACTIONS (Properties, Technicians, Requests)
+// ============================================================================
+
+export async function getProperties() {
+  if (isSupabaseConfigured()) {
+    try {
+      const supabase = await createServerClientInstance();
+      const { data, error } = await supabase.from('properties').select('*').order('name');
+      if (error) throw error;
+      return data || [];
+    } catch (e: any) {
+      console.error('getProperties error:', e);
+      return [];
+    }
+  }
+  return [];
+}
+
+export async function getTechniciansAndCaretakers() {
+  if (isSupabaseConfigured()) {
+    try {
+      const supabase = await createServerClientInstance();
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .or('role.eq.technician,role.eq.caretaker')
+        .order('name');
+      if (error) throw error;
+      return data || [];
+    } catch (e: any) {
+      console.error('getTechniciansAndCaretakers error:', e);
+      return [];
+    }
+  }
+  return [];
+}
+
+export async function getServiceRequests() {
+  if (isSupabaseConfigured()) {
+    try {
+      const supabase = await createServerClientInstance();
+      const { data, error } = await supabase
+        .from('service_requests')
+        .select('*')
+        .order('created_at', { ascending: false });
+      if (error) throw error;
+      return data || [];
+    } catch (e: any) {
+      console.error('getServiceRequests error:', e);
+      return [];
+    }
+  }
+  return [];
+}
+
+export async function getServicesList() {
+  if (isSupabaseConfigured()) {
+    try {
+      const supabase = await createServerClientInstance();
+      const { data, error } = await supabase.from('services').select('*').order('name');
+      if (error) throw error;
+      return data || [];
+    } catch (e: any) {
+      console.error('getServicesList error:', e);
+      return [];
+    }
+  }
+  return [];
+}
+
+export async function createWebProperty(input: {
+  name: string;
+  property_type: string;
+  amc_plan?: string;
+  address: string;
+  city: string;
+  total_units: number;
+  amc_contract: any;
+}) {
+  if (isSupabaseConfigured()) {
+    try {
+      const supabase = await createServerClientInstance();
+      const { data, error } = await supabase
+        .from('properties')
+        .insert([{
+          id: randomUUID(),
+          ...input,
+          amc_service_ids: ['s1', 's3', 's5', 's7']
+        }])
+        .select()
+        .single();
+      if (error) throw error;
+      revalidatePath('/admin/dashboard');
+      return { success: true, data };
+    } catch (e: any) {
+      console.error('createWebProperty error:', e);
+      return { success: false, error: e.message || 'Database error occurred' };
+    }
+  }
+  return { success: false, error: 'Database connection not configured' };
+}
+
+export async function createWebStaff(input: {
+  name: string;
+  email: string;
+  phone: string;
+  role: 'technician' | 'caretaker';
+  skills?: string[];
+  password?: string;
+  property_id?: string | null;
+}) {
+  if (isSupabaseConfigured()) {
+    try {
+      const supabase = await createServerClientInstance();
+      const { data, error } = await supabase
+        .from('profiles')
+        .insert([{
+          id: randomUUID(),
+          name: input.name,
+          email: input.email.trim().toLowerCase(),
+          phone: input.phone,
+          role: input.role,
+          skills: input.skills || [],
+          password: input.password || 'maintex123',
+          property_id: input.property_id || null,
+          available: true,
+        }])
+        .select()
+        .single();
+      if (error) throw error;
+      revalidatePath('/admin/dashboard');
+      return { success: true, data };
+    } catch (e: any) {
+      console.error('createWebStaff error:', e);
+      return { success: false, error: e.message || 'Database error occurred' };
+    }
+  }
+  return { success: false, error: 'Database connection not configured' };
+}
+
+export async function webAssignTechnician(requestId: string, technicianId: string) {
+  if (isSupabaseConfigured()) {
+    try {
+      const supabase = await createServerClientInstance();
+      const { data, error } = await supabase
+        .from('service_requests')
+        .update({
+          assigned_technician_id: technicianId,
+          status: 'assigned',
+          updated_at: new Date().toISOString(),
+        })
+        .eq('id', requestId)
+        .select()
+        .single();
+      if (error) throw error;
+      revalidatePath('/admin/dashboard');
+      return { success: true, data };
+    } catch (e: any) {
+      console.error('webAssignTechnician error:', e);
+      return { success: false, error: e.message || 'Database error occurred' };
+    }
+  }
+  return { success: false, error: 'Database connection not configured' };
+}
+
+export async function webUpdateTicketStatus(requestId: string, status: string) {
+  if (isSupabaseConfigured()) {
+    try {
+      const supabase = await createServerClientInstance();
+      const { data, error } = await supabase
+        .from('service_requests')
+        .update({
+          status,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('id', requestId)
+        .select()
+        .single();
+      if (error) throw error;
+      revalidatePath('/admin/dashboard');
+      return { success: true, data };
+    } catch (e: any) {
+      console.error('webUpdateTicketStatus error:', e);
+      return { success: false, error: e.message || 'Database error occurred' };
+    }
+  }
+  return { success: false, error: 'Database connection not configured' };
+}
+
+export async function getWorkLogs() {
+  if (isSupabaseConfigured()) {
+    try {
+      const supabase = await createServerClientInstance();
+      const { data, error } = await supabase.from('work_logs').select('*');
+      if (error) throw error;
+      return data || [];
+    } catch (e: any) {
+      console.error('getWorkLogs error:', e);
+      return [];
+    }
+  }
+  return [];
+}
+
 
 

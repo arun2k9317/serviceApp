@@ -39,6 +39,10 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
 
+  if (pathname && pathname.startsWith('/admin')) {
+    return null;
+  }
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 10) {

@@ -23,6 +23,7 @@ import {
   ActionIcon,
   Alert,
   rem,
+  useMantineColorScheme,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { useForm } from 'react-hook-form';
@@ -41,6 +42,12 @@ import {
   IconBolt,
   IconProgressCheck,
   IconFolder,
+  IconBuildingStore,
+  IconUsersGroup,
+  IconTool,
+  IconUser,
+  IconSun,
+  IconMoon,
 } from '@tabler/icons-react';
 import { notifications } from '@mantine/notifications';
 import {
@@ -54,6 +61,10 @@ import {
   deleteOffer,
   addGalleryItem,
   deleteGalleryItem,
+  createWebProperty,
+  createWebStaff,
+  webAssignTechnician,
+  webUpdateTicketStatus,
 } from '../../lib/actions';
 import { createClientComponentClient, isSupabaseConfigured } from '../../lib/supabase';
 
@@ -71,6 +82,11 @@ interface DashboardClientProps {
   testimonials: any[];
   offers: any[];
   gallery: any[];
+  properties: any[];
+  technicians: any[];
+  requests: any[];
+  services: any[];
+  workLogs: any[];
 }
 
 export default function DashboardClient({
@@ -80,13 +96,24 @@ export default function DashboardClient({
   testimonials: initialTestimonials,
   offers: initialOffers,
   gallery: initialGallery,
+  properties: initialProperties,
+  technicians: initialTechnicians,
+  requests: initialRequests,
+  services: initialServices,
+  workLogs: initialWorkLogs,
 }: DashboardClientProps) {
   const router = useRouter();
+  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   const [inquiries, setInquiries] = useState(initialInquiries);
   const [callbacks, setCallbacks] = useState(initialCallbacks);
   const [testimonials, setTestimonials] = useState(initialTestimonials);
   const [offers, setOffers] = useState(initialOffers);
   const [gallery, setGallery] = useState(initialGallery);
+  const [properties, setProperties] = useState(initialProperties);
+  const [technicians, setTechnicians] = useState(initialTechnicians);
+  const [requests, setRequests] = useState(initialRequests);
+  const [services, setServices] = useState(initialServices);
+  const [workLogs, setWorkLogs] = useState(initialWorkLogs);
 
   const [loading, setLoading] = useState(false);
 
@@ -94,6 +121,14 @@ export default function DashboardClient({
   const [testimonialOpened, testimonialHandlers] = useDisclosure(false);
   const [offerOpened, offerHandlers] = useDisclosure(false);
   const [galleryOpened, galleryHandlers] = useDisclosure(false);
+  const [propertyOpened, propertyHandlers] = useDisclosure(false);
+  const [staffOpened, staffHandlers] = useDisclosure(false);
+  const [assignOpened, assignHandlers] = useDisclosure(false);
+  const [completedOpened, completedHandlers] = useDisclosure(false);
+
+  const [selectedTicketId, setSelectedTicketId] = useState<string | null>(null);
+  const [selectedRequest, setSelectedRequest] = useState<any | null>(null);
+  const [selectedWorkLog, setSelectedWorkLog] = useState<any | null>(null);
 
   // Logout trigger
   const handleLogout = async () => {
@@ -101,6 +136,122 @@ export default function DashboardClient({
     await adminLogout();
     router.push('/admin/login');
     router.refresh();
+  };
+
+  // Property submit
+  const handleAddProperty = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    const data = new FormData(e.currentTarget);
+    const name = data.get('name') as string;
+    const property_type = data.get('property_type') as string;
+    const address = data.get('address') as string;
+    const city = data.get('city') as string;
+    const total_units = Number(data.get('total_units'));
+    const amcPlan = data.get('amc_plan') as string;
+
+    const res = await createWebProperty({
+      name,
+      property_type,
+      amc_plan: amcPlan,
+      address,
+      city,
+      total_units,
+      amc_contract: {
+        plumbingChecksPerFlat: Number(data.get('plumbingChecksPerFlat')) || 0,
+        electricalChecksPerFlat: Number(data.get('electricalChecksPerFlat')) || 0,
+        hvacChecksPerFlat: Number(data.get('hvacChecksPerFlat')) || 0,
+        deepCleaningsPerFlat: Number(data.get('deepCleaningsPerFlat')) || 0,
+        pestControlsPerFlat: Number(data.get('pestControlsPerFlat')) || 0,
+        emergencyCallsPerFlat: Number(data.get('emergencyCallsPerFlat')) || 0,
+        commonDeepCleanings: Number(data.get('commonDeepCleanings')) || 0,
+        commonPestControls: Number(data.get('commonPestControls')) || 0,
+      }
+    });
+
+    setLoading(false);
+    if (res.success) {
+      notifications.show({ title: 'Success', message: 'Property created successfully', color: 'green' });
+      propertyHandlers.close();
+      setProperties([...properties, res.data]);
+      router.refresh();
+    } else {
+      notifications.show({ title: 'Error', message: res.error || 'Failed to create property', color: 'red' });
+    }
+  };
+
+  // Staff submit
+  const handleAddStaff = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    const data = new FormData(e.currentTarget);
+    const name = data.get('name') as string;
+    const email = data.get('email') as string;
+    const phone = data.get('phone') as string;
+    const role = data.get('role') as 'technician' | 'caretaker';
+    const skillsString = data.get('skills') as string;
+    const skills = skillsString ? skillsString.split(',').map(s => s.trim()) : [];
+    const password = data.get('password') as string;
+    const property_id = data.get('property_id') as string || null;
+
+    const res = await createWebStaff({
+      name,
+      email,
+      phone,
+      role,
+      skills,
+      password,
+      property_id,
+    });
+
+    setLoading(false);
+    if (res.success) {
+      notifications.show({ title: 'Success', message: 'Staff member added successfully', color: 'green' });
+      staffHandlers.close();
+      setTechnicians([...technicians, res.data]);
+      router.refresh();
+    } else {
+      notifications.show({ title: 'Error', message: res.error || 'Failed to add staff', color: 'red' });
+    }
+  };
+
+  // Assign Technician submit
+  const handleAssignTechSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!selectedTicketId) return;
+    const data = new FormData(e.currentTarget);
+    const technicianId = data.get('technician_id') as string;
+    const techName = technicians.find(t => t.id === technicianId)?.name || 'this technician';
+    if (!window.confirm(`Are you sure you want to assign ${techName} to this request?`)) return;
+
+    setLoading(true);
+    const res = await webAssignTechnician(selectedTicketId, technicianId);
+    setLoading(false);
+    if (res.success) {
+      notifications.show({ title: 'Success', message: 'Technician assigned successfully', color: 'green' });
+      assignHandlers.close();
+      setRequests(requests.map(r => r.id === selectedTicketId ? { ...r, assigned_technician_id: technicianId, status: 'assigned' } : r));
+      router.refresh();
+    } else {
+      notifications.show({ title: 'Error', message: res.error || 'Failed to assign technician', color: 'red' });
+    }
+  };
+
+  // Ticket Status update
+  const handleUpdateTicketStatus = async (ticketId: string, status: string) => {
+    if (status === 'completed') {
+      if (!window.confirm("Are you sure you want to mark this request as completed?")) return;
+    }
+    setLoading(true);
+    const res = await webUpdateTicketStatus(ticketId, status);
+    setLoading(false);
+    if (res.success) {
+      notifications.show({ title: 'Success', message: `Ticket status updated to ${status}`, color: 'green' });
+      setRequests(requests.map(r => r.id === ticketId ? { ...r, status } : r));
+      router.refresh();
+    } else {
+      notifications.show({ title: 'Error', message: res.error || 'Failed to update status', color: 'red' });
+    }
   };
 
   // Status updaters
@@ -147,6 +298,7 @@ export default function DashboardClient({
   };
 
   const handleDeleteTestimonial = async (id: string) => {
+    if (!window.confirm("Are you sure you want to delete this testimonial?")) return;
     const res = await deleteTestimonial(id);
     if (res.success) {
       setTestimonials(testimonials.filter((t) => t.id !== id));
@@ -183,6 +335,7 @@ export default function DashboardClient({
   };
 
   const handleDeleteOffer = async (id: string) => {
+    if (!window.confirm("Are you sure you want to delete this special offer campaign?")) return;
     const res = await deleteOffer(id);
     if (res.success) {
       setOffers(offers.filter((o) => o.id !== id));
@@ -254,6 +407,7 @@ export default function DashboardClient({
   };
 
   const handleDeleteGallery = async (id: string) => {
+    if (!window.confirm("Are you sure you want to delete this gallery project item?")) return;
     const res = await deleteGalleryItem(id);
     if (res.success) {
       setGallery(gallery.filter((g) => g.id !== id));
@@ -262,25 +416,80 @@ export default function DashboardClient({
   };
 
   return (
-    <Container size="lg" py={40}>
-      {/* Header bar */}
-      <Group justify="space-between" align="center" mb="xl">
-        <div>
-          <Title order={1}>Admin Dashboard</Title>
-          <Text c="dimmed" size="sm">
-            Mode: <Badge color={stats.mode === 'production' ? 'green' : 'orange'}>{stats.mode.toUpperCase()}</Badge>
-          </Text>
-        </div>
-        <Button
-          onClick={handleLogout}
-          color="red"
-          variant="outline"
-          leftSection={<IconLogout size={16} />}
-          loading={loading}
-        >
-          Logout
-        </Button>
-      </Group>
+    <>
+      {/* Fixed Header bar */}
+      <div
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: rem(70),
+          zIndex: 1000,
+          backgroundColor: colorScheme === 'dark' ? '#1A1B1E' : '#ffffff',
+          borderBottom: `1px solid ${colorScheme === 'dark' ? '#25262B' : '#eaeaea'}`,
+          boxShadow: '0 2px 10px rgba(0, 0, 0, 0.05)',
+          display: 'flex',
+          alignItems: 'center',
+        }}
+      >
+        <Container size="xl" style={{ width: '100%' }}>
+          <Group justify="space-between" align="center" wrap="nowrap">
+            <Group gap="md">
+              <img
+                src="/maintex_logo.jpeg"
+                alt="Maintex Logo"
+                style={{
+                  height: 45,
+                  width: 'auto',
+                  objectFit: 'contain',
+                }}
+              />
+              <Badge color={stats.mode === 'production' ? 'green' : 'orange'}>
+                ADMIN CONSOLE ({stats.mode.toUpperCase()})
+              </Badge>
+            </Group>
+            
+            <Group gap="sm" wrap="nowrap">
+              {/* Color Scheme Toggle */}
+              <ActionIcon
+                onClick={toggleColorScheme}
+                variant="subtle"
+                size="lg"
+                aria-label="Toggle theme color"
+                radius="md"
+                styles={{ root: { color: colorScheme === 'dark' ? '#ffffff' : '#2B3A55' } }}
+              >
+                {colorScheme === 'dark' ? (
+                  <IconSun size={20} stroke={1.5} style={{ color: '#ffc107' }} />
+                ) : (
+                  <IconMoon size={20} stroke={1.5} style={{ color: '#2B3A55' }} />
+                )}
+              </ActionIcon>
+
+              <Button
+                component="a"
+                href="/"
+                variant="subtle"
+                color="gray"
+              >
+                Back to Website
+              </Button>
+              <Button
+                onClick={handleLogout}
+                color="red"
+                variant="outline"
+                leftSection={<IconLogout size={16} />}
+                loading={loading}
+              >
+                Logout
+              </Button>
+            </Group>
+          </Group>
+        </Container>
+      </div>
+
+      <Container size="xl" py={30} style={{ marginTop: rem(75) }}>
 
       {/* Stats Widgets Grid */}
       <SimpleGrid cols={{ base: 2, md: 4 }} spacing="md" mb="xl">
@@ -322,6 +531,9 @@ export default function DashboardClient({
         <Tabs.List mb="lg">
           <Tabs.Tab value="inquiries" leftSection={<IconInbox size={16} />}>Inquiries ({inquiries.length})</Tabs.Tab>
           <Tabs.Tab value="callbacks" leftSection={<IconClock size={16} />}>Callbacks ({callbacks.length})</Tabs.Tab>
+          <Tabs.Tab value="requests" leftSection={<IconTool size={16} />}>Service Requests ({requests.length})</Tabs.Tab>
+          <Tabs.Tab value="properties" leftSection={<IconBuildingStore size={16} />}>Properties ({properties.length})</Tabs.Tab>
+          <Tabs.Tab value="staff" leftSection={<IconUsersGroup size={16} />}>Staff Directory ({technicians.length})</Tabs.Tab>
           <Tabs.Tab value="testimonials" leftSection={<IconMessage size={16} />}>Testimonials</Tabs.Tab>
           <Tabs.Tab value="offers" leftSection={<IconGift size={16} />}>Offers</Tabs.Tab>
           <Tabs.Tab value="gallery" leftSection={<IconPhoto size={16} />}>Gallery Showcase</Tabs.Tab>
@@ -348,7 +560,7 @@ export default function DashboardClient({
                     <Table.Td fw={600}>{inq.name}</Table.Td>
                     <Table.Td>{inq.phone}</Table.Td>
                     <Table.Td>
-                      <Badge color={inq.service_type.includes('AMC') ? 'teal' : 'blue'}>
+                      <Badge variant="light" color={inq.service_type.includes('AMC') ? 'teal' : 'indigo'}>
                         {inq.service_type}
                       </Badge>
                     </Table.Td>
@@ -357,19 +569,19 @@ export default function DashboardClient({
                     </Table.Td>
                     <Table.Td>{new Date(inq.created_at).toLocaleDateString('en-IN')}</Table.Td>
                     <Table.Td>
-                      <Badge color={inq.status === 'pending' ? 'orange' : inq.status === 'contacted' ? 'blue' : 'green'}>
+                      <Badge variant="light" color={inq.status === 'pending' ? 'orange' : inq.status === 'contacted' ? 'indigo' : 'green'}>
                         {inq.status.toUpperCase()}
                       </Badge>
                     </Table.Td>
                     <Table.Td>
                       <Group gap={6}>
                         {inq.status === 'pending' && (
-                          <Button size="xs" color="blue" onClick={() => handleInquiryStatus(inq.id, 'contacted')}>
+                          <Button size="xs" color="indigo" variant="light" onClick={() => handleInquiryStatus(inq.id, 'contacted')}>
                             Contact
                           </Button>
                         )}
                         {inq.status !== 'resolved' && (
-                          <Button size="xs" color="green" onClick={() => handleInquiryStatus(inq.id, 'resolved')}>
+                          <Button size="xs" color="green" variant="light" onClick={() => handleInquiryStatus(inq.id, 'resolved')}>
                             Resolve
                           </Button>
                         )}
@@ -402,11 +614,11 @@ export default function DashboardClient({
                     <Table.Td fw={600}>{cb.name}</Table.Td>
                     <Table.Td>{cb.phone}</Table.Td>
                     <Table.Td>
-                      <Badge color="orange">{cb.preferred_time}</Badge>
+                      <Badge variant="light" color="orange">{cb.preferred_time}</Badge>
                     </Table.Td>
                     <Table.Td>{new Date(cb.created_at).toLocaleDateString('en-IN')}</Table.Td>
                     <Table.Td>
-                      <Badge color={cb.status === 'pending' ? 'orange' : 'green'}>
+                      <Badge variant="light" color={cb.status === 'pending' ? 'orange' : 'green'}>
                         {cb.status.toUpperCase()}
                       </Badge>
                     </Table.Td>
@@ -415,6 +627,7 @@ export default function DashboardClient({
                         <Button
                           size="xs"
                           color="green"
+                          variant="light"
                           leftSection={<IconCheck size={12} />}
                           onClick={() => handleCallbackStatus(cb.id, 'completed')}
                         >
@@ -569,7 +782,6 @@ export default function DashboardClient({
             </Table>
           </Card>
         </Tabs.Panel>
-      </Tabs>
 
       {/* Testimonial Form Modal */}
       <Modal opened={testimonialOpened} onClose={testimonialHandlers.close} title="Add Testimonial" radius="md">
@@ -657,6 +869,391 @@ export default function DashboardClient({
           </Stack>
         </form>
       </Modal>
-    </Container>
+
+      {/* Tab 6: Service Requests Panel */}
+      <Tabs.Panel value="requests">
+        <Card withBorder radius="md" padding={0} style={{ overflowX: 'auto' }} mt="md">
+          <Table striped highlightOnHover>
+            <Table.Thead>
+              <Table.Tr>
+                <Table.Th>Ticket #</Table.Th>
+                <Table.Th>Service Category</Table.Th>
+                <Table.Th>Location / Unit</Table.Th>
+                <Table.Th>Priority</Table.Th>
+                <Table.Th>Status</Table.Th>
+                <Table.Th>Assigned Technician</Table.Th>
+                <Table.Th>Actions</Table.Th>
+              </Table.Tr>
+            </Table.Thead>
+            <Table.Tbody>
+              {requests.map((req) => {
+                const techUser = technicians.find(t => t.id === req.assigned_technician_id);
+                const prop = properties.find(p => p.id === req.property_id);
+                const serv = services.find(s => s.id === req.service_id);
+                return (
+                  <Table.Tr key={req.id}>
+                    <Table.Td fw={600}>{req.ticket_no}</Table.Td>
+                    <Table.Td>
+                      <Badge variant="light" color="blue">
+                        {serv?.name || req.service_id}
+                      </Badge>
+                    </Table.Td>
+                    <Table.Td>
+                      {prop?.name || 'Public'}{' '}
+                      {req.unit_number ? `· Unit ${req.unit_number}` : ''}
+                    </Table.Td>
+                    <Table.Td>
+                      <Badge variant="light" color={req.priority === 'high' ? 'red' : req.priority === 'medium' ? 'orange' : 'gray'}>
+                        {req.priority.toUpperCase()}
+                      </Badge>
+                    </Table.Td>
+                    <Table.Td>
+                      <Badge variant="light" color={req.status === 'pending' ? 'orange' : req.status === 'assigned' ? 'indigo' : req.status === 'in_progress' ? 'cyan' : req.status === 'completed' ? 'green' : 'red'}>
+                        {req.status.toUpperCase()}
+                      </Badge>
+                    </Table.Td>
+                    <Table.Td>{techUser ? techUser.name : 'Unassigned'}</Table.Td>
+                    <Table.Td>
+                      <Group gap={6}>
+                        {req.status === 'pending' && (
+                          <Button
+                            size="xs"
+                            color="indigo"
+                            variant="light"
+                            onClick={() => {
+                              setSelectedTicketId(req.id);
+                              assignHandlers.open();
+                            }}
+                          >
+                            Assign Tech
+                          </Button>
+                        )}
+                        {req.status !== 'completed' && req.status !== 'cancelled' && (
+                          <Button 
+                            size="xs" 
+                            color="green" 
+                            variant="light"
+                            onClick={() => handleUpdateTicketStatus(req.id, 'completed')}
+                          >
+                            Complete
+                          </Button>
+                        )}
+                        {req.status === 'completed' && (
+                          <Button
+                            size="xs"
+                            color="teal"
+                            variant="subtle"
+                            onClick={() => {
+                              const wl = workLogs.find(w => w.request_id === req.id);
+                              setSelectedRequest(req);
+                              setSelectedWorkLog(wl || null);
+                              completedHandlers.open();
+                            }}
+                          >
+                            View Details
+                          </Button>
+                        )}
+                      </Group>
+                    </Table.Td>
+                  </Table.Tr>
+                );
+              })}
+            </Table.Tbody>
+          </Table>
+        </Card>
+      </Tabs.Panel>
+
+      {/* Tab 7: Properties Panel */}
+      <Tabs.Panel value="properties">
+        <Stack gap="md" mt="md">
+          <Group justify="space-between">
+            <Text size="sm" c="dimmed">Manage property locations and AMC quotas</Text>
+            <Button size="sm" leftSection={<IconPlus size={16} />} onClick={propertyHandlers.open}>
+              Add Property
+            </Button>
+          </Group>
+          <Card withBorder radius="md" padding={0} style={{ overflowX: 'auto' }}>
+            <Table striped highlightOnHover>
+              <Table.Thead>
+                <Table.Tr>
+                  <Table.Th>Property Name</Table.Th>
+                  <Table.Th>Type</Table.Th>
+                  <Table.Th>City</Table.Th>
+                  <Table.Th>Total Units</Table.Th>
+                  <Table.Th>AMC Plan</Table.Th>
+                  <Table.Th>Address</Table.Th>
+                </Table.Tr>
+              </Table.Thead>
+              <Table.Tbody>
+                {properties.map((p) => (
+                  <Table.Tr key={p.id}>
+                    <Table.Td fw={600}>{p.name}</Table.Td>
+                    <Table.Td>
+                      <Badge variant="light" color="indigo">{p.property_type}</Badge>
+                    </Table.Td>
+                    <Table.Td>{p.city}</Table.Td>
+                    <Table.Td>{p.total_units}</Table.Td>
+                    <Table.Td>
+                      <Badge color="orange">{p.amc_plan.toUpperCase()}</Badge>
+                    </Table.Td>
+                    <Table.Td>{p.address || '-'}</Table.Td>
+                  </Table.Tr>
+                ))}
+              </Table.Tbody>
+            </Table>
+          </Card>
+        </Stack>
+      </Tabs.Panel>
+
+      {/* Tab 8: Staff Panel */}
+      <Tabs.Panel value="staff">
+        <Stack gap="md" mt="md">
+          <Group justify="space-between">
+            <Text size="sm" c="dimmed">View all registered technicians and caretakers</Text>
+            <Button size="sm" leftSection={<IconPlus size={16} />} onClick={staffHandlers.open}>
+              Add Staff Member
+            </Button>
+          </Group>
+          <Card withBorder radius="md" padding={0} style={{ overflowX: 'auto' }}>
+            <Table striped highlightOnHover>
+              <Table.Thead>
+                <Table.Tr>
+                  <Table.Th>Name</Table.Th>
+                  <Table.Th>Role</Table.Th>
+                  <Table.Th>Email</Table.Th>
+                  <Table.Th>Phone</Table.Th>
+                  <Table.Th>Skills</Table.Th>
+                </Table.Tr>
+              </Table.Thead>
+              <Table.Tbody>
+                {technicians.map((t) => (
+                  <Table.Tr key={t.id}>
+                    <Table.Td fw={600}>{t.name}</Table.Td>
+                    <Table.Td>
+                      <Badge color={t.role === 'technician' ? 'blue' : 'teal'}>
+                        {t.role.toUpperCase()}
+                      </Badge>
+                    </Table.Td>
+                    <Table.Td>{t.email}</Table.Td>
+                    <Table.Td>{t.phone}</Table.Td>
+                    <Table.Td>
+                      <Group gap={4}>
+                        {(t.skills || []).map((s: string) => (
+                          <Badge key={s} size="xs" variant="outline" color="gray">{s}</Badge>
+                        ))}
+                      </Group>
+                    </Table.Td>
+                  </Table.Tr>
+                ))}
+              </Table.Tbody>
+            </Table>
+          </Card>
+        </Stack>
+      </Tabs.Panel>
+    </Tabs>
+
+    {/* Modal: Add Property */}
+    <Modal opened={propertyOpened} onClose={propertyHandlers.close} title="Add New Property" centered>
+      <form onSubmit={handleAddProperty}>
+        <Stack gap="sm">
+          <TextInput label="Property Name" name="name" required placeholder="e.g. Green Meadows" />
+          <Select
+            label="Property Type"
+            name="property_type"
+            required
+            data={[
+              { value: 'residential', label: 'Residential (Community)' },
+              { value: 'commercial', label: 'Commercial (Office Building)' },
+              { value: 'retail', label: 'Retail (Mall)' },
+              { value: 'educational', label: 'Educational (School/Uni)' },
+              { value: 'hospitality', label: 'Hospitality (Hotel)' },
+            ]}
+            defaultValue="residential"
+          />
+          <TextInput label="City" name="city" required placeholder="e.g. Pune" />
+          <NumberInput label="Total Units" name="total_units" required defaultValue={10} min={1} />
+          <TextInput label="Address" name="address" required placeholder="Detailed address" />
+          
+          <Text fw={600} size="sm" mt="xs">Annual Maintenance Quotas (Per Unit)</Text>
+          <SimpleGrid cols={2} spacing="xs">
+            <NumberInput label="Plumbing Checks" name="plumbingChecksPerFlat" min={0} defaultValue={2} />
+            <NumberInput label="Electrical Checks" name="electricalChecksPerFlat" min={0} defaultValue={2} />
+            <NumberInput label="HVAC/AC Checks" name="hvacChecksPerFlat" min={0} defaultValue={2} />
+            <NumberInput label="Deep Cleanings" name="deepCleaningsPerFlat" min={0} defaultValue={1} />
+            <NumberInput label="Pest Controls" name="pestControlsPerFlat" min={0} defaultValue={2} />
+            <NumberInput label="Emergency Calls" name="emergencyCallsPerFlat" min={0} defaultValue={3} />
+          </SimpleGrid>
+          
+          <Text fw={600} size="sm" mt="xs">Common Area Quotas</Text>
+          <SimpleGrid cols={2} spacing="xs">
+            <NumberInput label="Common Deep Clean" name="commonDeepCleanings" min={0} defaultValue={4} />
+            <NumberInput label="Common Pest Control" name="commonPestControls" min={0} defaultValue={4} />
+          </SimpleGrid>
+
+          <Button type="submit" color="blue" mt="md" fullWidth loading={loading}>
+            Create Property
+          </Button>
+        </Stack>
+      </form>
+    </Modal>
+
+    {/* Modal: Add Staff Member */}
+    <Modal opened={staffOpened} onClose={staffHandlers.close} title="Add Staff Member" centered>
+      <form onSubmit={handleAddStaff}>
+        <Stack gap="sm">
+          <TextInput label="Name" name="name" required placeholder="Full Name" />
+          <TextInput label="Email Address" name="email" required placeholder="email@maintex.com" />
+          <TextInput label="Phone Number" name="phone" required placeholder="10-digit number" />
+          <Select
+            label="Staff Role"
+            name="role"
+            required
+            data={[
+              { value: 'technician', label: 'Technician' },
+              { value: 'caretaker', label: 'Caretaker' },
+            ]}
+            defaultValue="technician"
+          />
+          <TextInput label="Skills (Comma separated list)" name="skills" placeholder="Plumbing, Electrical, AC" />
+          <TextInput label="Login Password" name="password" required defaultValue="maintex123" placeholder="Enter password" />
+          
+          <Select
+            label="Assigned Property (Caretaker only)"
+            name="property_id"
+            placeholder="Unassigned"
+            data={properties.map(p => ({ value: p.id, label: p.name }))}
+          />
+
+          <Button type="submit" color="blue" mt="md" fullWidth loading={loading}>
+            Add Staff Member
+          </Button>
+        </Stack>
+      </form>
+    </Modal>
+
+    {/* Modal: Assign Technician */}
+    <Modal opened={assignOpened} onClose={assignHandlers.close} title="Assign Technician" centered>
+      <form onSubmit={handleAssignTechSubmit}>
+        <Stack gap="sm">
+          <Select
+            label="Select Available Technician"
+            name="technician_id"
+            required
+            data={technicians
+              .filter(t => t.role === 'technician')
+              .map(tech => ({ value: tech.id, label: `${tech.name} (${tech.skills.join(', ') || 'General'})` }))
+            }
+            placeholder="Pick a technician"
+          />
+          <Button type="submit" color="blue" mt="md" fullWidth loading={loading}>
+            Confirm Assignment
+          </Button>
+        </Stack>
+      </form>
+    </Modal>
+    {/* Modal: View Completed Service Details */}
+    <Modal opened={completedOpened} onClose={completedHandlers.close} title="Completed Request Details" size="lg" centered>
+      {selectedRequest && (
+        <Stack gap="md">
+          <Group justify="space-between">
+            <Text fw={700} size="lg">Ticket: {selectedRequest.ticket_no}</Text>
+            <Badge color="green">COMPLETED</Badge>
+          </Group>
+
+          <Card withBorder padding="sm" radius="md">
+            <Text fw={600} size="sm" mb="xs">Request Overview</Text>
+            <SimpleGrid cols={2} spacing="sm">
+              <Text size="xs"><strong>Service:</strong> {services.find(s => s.id === selectedRequest.service_id)?.name || selectedRequest.service_id}</Text>
+              <Text size="xs"><strong>Priority:</strong> {selectedRequest.priority.toUpperCase()}</Text>
+              <Text size="xs"><strong>Property:</strong> {properties.find(p => p.id === selectedRequest.property_id)?.name || 'Public'}</Text>
+              <Text size="xs"><strong>Unit/Location:</strong> {selectedRequest.unit_number || selectedRequest.address || 'N/A'}</Text>
+              <Text size="xs"><strong>Created At:</strong> {new Date(selectedRequest.created_at).toLocaleString('en-IN')}</Text>
+              <Text size="xs"><strong>Completed At:</strong> {selectedRequest.updated_at ? new Date(selectedRequest.updated_at).toLocaleString('en-IN') : 'N/A'}</Text>
+            </SimpleGrid>
+            <Text size="xs" mt="sm"><strong>Description:</strong> {selectedRequest.description}</Text>
+          </Card>
+
+          {/* Technician Info */}
+          {(() => {
+            const tech = technicians.find(t => t.id === selectedRequest.assigned_technician_id);
+            return tech ? (
+              <Card withBorder padding="sm" radius="md">
+                <Text fw={600} size="sm" mb="xs">Technician Information</Text>
+                <SimpleGrid cols={2} spacing="xs">
+                  <Text size="xs"><strong>Name:</strong> {tech.name}</Text>
+                  <Text size="xs"><strong>Email:</strong> {tech.email}</Text>
+                  <Text size="xs"><strong>Phone:</strong> {tech.phone}</Text>
+                  <Text size="xs"><strong>Skills:</strong> {(tech.skills || []).join(', ')}</Text>
+                </SimpleGrid>
+              </Card>
+            ) : null;
+          })()}
+
+          {/* Completion Log Details */}
+          {selectedWorkLog ? (
+            <Stack gap="sm">
+              <Card withBorder padding="sm" radius="md">
+                <Text fw={600} size="sm" mb="xs">Completion Summary</Text>
+                <Text size="xs" style={{ whiteSpace: 'pre-line' }}><strong>Technician Notes/Comments:</strong> {selectedWorkLog.remarks || 'No comments provided.'}</Text>
+              </Card>
+
+              {/* Photos */}
+              <SimpleGrid cols={2} spacing="sm">
+                {selectedWorkLog.photo_uris && selectedWorkLog.photo_uris.length > 0 ? (
+                  <Card withBorder padding="xs" radius="md">
+                    <Text fw={600} size="xs" mb="xs">Work Completion Photo</Text>
+                    <img
+                      src={selectedWorkLog.photo_uris[0]}
+                      alt="Completion Image"
+                      style={{
+                        width: '100%',
+                        height: 180,
+                        objectFit: 'cover',
+                        borderRadius: 8,
+                      }}
+                    />
+                  </Card>
+                ) : (
+                  <Card withBorder padding="xs" radius="md" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 210 }}>
+                    <Text size="xs" c="dimmed">No completion photo uploaded</Text>
+                  </Card>
+                )}
+
+                {selectedWorkLog.signature_uri ? (
+                  <Card withBorder padding="xs" radius="md">
+                    <Text fw={600} size="xs" mb="xs">Resident Signature</Text>
+                    <div style={{ backgroundColor: '#ffffff', border: '1px solid #eee', borderRadius: 8, padding: 4 }}>
+                      <img
+                        src={selectedWorkLog.signature_uri}
+                        alt="Resident Signature"
+                        style={{
+                          width: '100%',
+                          height: 170,
+                          objectFit: 'contain',
+                        }}
+                      />
+                    </div>
+                  </Card>
+                ) : (
+                  <Card withBorder padding="xs" radius="md" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 210 }}>
+                    <Text size="xs" c="dimmed">No resident signature collected</Text>
+                  </Card>
+                )}
+              </SimpleGrid>
+            </Stack>
+          ) : (
+            <Alert color="orange" title="Log Details Missing">
+              Completion details log could not be loaded for this ticket.
+            </Alert>
+          )}
+
+          <Button color="blue" onClick={completedHandlers.close} fullWidth mt="sm">
+            Close Details
+          </Button>
+        </Stack>
+      )}
+    </Modal>
+  </Container>
+    </>
   );
 }
