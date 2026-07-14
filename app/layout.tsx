@@ -32,8 +32,8 @@ const openSans = Open_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Complete Facility Management Solutions | Full Maintenance',
-    template: '%s | Full Maintenance',
+    default: 'Complete Facility Management Solutions | Maintex Facility Management',
+    template: '%s | Maintex Facility Management',
   },
   description:
     'Professional facility management services including electrical maintenance, plumbing, HVAC, deep cleaning, housekeeping, painting, pest control, and comprehensive property maintenance for homes, offices, and commercial buildings.',
@@ -50,17 +50,17 @@ export const metadata: Metadata = {
     'commercial facility management',
     'building maintenance',
   ],
-  authors: [{ name: 'Full Maintenance Company' }],
-  creator: 'Full Maintenance Company',
-  metadataBase: new URL('https://fullmaintenance.com'),
+  authors: [{ name: 'Maintex Facility Management' }],
+  creator: 'Maintex Facility Management',
+  metadataBase: new URL('https://maintex.in'),
   alternates: {
     canonical: '/',
   },
   openGraph: {
-    title: 'Complete Facility Management Solutions Under One Roof | Full Maintenance',
+    title: 'Complete Facility Management Solutions Under One Roof | Maintex Facility Management',
     description: 'Professional facility management services for homes, offices, hospitals, hotels, and industrial facilities. Get a free consultation today.',
-    url: 'https://fullmaintenance.com',
-    siteName: 'Full Maintenance Company',
+    url: 'https://maintex.in',
+    siteName: 'Maintex Facility Management',
     locale: 'en_IN',
     type: 'website',
     images: [

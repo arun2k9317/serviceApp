@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 import { getServices } from '../lib/actions';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://fullmaintenance.com'; // Replace with actual production domain
+  const baseUrl = 'https://maintex.in'; // Replace with actual production domain
 
   const staticRoutes = [
     '',

@@ -1102,7 +1102,7 @@ export default function DashboardClient({
       <form onSubmit={handleAddStaff}>
         <Stack gap="sm">
           <TextInput label="Name" name="name" required placeholder="Full Name" />
-          <TextInput label="Email Address" name="email" required placeholder="email@maintex.com" />
+          <TextInput label="Email Address" name="email" required placeholder="email@maintex.in" />
           <TextInput label="Phone Number" name="phone" required placeholder="10-digit number" />
           <Select
             label="Staff Role"

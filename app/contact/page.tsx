@@ -85,7 +85,7 @@ export default function ContactPage() {
                       </ThemeIcon>
                       <div>
                         <Text size="sm" fw={700}>Support Email</Text>
-                        <Text size="sm">info@maintex.com</Text>
+                        <Text size="sm">info@maintex.in</Text>
                         <Text size="xs" c="dimmed">Email us for AMC tenders and commercial contracts</Text>
                       </div>
                     </Group>

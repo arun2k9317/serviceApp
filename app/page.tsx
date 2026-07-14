@@ -635,10 +635,10 @@ export default function HomePage() {
   const businessSchema = {
     "@context": "https://schema.org",
     "@type": "HomeAndConstructionBusiness",
-    "name": "Full Maintenance — Facility Management",
-    "image": "https://fullmaintenance.com/og-image.jpg",
-    "@id": "https://fullmaintenance.com/#organization",
-    "url": "https://fullmaintenance.com",
+    "name": "Maintex Facility Management",
+    "image": "https://maintex.in/og-image.jpg",
+    "@id": "https://maintex.in/#organization",
+    "url": "https://maintex.in",
     "telephone": "+919048199754",
     "priceRange": "$$",
     "address": {

@@ -49,7 +49,7 @@ export default function Footer() {
                     lineHeight: 1.1,
                   }}
                 >
-                  FULL MAINTENANCE<span style={{ color: '#6D94C5' }}>.</span>
+                  MAINTEX<span style={{ color: '#6D94C5' }}>.</span>
                 </span>
                 <span
                   style={{
@@ -60,7 +60,7 @@ export default function Footer() {
                     textTransform: 'uppercase',
                   }}
                 >
-                  Facility Services
+                  Facility Management
                 </span>
               </Link>
               <Text size="sm" style={{ color: '#adb5bd', maxWidth: rem(320), lineHeight: 1.6 }}>
@@ -194,7 +194,7 @@ export default function Footer() {
                   <IconMail size={18} style={{ color: '#CBDCEB', marginTop: rem(2), flexShrink: 0 }} />
                   <div>
                     <Text size="sm" fw={600} style={{ color: '#ffffff' }}>
-                      support@fullmaintenance.com
+                      info@maintex.in
                     </Text>
                     <Text size="xs" style={{ color: '#adb5bd' }}>
                       Average response: 1 hour
@@ -231,7 +231,7 @@ export default function Footer() {
         {/* Copyright */}
         <Group justify="space-between" align="center" wrap="wrap">
           <Text size="xs" style={{ color: '#adb5bd' }}>
-            © {currentYear} Maintex Interntional Facility Management LLP. All rights reserved.
+            © {currentYear} Maintex International Facility Management LLP. All rights reserved.
           </Text>
           <Group gap="md">
             <Link
